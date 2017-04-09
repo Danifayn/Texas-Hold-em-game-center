@@ -1,6 +1,6 @@
 # Get Started
 
-1. Download and install [Visual Studio Code](https://code.visualstudio.com/download) or any other editor of your choice that supports typescript
+1. Download and install [Visual Studio Code](https://code.visualstudio.com/download)
 2. Install [Node.js](https://nodejs.org/dist/v6.10.2/node-v6.10.2-x64.msi)
 3. Install some tools `> npm install --global firebase-tools firebase-bolt typescript`
     - [Firebase Tools](https://github.com/firebase/firebase-tools) - for deploying stuff to firebase
