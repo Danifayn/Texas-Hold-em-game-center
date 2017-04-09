@@ -1,5 +1,4 @@
 # Get Started
-
 1. Download and install [Visual Studio Code](https://code.visualstudio.com/download)
 2. Install [Node.js](https://nodejs.org/dist/v6.10.2/node-v6.10.2-x64.msi)
 3. Install some tools `> npm install --global firebase-tools firebase-bolt typescript`
@@ -19,6 +18,7 @@ Basically you need to know two things:
 2. `database.rules.bolt` is where you define security rules for the database in a language called `Bolt`
     - [Get started & Documentation](https://github.com/firebase/bolt/blob/master/docs/guide.md)
     - `.../TexasHoldem> firebase deploy --only database` - update security rules on the server
+3. Quick tip - `ctrl + ~` opens the built-in terminal in Visual Studio Code
 
 # How to access the firebase console
 1. Go to [Firebase](firebase.google.com)
