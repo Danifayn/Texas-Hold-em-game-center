@@ -1,1 +1,5 @@
-{}
+{
+  "projects": {
+    "staging": "texasholdem-7ff59"
+  }
+}
