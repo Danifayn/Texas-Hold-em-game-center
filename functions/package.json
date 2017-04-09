@@ -5,5 +5,8 @@
     "firebase-admin": "^4.1.2",
     "firebase-functions": "^0.5"
   },
-  "private": true
+  "private": true,
+  "scripts": {
+    "functions" : "tsc ./src/index.ts --outDir ./build && firebase deploy --only functions"
+  }
 }
