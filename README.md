@@ -10,7 +10,7 @@
 Basically you need to know two things:
 1. `functions/index.js` is where you write triggers for firebase
     - [Get started & Documentation](https://firebase.google.com/docs/functions/get-started)
-    - `npm run functions` - (run this in the functions directory) - update triggers on the server (all of functions folder)
+    - `npm run functions` - (run this in the `functions` directory) - update triggers on the server (all of functions folder)
 2. `database.rules.bolt` is where you define security rules for the database in a language called `Bolt`
     - [Get started & Documentation](https://github.com/firebase/bolt/blob/master/docs/guide.md)
     - `firebase deploy --only database` - update security rules on the server
