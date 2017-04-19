@@ -6,8 +6,9 @@
     - [Firebase bolt](https://github.com/firebase/bolt/blob/master/docs/guide.md) - for writing security rules
     - [Typescript](http://www.typescriptlang.org/docs/tutorial.html) - for writing the triggers
 4. `> git clone https://github.com/Danifayn/Texas-Hold-em-game-center.git TexasHoldem`
-5. Open the newly created `TexasHoldem` directory in Visual Studio Code
-6. Code away.
+5. `> npm install` to install all dependecies
+6. Open the newly created `TexasHoldem` directory in Visual Studio Code
+7. Code away.
 
 # Overview
 Basically you need to know two things:
@@ -19,6 +20,11 @@ Basically you need to know two things:
     - [Get started & Documentation](https://github.com/firebase/bolt/blob/master/docs/guide.md)
     - `.../TexasHoldem> firebase deploy --only database` - update security rules on the server
 3. Quick tip - `ctrl + ~` opens the built-in terminal in Visual Studio Code
+
+# Unit Testing
+1. unit testing is done with [jasmine](https://code.tutsplus.com/tutorials/testing-your-javascript-with-jasmine--net-21229)
+2. write your unit tests in a file named `*.spec.ts` in the `src` directory
+3. run the tests using `npm run test`
 
 # How to access the firebase console
 1. Go to [Firebase](firebase.google.com)
