@@ -8,6 +8,11 @@
   },
   "private": true,
   "scripts": {
-    "functions": "tsc ./src/index.ts --outDir ./build && firebase deploy --only functions"
+    "build": "tsc --outDir ./build",
+    "test": "npm run build && jasmine",
+    "functions": "npm run build && firebase deploy --only functions"
+  },
+  "devDependencies": {
+    "jasmine": "^2.5.3"
   }
 }

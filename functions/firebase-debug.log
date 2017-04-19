@@ -1,0 +1,60 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\matan tsuberi\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy --only functions
+[debug] CLI Version:  3.5.0
+[debug] Platform:     win32
+[debug] Node Version: v6.9.2
+[debug] Time:         Wed Apr 19 2017 14:49:44 GMT+0300 (Jerusalem Daylight Time)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/S86TxUVv_3EHX5eU-fKmj_UHoAYjzfkX86vDbWNUgAuRVtjxMpGlJAGPD487fsFe',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Wed Apr 19 2017 14:49:44 GMT+0300 (Jerusalem Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/texasholdem-7ff59  
+ Wed Apr 19 2017 14:49:45 GMT+0300 (Jerusalem Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/texasholdem-7ff59/tokens  
+ Wed Apr 19 2017 14:49:46 GMT+0300 (Jerusalem Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'texasholdem-7ff59'...
+[info] 
+[info] i  deploying functions
+[debug] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "dependencies": {
+    "firebase-admin": "^4.1.2",
+    "firebase-functions": "^0.5",
+    "object.assign": "^4.0.4"
+  },
+  "private": true,
+  "scripts": {
+    "build": "tsc ./src/index.ts --outDir ./build",
+    "test": "npm run build && jasmine",
+    "functions": "npm run build && firebase deploy --only functions"
+  },
+  "devDependencies": {
+    "jasmine": "^2.5.3"
+  }
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[info] i  runtimeconfig: ensuring necessary APIs are enabled...
+[debug] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/texasholdem-7ff59?view=CONSUMER_VIEW  
+ Wed Apr 19 2017 14:49:49 GMT+0300 (Jerusalem Daylight Time)
+[debug] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/texasholdem-7ff59?view=CONSUMER_VIEW  
+ Wed Apr 19 2017 14:49:49 GMT+0300 (Jerusalem Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[info] +  runtimeconfig: all necessary APIs are enabled
+[debug] <<< HTTP RESPONSE 200
+[info] +  functions: all necessary APIs are enabled
+[debug] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/texasholdem-7ff59  
+ Wed Apr 19 2017 14:49:51 GMT+0300 (Jerusalem Daylight Time)
+[debug] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/texasholdem-7ff59/apiKeys  
+ Wed Apr 19 2017 14:49:51 GMT+0300 (Jerusalem Daylight Time)
+[debug] <<< HTTP RESPONSE 200

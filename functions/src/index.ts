@@ -1,4 +1,4 @@
-import { GameCenter } from './test';
+import { GameCenter } from './game-center';
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 var assign = require('object.assign');
