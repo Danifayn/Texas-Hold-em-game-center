@@ -32,3 +32,14 @@ Basically you need to know two things:
     - Email - `texas.holdem.workshop@gmail.com`
     - Password - `texas shuffle`
 2. Press `go to console`
+
+# How to create new branches and checkout branches
+## create new branches
+1. Press `ctrl+~`
+2. In the console enter `git branch <branch_name>`
+## checkout branches
+1. Press `ctrl+~`
+2. In the console enter `git checkout <branch_name>`
+Other  way to checkout:
+1. Click on the name branch at the left bottom of the screen.
+2. Choose the wanted branch.
