@@ -32,7 +32,7 @@ export class GameCenter {
     // factory method to create a GameCenter instance from the json data from the db
     public static from(json: any): GameCenter{
         let gc: GameCenter = assign(new GameCenter(), json);
-        //gc.users = Object.keys(gc.users).reduce((acc,k) => ({...acc, [k]: assign(new User(), gc.users[k])}),{})
+        gc.users = Object.keys(gc.users).reduce((acc,k) => ({...acc, [k]: assign(new User(), gc.users[k])}),{})
         return gc;
     }
 }
