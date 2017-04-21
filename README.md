@@ -27,7 +27,7 @@ Basically you need to know two things:
 3. run the tests using `npm run test`
 
 # How to access the firebase console
-1. Go to [Firebase](firebase.google.com)
+1. Go to [Firebase](https://firebase.google.com/)
 2. Login using:
     - Email - `texas.holdem.workshop@gmail.com`
     - Password - `texas shuffle`
