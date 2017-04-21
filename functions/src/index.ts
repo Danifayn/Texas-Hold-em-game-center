@@ -1,3 +1,4 @@
+import { User } from './user';
 import { GameCenter } from './game-center';
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
@@ -9,6 +10,8 @@ export type Extractor = {
   number: (name: string) => number;
   boolean: (name: string) => boolean;
 }
+
+export type RequestHandler = (gc: GameCenter, params: Extractor, currentUser?: User) => any;
 
 const createExtractor = (o: any): Extractor => ({
   string: name => {
@@ -26,30 +29,48 @@ const createExtractor = (o: any): Extractor => ({
   boolean: name => o[name] ? true : false
 });
 
-const createHandler = (f: (gc: GameCenter, params: Extractor) => any) => {
+const createHandler = (f: RequestHandler) => {
   return functions.https.onRequest((req, res) => {
     var result;
     var error: Error;
     const onComplete = (e,commited,snapshot) => {
-      if(commited){
-        res.send({result});
-      } else {
-        res.send(error.message);
+      console.log('onComplete',e, commited, snapshot)
+      if(commited || error){
+        if(result)
+          res.send({result});
+        else if(error)
+          res.send(error.message);
       }
     }
     return admin.database().ref('/').transaction(db => {
+      if(!db) return 0;
       try{
         const gc = GameCenter.from(db);
-        const params = assign({},req.query, req.params, req.body);
-        result = f(gc, createExtractor(params));
+        const params = assign({},req.query, req.params, req.body,req.headers);
+        const extractor = createExtractor(params);
+
+        let user = null;
+        if(params.username && params.password){
+          user = gc.getUser(params.username);
+          if(!user || user.password !== params.password)
+            user = null;
+        }
+        console.log('user', user);
+        result = f(gc, extractor , user) || true;
         return gc;
       }
       catch(e){
         error = e;
         return;
       }
-    },onComplete);
+    }, onComplete, true);
   })
 }
 
-export const add = createHandler((gc,extractor) => gc.add(extractor.number('param')));
+export const add = createHandler((gc,extractor,user) => gc.add(user,extractor.number('param')));
+export const register = createHandler((gc,extractor) => gc.register(
+  {
+    username: extractor.string('username'),
+    password: extractor.string('password')
+  }
+));

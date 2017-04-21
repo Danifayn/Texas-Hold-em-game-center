@@ -9,7 +9,7 @@
   },
   "private": true,
   "scripts": {
-    "build": "tsc --outDir ./build",
+    "build": "rd /s /q \"./build\" && tsc --outDir ./build",
     "test": "npm run build && jasmine",
     "functions": "npm run build && firebase deploy --only functions"
   },
