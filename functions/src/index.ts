@@ -37,9 +37,9 @@ const createHandler = (f: RequestHandler) => {
       console.log('onComplete',e, commited, snapshot)
       if(commited || error){
         if(result)
-          res.send({result});
+          res.send(200,{result});
         else if(error)
-          res.send(error.message);
+          res.send(400,error.message);
       }
     }
     return admin.database().ref('/').transaction(db => {
@@ -56,7 +56,9 @@ const createHandler = (f: RequestHandler) => {
             user = null;
         }
         console.log('user', user);
-        result = f(gc, extractor , user) || true;
+        result = f(gc, extractor , user);
+        if(result === undefined)
+          result = true;
         return gc;
       }
       catch(e){
@@ -67,10 +69,18 @@ const createHandler = (f: RequestHandler) => {
   })
 }
 
-export const add = createHandler((gc,extractor,user) => gc.add(user,extractor.number('param')));
-export const register = createHandler((gc,extractor) => gc.register(
-  {
-    username: extractor.string('username'),
-    password: extractor.string('password')
-  }
-));
+export const register = createHandler((gc,extractor) => gc.register(extractor.string('username'),extractor.string('password')));
+export const createGame = createHandler((gc,extractor,user) => 
+  gc.createGame(user,
+    extractor.number('gameType'),
+    extractor.number('buyin'),
+    extractor.number('initialChips'),
+    extractor.number('minBet'),
+    extractor.number('minPlayers'),
+    extractor.number('maxPlayers'),
+    extractor.boolean('spectatingAllowed')
+  )
+);
+export const joinGame = createHandler((gc,extractor,user) => gc.joinGame(user, extractor.number('gameId')));
+export const spectateGame = createHandler((gc,extractor,user) => gc.spectateGame(user, extractor.number('gameId')));
+export const leaveGame = createHandler((gc,extractor,user) => gc.leaveGame(user,extractor.number('gameId')));
