@@ -9,10 +9,11 @@ export enum Status {
 }
 
 export class Player {
+    id: number;
     status: Status = null;
-    lastBet: Number = null;
+    lastBet: number = null;
     hand: Card[] = [];
-    money: Number = 0;
+    money: number = 0;
     playingUser: User = null;
     playingGame: Game = null;
     err: boolean = false;
@@ -23,13 +24,12 @@ export class Player {
         this.playingGame = game;
     }
 
-    deal(c:Card) {
-        this.hand.push(c);
-    }
-
-    isEqual(p: Player): boolean {
-        return  (p.playingGame.id == this.playingGame.id) &&
-                (p.playingUser.username == this.playingUser.username);
+    deal(c:Card): boolean {
+        if(this.hand.length < 5) {
+            this.hand.push(c);
+            return true;
+        }
+        return false;
     }
 
     static from(json: any): Player {

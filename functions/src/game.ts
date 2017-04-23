@@ -73,9 +73,9 @@ export class Game {
     minPlayers: number = 2;
     maxPlayers: number = 23;
     spectatingAllowed: boolean = true;
-    currentPlayer: Player = null;
     allPlayers: Player[] = [];
-    activePlayers: Player[] = [];
+    currentPlayer: number = null;
+    activePlayers: number[] = [];
 
     constructor(id?: number,
                 league?: number,
@@ -99,52 +99,51 @@ export class Game {
 
     addPlayer(player: Player): void {
         if(this.currentPlayer == null) {
-            this.currentPlayer = player;
+            this.currentPlayer = player.id;
         }
     }
 
-    isNotCurr(element, index, array) { 
-        return (!element.isEqual(this.currentPlayer)); 
-    }
-
-    getCurr(element, index, array){ 
-        return (element.isEqual(this.currentPlayer)); 
-    }
-
     doAction(status: Status, amount: Number, player: Player): void {
-        if(!player.isEqual(this.currentPlayer))
+        if(player.id != this.currentPlayer) {
+            player.err = true;
             return;
+        }
         if(status == Status.Check) {
             if(player.lastBet != this.bet) {
                 player.err = true;
                 return;
             }
         } else if(status == Status.Fold) {
-            this.activePlayers.filter(this.isNotCurr);
+            let i = this.activePlayers.indexOf(this.currentPlayer);
+            this.activePlayers.splice(i, 1);
+            i = i % this.activePlayers.length;
+            this.currentPlayer = this.activePlayers[i];
+            return;
         } else if(status == Status.Raise) {
-            // do raise stuff
+            //TODO: do raise stuff
+            let i = this.activePlayers.indexOf(this.currentPlayer);
+            i = (i+1) % this.activePlayers.length;
+            this.currentPlayer = this.activePlayers[i];
         }
-
-        let aCurr = this.activePlayers.filter(this.getCurr);
-        let i = this.activePlayers.indexOf(aCurr[0]);
-        i = (i+1) % this.activePlayers.length;
-        this.currentPlayer = this.activePlayers[i];
     }
 
     dealCard() : void {
-        for(let i = 0; i < this.activePlayers.length; i++) {
-            let rnd = 0;
-            //need to unify all players into a singel player bank
+        for(let i = 0; i < this.allPlayers.length; i++) {
+            let player = this.allPlayers[i];
+            if(this.activePlayers.indexOf(player.id) != -1) {
+                let rnd = Math.floor(Math.random() * this.freeCards.length);
+                if(player.deal(this.freeCards[rnd])) {
+                    this.freeCards.splice(rnd, 1);
+                }
+            }
         }
     }
 
     static from(json: any): Game {
         let game: Game = assign(new Game(),json)
         game.openCards.map(x => Card.from(x));
+        game.freeCards.map(x => Card.from(x));
         game.allPlayers.map(x => Player.from(x));
-        game.activePlayers.map(x => Player.from(x));
-        if(game.currentPlayer != null)
-            game.currentPlayer = Player.from(game.currentPlayer);
         return game;
     }
 }
