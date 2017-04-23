@@ -63,7 +63,7 @@ export class Game {
     id: number;
     stage: Stage = Stage.Preflop;
     openCards: Card[] = [];
-    freeCards: Card[] = Card.getAll();
+    freeCards: Card[] = [];
     bet: number = 0;
     type: GameType = GameType.NoLimit;
     buyin: number = 0;
@@ -76,6 +76,9 @@ export class Game {
     allPlayers: Player[] = [];
     currentPlayer: number = null;
     activePlayers: number[] = [];
+    smallBet: number = null;
+    pot: number[] = [];
+    potPlayers: number[][] = [];
 
     constructor(id?: number,
                 league?: number,
@@ -98,19 +101,15 @@ export class Game {
     }
 
     addPlayer(player: Player): void {
-        if(this.currentPlayer == null) {
-            this.currentPlayer = player.id;
-        }
+        this.allPlayers.push(player);
     }
 
     doAction(status: Status, amount: Number, player: Player): void {
         if(player.id != this.currentPlayer) {
-            player.err = true;
             return;
         }
         if(status == Status.Check) {
             if(player.lastBet != this.bet) {
-                player.err = true;
                 return;
             }
         } else if(status == Status.Fold) {
@@ -143,15 +142,80 @@ export class Game {
                 if(player.deal(this.freeCards[rnd])) {
                     this.freeCards.splice(rnd, 1);
                 }
+                rnd = Math.floor(Math.random() * this.freeCards.length);
+                if(player.deal(this.freeCards[rnd])) {
+                    this.freeCards.splice(rnd, 1);
+                }
             }
         }
     }
 
+    startARound(): void {
+        this.freeCards = Card.getAll();
+        this.openCards = [];
+        this.allPlayers.forEach(player => {
+            player.hand = [];
+            player.lastBet = 0;
+        })
+        this.dealCardsToPlayer();
+        this.activePlayers = [];
+        this.allPlayers.map(x => this.activePlayers.push());
+        if(this.smallBet == null) {
+            this.smallBet = this.allPlayers[0].id;
+            this.currentPlayer = this.allPlayers[0].id;
+        } else {
+            this.smallBet = this.activePlayers[(this.activePlayers.indexOf(this.smallBet)+1)%this.activePlayers.length];
+        }
+        let smallBlindPlayer = this.getPlayerByID(this.currentPlayer);
+        this.currentPlayer = this.activePlayers[(this.activePlayers.indexOf(this.currentPlayer) + 1)%this.activePlayers.length];
+        let bigBlindPlayer = this.getPlayerByID(this.currentPlayer);
+        this.currentPlayer = this.activePlayers[(this.activePlayers.indexOf(this.currentPlayer) + 1)%this.activePlayers.length];
+        smallBlindPlayer.lastBet = Math.floor(this.minBet/2);
+        smallBlindPlayer.money = smallBlindPlayer.money-smallBlindPlayer.lastBet;
+        bigBlindPlayer.lastBet = this.minBet;
+        bigBlindPlayer.money = bigBlindPlayer.money-bigBlindPlayer.lastBet;
+        this.stage = Stage.Preflop;
+    }
+
+    finishARound(): void {
+        if(this.pot.length == 0) 
+            return;
+        if(this.potPlayers[0].length == 1) {
+            this.getPlayerByID(this.potPlayers[0][0]).money += this.pot[0];
+        } else {
+            let hands = this.potPlayers[0].map(id => {
+                return this.openCards.concat(this.getPlayerByID(id).hand);
+            });
+            let best = 0;
+            for(let i = 1; i < this.potPlayers[0].length; i++) {
+                if(!this.betterHand(hands[best], hands[i]))
+                    best = i;
+            }
+            this.getPlayerByID(this.potPlayers[0][best]).money += this.pot[0];
+        }
+        this.pot.splice(0,1);
+        this.potPlayers.splice(0,1);
+        this.finishARound();
+    }
+
+    betterHand(hand1: Card[], hand2: Card[]): boolean {
+        
+        return true;
+        //change to really check
+    }
+
+    getPlayerByID(id: number): Player {
+        let pList = this.allPlayers.filter(p => {return p.id == id});
+        if(pList.length == 0)
+            return null;
+        return pList[0];
+    }
+
     static from(json: any): Game {
         let game: Game = assign(new Game(),json)
-        game.openCards.map(x => Card.from(x));
-        game.freeCards.map(x => Card.from(x));
-        game.allPlayers.map(x => Player.from(x));
+        game.openCards = game.openCards.map(x => Card.from(x));
+        game.freeCards = game.freeCards.map(x => Card.from(x));
+        game.allPlayers = game.allPlayers.map(x => Player.from(x));
         return game;
     }
 }

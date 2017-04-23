@@ -16,10 +16,11 @@ export class Player {
     money: number = 0;
     playingUser: User = null;
     playingGame: Game = null;
-    err: boolean = false;
 
-    constructor(user?:User,
-                game?:Game) {
+    constructor(id?: number,
+                user?: User,
+                game?: Game) {
+        this.id = id;
         this.playingUser = user;
         this.playingGame = game;
     }
@@ -34,7 +35,7 @@ export class Player {
 
     static from(json: any): Player {
         let player: Player = assign(new Player(),json)
-        player.hand.map(x => Card.from(x));
+        player.hand = player.hand.map(x => Card.from(x));
         return player;
     }
 }
