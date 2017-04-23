@@ -84,3 +84,14 @@ export const createGame = createHandler((gc,extractor,user) =>
 export const joinGame = createHandler((gc,extractor,user) => gc.joinGame(user, extractor.number('gameId')));
 export const spectateGame = createHandler((gc,extractor,user) => gc.spectateGame(user, extractor.number('gameId')));
 export const leaveGame = createHandler((gc,extractor,user) => gc.leaveGame(user,extractor.number('gameId')));
+
+//check/fold/raise
+export const playerAction = createHandler((gc,extractor,user) => {
+  let playerID = extractor.number('playerId');
+  let game = gc.getGame(extractor.number('gameId'));
+  let player = game.getPlayerByID(extractor.number('playerId'));
+  game.doAction(player.status, player.lastBet, player);
+});
+
+//start round
+export const startRound = createHandler((gc,extractor,user) => gc.getGame(extractor.number('gameId')).startARound());

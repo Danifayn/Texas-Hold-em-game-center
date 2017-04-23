@@ -105,7 +105,7 @@ export class Game {
     }
 
     doAction(status: Status, amount: Number, player: Player): void {
-        if(player.id != this.currentPlayer) {
+        if(player.playerId != this.currentPlayer) {
             return;
         }
         if(status == Status.Check) {
@@ -137,7 +137,7 @@ export class Game {
     dealCardsToPlayer(): void {
         for(let i = 0; i < this.allPlayers.length; i++) {
             let player = this.allPlayers[i];
-            if(this.activePlayers.indexOf(player.id) != -1) {
+            if(this.activePlayers.indexOf(player.playerId) != -1) {
                 let rnd = Math.floor(Math.random() * this.freeCards.length);
                 if(player.deal(this.freeCards[rnd])) {
                     this.freeCards.splice(rnd, 1);
@@ -161,8 +161,8 @@ export class Game {
         this.activePlayers = [];
         this.allPlayers.map(x => this.activePlayers.push());
         if(this.smallBet == null) {
-            this.smallBet = this.allPlayers[0].id;
-            this.currentPlayer = this.allPlayers[0].id;
+            this.smallBet = this.allPlayers[0].playerId;
+            this.currentPlayer = this.allPlayers[0].playerId;
         } else {
             this.smallBet = this.activePlayers[(this.activePlayers.indexOf(this.smallBet)+1)%this.activePlayers.length];
         }

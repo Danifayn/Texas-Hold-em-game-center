@@ -62,6 +62,10 @@ export class GameCenter {
         return this.users[username];
     }
 
+    getGame(gameId: number): Game{
+        return this.games[gameId];
+    }
+
     // factory method to create a GameCenter instance from the json data from the db
     public static from(json: any): GameCenter{
         let gc: GameCenter = assign(new GameCenter(), json);

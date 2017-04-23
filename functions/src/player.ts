@@ -9,7 +9,7 @@ export enum Status {
 }
 
 export class Player {
-    id: number;
+    playerId: number;
     status: Status = null;
     lastBet: number = null;
     hand: Card[] = [];
@@ -20,7 +20,7 @@ export class Player {
     constructor(id?: number,
                 user?: User,
                 game?: Game) {
-        this.id = id;
+        this.playerId = id;
         this.playingUser = user;
         this.playingGame = game;
     }
