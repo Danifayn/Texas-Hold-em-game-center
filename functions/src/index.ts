@@ -84,3 +84,6 @@ export const createGame = createHandler((gc,extractor,user) =>
 export const joinGame = createHandler((gc,extractor,user) => gc.joinGame(user, extractor.number('gameId')));
 export const spectateGame = createHandler((gc,extractor,user) => gc.spectateGame(user, extractor.number('gameId')));
 export const leaveGame = createHandler((gc,extractor,user) => gc.leaveGame(user,extractor.number('gameId')));
+
+export const setDefaultLeague = createHandler((gc,extractor,user) => gc.setDefaultLeague(user,extractor.number('defaultLeague')));
+export const setUserLeague = createHandler((gc,extractor,user) => gc.setUserLeague(user,extractor.string('user'),extractor.number('league')));
