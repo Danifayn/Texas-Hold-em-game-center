@@ -2,13 +2,15 @@ import { Game } from './game';
 import * as assign from 'object.assign';
 
 export class User{
+    id: number;
     username: string;
     password: string;
     league: number = 0;
     activeGamesIds: number[] = [];
     spectatingGamesIds: number[] = [];
 
-    constructor(username?: string, password?: string) {
+    constructor(id?: number,username?: string, password?: string) {
+        this.id = id;
         this.username = username;
         this.password = password;
     }
@@ -18,7 +20,9 @@ export class User{
     }
 
     public joinGame(game: Game) {
+        console.log("entering ujg");
         this.activeGamesIds.push(game.id);
+        console.log("exiting ujg");
     }
 
     public spectateGame(game: Game) {

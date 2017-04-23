@@ -1,5 +1,6 @@
 import { User } from './user';
 import { GameCenter } from './game-center';
+import { Player } from './player';
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as assign from 'object.assign';
@@ -31,6 +32,7 @@ const createExtractor = (o: any): Extractor => ({
 
 const createHandler = (f: RequestHandler) => {
   return functions.https.onRequest((req, res) => {
+    console.log("1");
     var result;
     var error: Error;
     const onComplete = (e,commited,snapshot) => {
@@ -39,16 +41,21 @@ const createHandler = (f: RequestHandler) => {
         if(result)
           res.send(200,{result});
         else if(error)
-          res.send(400,error.message);
+          res.send(400,error.stack);
       }
     }
+    
+    console.log("2");
     return admin.database().ref('/').transaction(db => {
       if(!db) return 0;
       try{
+    console.log("3");
         const gc = GameCenter.from(db);
+    console.log("4");
         const params = assign({},req.query, req.params, req.body,req.headers);
         const extractor = createExtractor(params);
 
+    console.log("5");
         let user = null;
         if(params.username && params.password){
           user = gc.getUser(params.username);
@@ -81,7 +88,10 @@ export const createGame = createHandler((gc,extractor,user) =>
     extractor.boolean('spectatingAllowed')
   )
 );
-export const joinGame = createHandler((gc,extractor,user) => gc.joinGame(user, extractor.number('gameId')));
+export const joinGame = createHandler((gc,extractor,user) => {
+  gc.joinGame(user, extractor.number('gameId'));
+  gc.getGame(extractor.number('gameId')).addPlayer(user);
+});
 export const spectateGame = createHandler((gc,extractor,user) => gc.spectateGame(user, extractor.number('gameId')));
 export const leaveGame = createHandler((gc,extractor,user) => gc.leaveGame(user,extractor.number('gameId')));
 
@@ -90,6 +100,8 @@ export const playerAction = createHandler((gc,extractor,user) => {
   let playerID = extractor.number('playerId');
   let game = gc.getGame(extractor.number('gameId'));
   let player = game.getPlayerByID(extractor.number('playerId'));
+  player.status = extractor.number('newStatus');
+  player.lastBet = extractor.number('newBet');
   game.doAction(player.status, player.lastBet, player);
 });
 

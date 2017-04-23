@@ -1,5 +1,6 @@
 import * as assign from 'object.assign';
 import {Player, Status} from "./player";
+import {User} from "./user";
 
 export enum CardType {
     Spade,
@@ -31,6 +32,7 @@ export class Card {
     constructor() {}
 
     static from(json: any): Card {
+        console.log("3.3.3.1");
         return assign(new Card(),json);
     }
 
@@ -39,7 +41,7 @@ export class Card {
         for(let i = 0; i < 52; i++) {
             let newCard = new Card();
             newCard.number = i % 13;
-            newCard.type = i/13;
+            newCard.type = Math.floor(i/13);
             cards.push(newCard);
         }
         return cards;
@@ -79,6 +81,7 @@ export class Game {
     smallBet: number = null;
     pot: number[] = [];
     potPlayers: number[][] = [];
+    newPlayerId: number = 0;
 
     constructor(id?: number,
                 league?: number,
@@ -100,8 +103,9 @@ export class Game {
         this.spectatingAllowed = spectatingAllowed;
     }
 
-    addPlayer(player: Player): void {
-        this.allPlayers.push(player);
+    addPlayer(user: User): void {
+        this.allPlayers.push(new Player(this.newPlayerId, user, this));
+        this.newPlayerId += 1;
     }
 
     doAction(status: Status, amount: Number, player: Player): void {
@@ -112,6 +116,9 @@ export class Game {
             if(player.lastBet != this.bet) {
                 return;
             }
+            let i = this.activePlayers.indexOf(this.currentPlayer);
+            i = (i+1) % this.activePlayers.length;
+            this.currentPlayer = this.activePlayers[i];
         } else if(status == Status.Fold) {
             let i = this.activePlayers.indexOf(this.currentPlayer);
             this.activePlayers.splice(i, 1);
@@ -157,9 +164,9 @@ export class Game {
             player.hand = [];
             player.lastBet = 0;
         })
-        this.dealCardsToPlayer();
         this.activePlayers = [];
-        this.allPlayers.map(x => this.activePlayers.push());
+        this.allPlayers.map(x => this.activePlayers.push(x.playerId));
+        this.dealCardsToPlayer();
         if(this.smallBet == null) {
             this.smallBet = this.allPlayers[0].playerId;
             this.currentPlayer = this.allPlayers[0].playerId;
@@ -205,17 +212,22 @@ export class Game {
     }
 
     getPlayerByID(id: number): Player {
-        let pList = this.allPlayers.filter(p => {return p.id == id});
+        let pList = this.allPlayers.filter(p => {return p.playerId == id});
         if(pList.length == 0)
             return null;
         return pList[0];
     }
 
     static from(json: any): Game {
-        let game: Game = assign(new Game(),json)
+        console.log("3.3.1");
+        let game: Game = assign(new Game(),json);
+        console.log("3.3.2");
         game.openCards = game.openCards.map(x => Card.from(x));
+        console.log("3.3.3");
         game.freeCards = game.freeCards.map(x => Card.from(x));
+        console.log("3.3.4");
         game.allPlayers = game.allPlayers.map(x => Player.from(x));
+        console.log("3.3.5");
         return game;
     }
 }

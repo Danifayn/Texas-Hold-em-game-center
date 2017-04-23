@@ -14,15 +14,19 @@ export class Player {
     lastBet: number = null;
     hand: Card[] = [];
     money: number = 0;
-    playingUser: User = null;
-    playingGame: Game = null;
+    playingUserId: number = null;
+    playingGameId: number = null;
 
     constructor(id?: number,
                 user?: User,
                 game?: Game) {
+                    
+        console.log("~.1");
         this.playerId = id;
-        this.playingUser = user;
-        this.playingGame = game;
+        console.log("~.2");
+        if(user) this.playingUserId = user.id;
+        console.log("~.3");
+        if(game) this.playingGameId = game.id;
     }
 
     deal(c:Card): boolean {
@@ -34,8 +38,11 @@ export class Player {
     }
 
     static from(json: any): Player {
-        let player: Player = assign(new Player(),json)
+        console.log("3.3.4.1");
+        let player: Player = assign(new Player(),json);
+        console.log("3.3.4.2");
         player.hand = player.hand.map(x => Card.from(x));
+        console.log("3.3.4.3");
         return player;
     }
 }
