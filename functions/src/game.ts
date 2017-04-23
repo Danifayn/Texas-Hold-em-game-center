@@ -127,7 +127,15 @@ export class Game {
         }
     }
 
-    dealCard() : void {
+    dealCard(): void {
+        if(this.openCards.length >= 5)
+            return;
+        let rnd = Math.floor(Math.random() * this.freeCards.length);
+        this.openCards.push(this.freeCards[rnd]);
+        this.freeCards.splice(rnd, 1);
+    }
+
+    dealCardsToPlayer(): void {
         for(let i = 0; i < this.allPlayers.length; i++) {
             let player = this.allPlayers[i];
             if(this.activePlayers.indexOf(player.id) != -1) {
