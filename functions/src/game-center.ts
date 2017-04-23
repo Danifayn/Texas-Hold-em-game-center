@@ -1,8 +1,22 @@
 import { Game, GameType } from './game';
-import { User } from './user';
+import { User, Admin, ADMIN_USERNAME } from './user';
 import * as assign from 'object.assign';
 
+export const MAX_LEAGUES = 30;
+
+export const leaguesCriteria = []
+for(let i = 0; i < MAX_LEAGUES ; i++)
+    leaguesCriteria.push(i*100);
+
+export const updateLeague = (user: User) => {
+    for(let i = 0 ; i < MAX_LEAGUES - 1; i ++)
+        if(leaguesCriteria[i+1] > user)
+            user.league = i;
+}
+
 export class GameCenter {
+    private defaultLeague: number;
+    
     private users: {[username:string]: User} = {};
     private games: {[id: number]: Game} = {};
     private lastGameId = 0;
@@ -55,11 +69,25 @@ export class GameCenter {
         if(this.users[username])
             throw new Error('username already taken !');
         else 
-            this.users[username] = new User(username, password);
+            this.users[username] = new User(username, password, this.defaultLeague);
     }
 
     getUser(username: string): User{
         return this.users[username];
+    }
+
+    setDefaultLeague(user: User, league: number) {
+        if(!(user instanceof Admin))
+            throw new Error('must be an admin to use this method');
+        this.defaultLeague = league;
+    }
+
+    setUserLeague(user: User, username: string, league: number) {
+        if(!(user instanceof Admin))
+            throw new Error('must be an admin to use this method');
+        if(!this.users[username])
+            throw new Error('user not found');
+        this.users[username].setLeague(league);
     }
 
     // factory method to create a GameCenter instance from the json data from the db
@@ -67,6 +95,9 @@ export class GameCenter {
         let gc: GameCenter = assign(new GameCenter(), json);
         gc.users = Object.keys(gc.users).reduce((acc,k) => ({...acc, [k]: User.from(gc.users[k])}),{});
         gc.games = Object.keys(gc.games).reduce((acc,k) => ({...acc, [k]: Game.from(gc.games[k])}),{});
+
+        if(!gc.users[ADMIN_USERNAME])
+            gc.users[ADMIN_USERNAME] = new Admin()
         return gc;
     }
 }
