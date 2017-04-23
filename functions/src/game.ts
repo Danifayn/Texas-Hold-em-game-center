@@ -1,4 +1,5 @@
 import * as assign from 'object.assign';
+import {Player, Status} from "./player";
 
 export enum CardType {
     Spade,
@@ -27,8 +28,21 @@ export class Card {
     type: CardType = CardType.Spade;
     number: CardRank = CardRank.Ace;
 
+    constructor() {}
+
     static from(json: any): Card {
         return assign(new Card(),json);
+    }
+
+    static getAll(): Card[] {
+        let cards = [];
+        for(let i = 0; i < 52; i++) {
+            let newCard = new Card();
+            newCard.number = i % 13;
+            newCard.type = i/13;
+            cards.push(newCard);
+        }
+        return cards;
     }
 }
 
@@ -49,6 +63,7 @@ export class Game {
     id: number;
     stage: Stage = Stage.Preflop;
     openCards: Card[] = [];
+    freeCards: Card[] = Card.getAll();
     bet: number = 0;
     type: GameType = GameType.NoLimit;
     buyin: number = 0;
@@ -58,6 +73,9 @@ export class Game {
     minPlayers: number = 2;
     maxPlayers: number = 23;
     spectatingAllowed: boolean = true;
+    currentPlayer: Player = null;
+    allPlayers: Player[] = [];
+    activePlayers: Player[] = [];
 
     constructor(id?: number,
                 league?: number,
@@ -79,9 +97,54 @@ export class Game {
         this.spectatingAllowed = spectatingAllowed;
     }
 
+    addPlayer(player: Player): void {
+        if(this.currentPlayer == null) {
+            this.currentPlayer = player;
+        }
+    }
+
+    isNotCurr(element, index, array) { 
+        return (!element.isEqual(this.currentPlayer)); 
+    }
+
+    getCurr(element, index, array){ 
+        return (element.isEqual(this.currentPlayer)); 
+    }
+
+    doAction(status: Status, amount: Number, player: Player): void {
+        if(!player.isEqual(this.currentPlayer))
+            return;
+        if(status == Status.Check) {
+            if(player.lastBet != this.bet) {
+                player.err = true;
+                return;
+            }
+        } else if(status == Status.Fold) {
+            this.activePlayers.filter(this.isNotCurr);
+        } else if(status == Status.Raise) {
+            // do raise stuff
+        }
+
+        let aCurr = this.activePlayers.filter(this.getCurr);
+        let i = this.activePlayers.indexOf(aCurr[0]);
+        i = (i+1) % this.activePlayers.length;
+        this.currentPlayer = this.activePlayers[i];
+    }
+
+    dealCard() : void {
+        for(let i = 0; i < this.activePlayers.length; i++) {
+            let rnd = 0;
+            //need to unify all players into a singel player bank
+        }
+    }
+
     static from(json: any): Game {
         let game: Game = assign(new Game(),json)
         game.openCards.map(x => Card.from(x));
+        game.allPlayers.map(x => Player.from(x));
+        game.activePlayers.map(x => Player.from(x));
+        if(game.currentPlayer != null)
+            game.currentPlayer = Player.from(game.currentPlayer);
         return game;
     }
 }
