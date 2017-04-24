@@ -107,4 +107,23 @@ describe("Game Center", function() {
       gc.spectateGame(user2,gameId + 1);
     }).toThrowError();
   });
+
+  it('should allow to leave a game', ()=>{
+    gc.leaveGame(user1,gameId);
+  });
+
+  it('should allow to join a game', ()=>{
+    gc.joinGame(user2,gameId);
+  });
+
+  it('should allow to spectate a game', ()=>{
+    gc.spectateGame(user2,gameId);
+  });
+
+  it('should not allow to join twice', ()=>{
+    expect(()=>{
+      gc.joinGame(user2, gameId);
+      gc.joinGame(user2, gameId);
+    }).toThrowError();
+  });
 });
