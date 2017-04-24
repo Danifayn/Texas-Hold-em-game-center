@@ -71,7 +71,7 @@ const createHandler = (f: RequestHandler) => {
   })
 }
 
-export const register = createHandler((gc,extractor) => gc.register(extractor.string('username'),extractor.string('password')));
+export const register = createHandler((gc,extractor) => gc.register(extractor.string('username'),extractor.string('password'),extractor.string('email')));
 export const createGame = createHandler((gc,extractor,user) => 
   gc.createGame(user,
     extractor.number('gameType'),
