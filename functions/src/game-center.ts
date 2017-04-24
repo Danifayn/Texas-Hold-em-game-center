@@ -2,24 +2,13 @@ import { Game, GameType } from './game';
 import { User, Admin, ADMIN_USERNAME } from './user';
 import * as assign from 'object.assign';
 
-export const MAX_LEAGUES = 30;
-
-export const leaguesCriteria = []
-for(let i = 0; i < MAX_LEAGUES ; i++)
-    leaguesCriteria.push(i*100);
-
-export const updateLeague = (user: User) => {
-    for(let i = 0 ; i < MAX_LEAGUES - 1; i ++)
-        if(leaguesCriteria[i+1] > user)
-            user.league = i;
-}
-
 export class GameCenter {
     private defaultLeague: number;
     
     private users: {[username:string]: User} = {};
     private games: {[id: number]: Game} = {};
     private lastGameId = 0;
+    private leaguesCriteria = [100,100,100,100,100,100,100,100,100,-1/*infinity*/];
 
     createGame(user: User, 
                 gameType: GameType, 
@@ -61,6 +50,7 @@ export class GameCenter {
            throw new Error('game not found');
         this.games[gameId] = null;
         user.leaveGame(this.games[gameId]);
+        this.updateUserLeague(user);
     }
 
     register(username: string, password: string) {
@@ -88,6 +78,26 @@ export class GameCenter {
         if(!this.users[username])
             throw new Error('user not found');
         this.users[username].setLeague(league);
+    }
+
+    setLeagueCriteria(user: User, league: number, criteria: number) {
+        if(!(user instanceof Admin))
+            throw new Error('must be an admin to use this method');
+        if(!(0 <= league && league < this.leaguesCriteria.length))
+            throw new Error('league must be between 0 and 10');
+        if(criteria < 0)
+            throw new Error('criteria must be positive');
+        this.leaguesCriteria[league] = criteria
+
+        for(let username in this.users)
+            this.updateUserLeague(this.users[username]);
+    }
+
+    updateUserLeague(user: User) {
+        if(this.leaguesCriteria[user.league] > 0 && user.points > this.leaguesCriteria[user.league]){
+            user.points -= this.leaguesCriteria[user.league];
+            user.league++;
+        }
     }
 
     // factory method to create a GameCenter instance from the json data from the db

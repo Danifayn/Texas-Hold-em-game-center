@@ -87,3 +87,4 @@ export const leaveGame = createHandler((gc,extractor,user) => gc.leaveGame(user,
 
 export const setDefaultLeague = createHandler((gc,extractor,user) => gc.setDefaultLeague(user,extractor.number('defaultLeague')));
 export const setUserLeague = createHandler((gc,extractor,user) => gc.setUserLeague(user,extractor.string('user'),extractor.number('league')));
+export const setLeagueCriteria = createHandler((gc,extractor,user) => gc.setLeagueCriteria(user,extractor.number('league'),extractor.number('criteria')));
