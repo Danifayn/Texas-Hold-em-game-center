@@ -32,7 +32,6 @@ const createExtractor = (o: any): Extractor => ({
 
 const createHandler = (f: RequestHandler) => {
   return functions.https.onRequest((req, res) => {
-    console.log("1");
     var result;
     var error: Error;
     const onComplete = (e,commited,snapshot) => {
@@ -41,21 +40,17 @@ const createHandler = (f: RequestHandler) => {
         if(result)
           res.send(200,{result});
         else if(error)
-          res.send(400,error.stack);
+          res.send(400,error.message);
       }
     }
     
-    console.log("2");
     return admin.database().ref('/').transaction(db => {
       if(!db) return 0;
       try{
-    console.log("3");
         const gc = GameCenter.from(db);
-    console.log("4");
         const params = assign({},req.query, req.params, req.body,req.headers);
         const extractor = createExtractor(params);
 
-    console.log("5");
         let user = null;
         if(params.username && params.password){
           user = gc.getUser(params.username);

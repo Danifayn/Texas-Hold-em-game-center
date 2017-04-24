@@ -21,11 +21,8 @@ export class Player {
                 user?: User,
                 game?: Game) {
                     
-        console.log("~.1");
         this.playerId = id;
-        console.log("~.2");
         if(user) this.playingUser = user.username;
-        console.log("~.3");
         if(game) this.playingGameId = game.id;
     }
 
@@ -38,11 +35,8 @@ export class Player {
     }
 
     static from(json: any): Player {
-        console.log("3.3.4.1");
         let player: Player = assign(new Player(),json);
-        console.log("3.3.4.2");
         player.hand = player.hand.map(x => Card.from(x));
-        console.log("3.3.4.3");
         return player;
     }
 }

@@ -18,9 +18,7 @@ export class User{
     }
 
     public joinGame(game: Game) {
-        console.log("entering ujg");
         this.activeGamesIds.push(game.id);
-        console.log("exiting ujg");
     }
 
     public spectateGame(game: Game) {

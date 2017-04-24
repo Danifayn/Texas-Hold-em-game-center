@@ -35,7 +35,6 @@ export class Card {
     constructor() {}
 
     static from(json: any): Card {
-        console.log("3.3.3.1");
         return assign(new Card(),json);
     }
 
@@ -255,15 +254,10 @@ export class Game {
     }
 
     static from(json: any): Game {
-        console.log("3.3.1");
         let game: Game = assign(new Game(),json);
-        console.log("3.3.2");
         game.openCards = game.openCards.map(x => Card.from(x));
-        console.log("3.3.3");
         game.freeCards = game.freeCards.map(x => Card.from(x));
-        console.log("3.3.4");
         game.allPlayers = game.allPlayers.map(x => Player.from(x));
-        console.log("3.3.5");
         return game;
     }
 }
