@@ -29,6 +29,8 @@ export class GameCenter {
            throw new Error('must be logged in to use this method !');
         if(!this.games[gameId])
            throw new Error('game not found');
+        if(user.activeGamesIds.indexOf(gameId) != -1)
+           throw new Error('cannot join twice !');
         user.joinGame(this.games[gameId]);
     }
 
@@ -45,8 +47,8 @@ export class GameCenter {
            throw new Error('must be logged in to use this method !');
         if(!this.games[gameId])
            throw new Error('game not found');
-        this.games[gameId] = null;
         user.leaveGame(this.games[gameId]);
+        this.games[gameId] = null;
     }
 
     register(username: string, password: string) {
