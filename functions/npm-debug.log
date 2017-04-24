@@ -1,0 +1,48 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'run',
+1 verbose cli   'test' ]
+2 info using npm@3.10.9
+3 info using node@v6.9.2
+4 verbose run-script [ 'pretest', 'test', 'posttest' ]
+5 info lifecycle functions@~pretest: functions@
+6 silly lifecycle functions@~pretest: no script for pretest, continuing
+7 info lifecycle functions@~test: functions@
+8 verbose lifecycle functions@~test: unsafe-perm in lifecycle true
+9 verbose lifecycle functions@~test: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Projects\TexasHoldem\functions\node_modules\.bin;C:\Program Files\Haskell\bin;C:\Program Files\Haskell Platform\8.0.2\lib\extralibs\bin;C:\Program Files\Haskell Platform\8.0.2\bin;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\MATLAB\MATLAB Production Server\R2015a\runtime\win64;C:\Program Files\MATLAB\MATLAB Production Server\R2015a\bin;C:\Program Files\MATLAB\MATLAB Production Server\R2015a\polyspace\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Haskell Platform\8.0.2\mingw\bin;C:\sbt\bin;C:\Android\sdk;C:\Program Files\Java\jdk1.8.0_112;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Users\matan tsuberi\AppData\Roaming\cabal\bin;C:\Users\matan tsuberi\AppData\Roaming\local\bin;C:\Users\matan tsuberi\AppData\Local\Microsoft\WindowsApps;C:\Users\matan tsuberi\AppData\Roaming\npm;C:\Program Files (x86)\Microsoft VS Code\bin;C:\Users\matan tsuberi\AppData\Local\atom\bin
+10 verbose lifecycle functions@~test: CWD: C:\Projects\TexasHoldem\functions
+11 silly lifecycle functions@~test: Args: [ '/d /s /c', 'npm run build && jasmine' ]
+12 silly lifecycle functions@~test: Returned: code: 1  signal: null
+13 info lifecycle functions@~test: Failed to exec test script
+14 verbose stack Error: functions@ test: `npm run build && jasmine`
+14 verbose stack Exit status 1
+14 verbose stack     at EventEmitter.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\lifecycle.js:255:16)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at EventEmitter.emit (events.js:191:7)
+14 verbose stack     at ChildProcess.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\spawn.js:40:14)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at ChildProcess.emit (events.js:191:7)
+14 verbose stack     at maybeClose (internal/child_process.js:877:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
+15 verbose pkgid functions@
+16 verbose cwd C:\Projects\TexasHoldem\functions
+17 error Windows_NT 10.0.14393
+18 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "test"
+19 error node v6.9.2
+20 error npm  v3.10.9
+21 error code ELIFECYCLE
+22 error functions@ test: `npm run build && jasmine`
+22 error Exit status 1
+23 error Failed at the functions@ test script 'npm run build && jasmine'.
+23 error Make sure you have the latest version of node.js and npm installed.
+23 error If you do, this is most likely a problem with the functions package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     npm run build && jasmine
+23 error You can get information on how to open an issue for this project with:
+23 error     npm bugs functions
+23 error Or if that isn't available, you can get their info via:
+23 error     npm owner ls functions
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]
