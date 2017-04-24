@@ -83,6 +83,7 @@ export class GameCenter {
 
     getGame(gameId: number): Game{
         return this.games[gameId];
+    }
       
     setDefaultLeague(user: User, league: number) {
         if(!(user instanceof Admin))
