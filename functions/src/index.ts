@@ -101,3 +101,7 @@ export const playerAction = createHandler((gc,extractor,user) => {
 
 //start round
 export const startRound = createHandler((gc,extractor,user) => gc.getGame(extractor.number('gameId')).startARound());
+
+export const changePassword = createHandler((gc,extractor,user) => user.setPassword(extractor.string('newPassword')));
+
+export const changeEmail = createHandler((gc,extractor,user) =>  user.setEmail(extractor.string('newEmail')));

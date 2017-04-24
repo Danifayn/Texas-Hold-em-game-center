@@ -31,4 +31,12 @@ export class User{
         this.activeGamesIds = this.activeGamesIds.filter(x => x !== game.id);
         this.spectatingGamesIds = this.spectatingGamesIds.filter(x => x !== game.id);
     }
+
+    public setEmail(email: string) {
+        this.email = email;
+    }
+
+    public setPassword(password: string) {
+        this.password = password;
+    }
 }
