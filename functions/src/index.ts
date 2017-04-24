@@ -101,8 +101,7 @@ export const playerAction = createHandler((gc,extractor,user) => {
   let game = gc.getGame(extractor.number('gameId'));
   let player = game.getPlayerByID(extractor.number('playerId'));
   player.status = extractor.number('newStatus');
-  player.lastBet = extractor.number('newBet');
-  game.doAction(player.status, player.lastBet, player);
+  game.doAction(player.status, extractor.number('newBet'), player);
 });
 
 //start round
