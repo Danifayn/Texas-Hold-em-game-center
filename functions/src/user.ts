@@ -1,5 +1,6 @@
 import { Game } from './game';
 import * as assign from 'object.assign';
+import {gamePlayerLog} from "./log";
 
 export const ADMIN_USERNAME = 'admin';
 export const ADMIN_PASSWORD = 'admin';
@@ -13,6 +14,8 @@ export class User{
     activeGamesIds: number[] = [];
     spectatingGamesIds: number[] = [];
 
+    favTurns: gamePlayerLog[] = [];
+
     constructor(username?: string, password?: string, email?: string, league?: number) {
         this.username = username;
         this.password = password;
@@ -21,7 +24,10 @@ export class User{
     }
 
     static from(json: any): User {
-        return json.username === ADMIN_USERNAME && json.password === ADMIN_PASSWORD ? assign(new Admin(), json) : assign(new User(), json);
+        let user = null;
+        user = json.username === ADMIN_USERNAME && json.password === ADMIN_PASSWORD ? assign(new Admin(), json) : assign(new User(), json);
+        user.favTurns = user.favTurns.map(x => gamePlayerLog.from(x));
+        return user;
     }
 
     public joinGame(game: Game) {
@@ -46,6 +52,10 @@ export class User{
     }
     public setLeague(leauge: number) {
         this.league = leauge;
+    }
+
+    public addFave(turn: gamePlayerLog) {
+        this.favTurns.push(turn);
     }
 }
 

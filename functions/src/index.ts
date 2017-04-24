@@ -4,6 +4,7 @@ import { Player } from './player';
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as assign from 'object.assign';
+import {gamePlayerLog} from "./log";
 admin.initializeApp(functions.config().firebase);
 
 export type Extractor = {
@@ -114,3 +115,15 @@ export const changeEmail = createHandler((gc,extractor,user) =>  user.setEmail(e
 export const setDefaultLeague = createHandler((gc,extractor,user) => gc.setDefaultLeague(user,extractor.number('defaultLeague')));
 export const setUserLeague = createHandler((gc,extractor,user) => gc.setUserLeague(user,extractor.string('user'),extractor.number('league')));
 export const setLeagueCriteria = createHandler((gc,extractor,user) => gc.setLeagueCriteria(user,extractor.number('league'),extractor.number('criteria')));
+
+export const adFavTurn = createHandler((gc, extractor, user) => {
+  let Turns = gc.getGame(extractor.number('gameId')).userLogs;
+  let favTurn = null;
+  for(let i = 0; i < Turns.length; i++) {
+    if(Turns[i].logId == extractor.number('logId'))
+      favTurn = Turns[i]
+  }
+  if(favTurn == null)
+    throw new Error("The turn does not exist!!!");
+  user.favTurns.push(favTurn);
+});
