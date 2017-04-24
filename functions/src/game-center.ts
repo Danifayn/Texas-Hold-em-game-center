@@ -9,6 +9,7 @@ export class GameCenter {
     private games: {[id: number]: Game} = {};
     private lastGameId = 0;
     private leaguesCriteria = [100,100,100,100,100,100,100,100,100,-1/*infinity*/];
+    private lastUserId = 0;
 
     createGame(user: User, 
                 gameType: GameType, 
@@ -22,12 +23,14 @@ export class GameCenter {
            throw new Error('must be logged in to use this method !');
         let id = ++this.lastGameId;
         let game = new Game(id,user.league,gameType,buyin,initialChips,minBet,minPlayers,maxPlayers,spectatingAllowed);
+        game.addPlayer(user);
         this.games[id] = game;
         user.joinGame(game);
         return id;
     }
 
     joinGame(user: User, gameId: number) {
+        console.log("entering gcjg");
         if(!user)
            throw new Error('must be logged in to use this method !');
         if(!this.games[gameId])
@@ -53,19 +56,25 @@ export class GameCenter {
         this.updateUserLeague(user);
     }
 
-    register(username: string, password: string) {
+    register(username: string, password: string, email: string) {
         if(/^[a-zA-Z0-9- ]*$/.test(username) == false)
             throw new Error('username cannot contain special characters !');
         if(this.users[username])
             throw new Error('username already taken !');
-        else 
-            this.users[username] = new User(username, password, this.defaultLeague);
+        else {
+            let id = ++this.lastUserId;
+            this.users[username] = new User(username, password, email, this.defaultLeague);
+        }
     }
 
     getUser(username: string): User{
         return this.users[username];
     }
 
+    getGame(gameId: number): Game{
+        return this.games[gameId];
+    }
+      
     setDefaultLeague(user: User, league: number) {
         if(!(user instanceof Admin))
             throw new Error('must be an admin to use this method');
