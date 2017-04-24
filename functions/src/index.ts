@@ -105,3 +105,6 @@ export const startRound = createHandler((gc,extractor,user) => gc.getGame(extrac
 export const changePassword = createHandler((gc,extractor,user) => user.setPassword(extractor.string('newPassword')));
 
 export const changeEmail = createHandler((gc,extractor,user) =>  user.setEmail(extractor.string('newEmail')));
+
+export const setDefaultLeague = createHandler((gc,extractor,user) => gc.setDefaultLeague(user,extractor.number('defaultLeague')));
+export const setUserLeague = createHandler((gc,extractor,user) => gc.setUserLeague(user,extractor.string('user'),extractor.number('league')));
