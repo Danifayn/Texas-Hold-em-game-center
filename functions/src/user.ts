@@ -7,14 +7,16 @@ export const ADMIN_PASSWORD = 'admin';
 export class User{
     username: string;
     password: string;
+    email: string;
     league: number = 0;
     points: number = 0;
     activeGamesIds: number[] = [];
     spectatingGamesIds: number[] = [];
 
-    constructor(username?: string, password?: string, league?: number) {
+    constructor(username?: string, password?: string, email?: string, league?: number) {
         this.username = username;
         this.password = password;
+        this.email = email;
         if(league) this.league = league;
     }
 
@@ -35,6 +37,13 @@ export class User{
         this.spectatingGamesIds = this.spectatingGamesIds.filter(x => x !== game.id);
     }
 
+    public setEmail(email: string) {
+        this.email = email;
+    }
+
+    public setPassword(password: string) {
+        this.password = password;
+    }
     public setLeague(leauge: number) {
         this.league = leauge;
     }
