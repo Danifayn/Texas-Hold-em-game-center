@@ -1,11 +1,13 @@
 import * as assign from 'object.assign';
 import {Status, Player} from "./player";
 
-class logEntry {
+export class logEntry {
+    logId: number;
     massage: string = "log";
     timestamp: Date = null;
 
-    constructor(msg?: string, date?:Date) {
+    constructor(id?: number, msg?: string, date?:Date) {
+        this.logId = id;
         this.massage = msg;
         this.timestamp = date;
     }
@@ -16,13 +18,13 @@ class logEntry {
     }
 }
 
-class gamePlayerLog extends logEntry {
+export class gamePlayerLog extends logEntry {
     playerid: number = null;
     action: Status = null;
     raiseAmount: number = null;
 
-    constructor(player?: Player, status?: Status, amount?: number, date?:Date) {
-        super("", date);
+    constructor(id?: number, player?: Player, status?: Status, amount?: number, date?:Date) {
+        super(id, "", date);
         if(status == Status.Check) {
             this.massage = player.playingUser + " checked";
         } else if(status == Status.Fold) {
@@ -52,13 +54,13 @@ export enum logType {
     cardsToPlayer
 }
 
-class gameSystemLog extends logEntry {
+export class gameSystemLog extends logEntry {
     action: number = null;
     playerid: number = null;
     cards: string[] = null;
 
-    constructor(action?: logType, player?: Player, cards?: string[], date?: Date) {
-        super("", date);
+    constructor(id?: number, action?: logType, player?: Player, cards?: string[], date?: Date) {
+        super(id, "", date);
         this.action = action;
         if(action == logType.entering) {
             this.playerid = player.playerId;
@@ -77,9 +79,7 @@ class gameSystemLog extends logEntry {
         } else 
         if(action == logType.cardsToTable) {
             this.cards = cards;
-            this.massage = "opened ";
-            cards.forEach(x => this.massage += x + " ");
-            this.massage += "on the table";
+            this.massage = "opened "+ cards[0] + "on the table";
         }
     }
     
@@ -89,14 +89,14 @@ class gameSystemLog extends logEntry {
     }
 }
 
-class errorLog extends logEntry {
+export class errorLog extends logEntry {
     actionName: string = null;
     username: string = null;
     err: string = null;
     isCrit: boolean = null;
 
-    constructor(action?: string, user?: string, error?: string, critical?: boolean, date?: Date) {
-        super("", date);
+    constructor(id?: number, action?: string, user?: string, error?: string, critical?: boolean, date?: Date) {
+        super(id, "", date);
         this.actionName = action;
         this.username = user;
         this.isCrit = critical;
