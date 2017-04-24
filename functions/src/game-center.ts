@@ -52,14 +52,14 @@ export class GameCenter {
         user.leaveGame(this.games[gameId]);
     }
 
-    register(username: string, password: string) {
+    register(username: string, password: string, email: string) {
         if(/^[a-zA-Z0-9- ]*$/.test(username) == false)
             throw new Error('username cannot contain special characters !');
         if(this.users[username])
             throw new Error('username already taken !');
         else {
             let id = ++this.lastUserId;
-            this.users[username] = new User(username, password);
+            this.users[username] = new User(username, password, email);
         }
     }
 

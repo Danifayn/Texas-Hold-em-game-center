@@ -4,13 +4,15 @@ import * as assign from 'object.assign';
 export class User{
     username: string;
     password: string;
+    email: string;
     league: number = 0;
     activeGamesIds: number[] = [];
     spectatingGamesIds: number[] = [];
 
-    constructor(username?: string, password?: string) {
+    constructor(username?: string, password?: string, email?: string) {
         this.username = username;
         this.password = password;
+        this.email = email;
     }
 
     static from(json: any): User {
@@ -28,5 +30,13 @@ export class User{
     public leaveGame(game: Game) {
         this.activeGamesIds = this.activeGamesIds.filter(x => x !== game.id);
         this.spectatingGamesIds = this.spectatingGamesIds.filter(x => x !== game.id);
+    }
+
+    public setEmail(email: string) {
+        this.email = email;
+    }
+
+    public setPassword(password: string) {
+        this.password = password;
     }
 }

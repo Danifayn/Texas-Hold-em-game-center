@@ -71,7 +71,7 @@ const createHandler = (f: RequestHandler) => {
   })
 }
 
-export const register = createHandler((gc,extractor) => gc.register(extractor.string('username'),extractor.string('password')));
+export const register = createHandler((gc,extractor) => gc.register(extractor.string('username'),extractor.string('password'),extractor.string('email')));
 export const createGame = createHandler((gc,extractor,user) => 
   gc.createGame(user,
     extractor.number('gameType'),
@@ -101,3 +101,7 @@ export const playerAction = createHandler((gc,extractor,user) => {
 
 //start round
 export const startRound = createHandler((gc,extractor,user) => gc.getGame(extractor.number('gameId')).startARound());
+
+export const changePassword = createHandler((gc,extractor,user) => user.setPassword(extractor.string('newPassword')));
+
+export const changeEmail = createHandler((gc,extractor,user) =>  user.setEmail(extractor.string('newEmail')));
