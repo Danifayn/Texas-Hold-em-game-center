@@ -1,3 +1,4 @@
+
 import { setUserLeague, register } from './index';
 import { User, Admin } from './user';
 import { GameCenter } from './game-center';
@@ -36,11 +37,17 @@ describe("Game Center", function() {
   var gc: GameCenter;
   var admin: Admin;
   var user1: User;
+  var user2: User;
+  var gameId: number;
+
   beforeEach(()=>{
     gc = GameCenter.from({});
     admin = new Admin();
     gc.register('user1','user1','user1@email.com');
     user1 = gc.getUser('user1');
+    gc.register('user2','user2','user2@email.com');
+    user1 = gc.getUser('user2');
+    gameId = gc.createGame(user1, GameType.NoLimit, 20, 100, 10, 2, 23, false);
   })
 
   it('should not allow managing leagues for non-admin user', ()=>{
@@ -80,5 +87,24 @@ describe("Game Center", function() {
 
     gc.leaveGame(user1,gameId); // leave
     expect(user1.league).toBe(3);
+  });
+
+  it("should not allow registeration twice", () => {
+    expect(()=>{
+      gc.register('moshe','moshe');
+      gc.register('moshe','moshe');
+    }).toThrowError();
+  });
+
+  it("should not allow operation on non-existent game", () => {
+    expect(()=>{
+      gc.leaveGame(user1,gameId + 1);
+      gc.joinGame(user1,gameId + 1);
+      gc.spectateGame(user1,gameId + 1);
+
+      gc.leaveGame(user2,gameId + 1);
+      gc.joinGame(user2,gameId + 1);
+      gc.spectateGame(user2,gameId + 1);
+    }).toThrowError();
   });
 });

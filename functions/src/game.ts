@@ -1,6 +1,7 @@
 import * as assign from 'object.assign';
 import {Player, Status} from "./player";
 import {User} from "./user";
+import {gamePlayerLog, gameSystemLog, logType} from "./log";
 
 export enum CardType {
     Spade,
@@ -89,6 +90,10 @@ export class Game {
     potPlayers: number[][] = [];
     newPlayerId: number = 0;
 
+    userLogs: gamePlayerLog[] = [];
+    systemLogs : gameSystemLog[] = [];
+    logId: number = 0;
+
     constructor(id?: number,
                 league?: number,
                 gameType?: GameType,
@@ -110,7 +115,9 @@ export class Game {
     }
 
     addPlayer(user: User): void {
-        this.allPlayers.push(new Player(this.newPlayerId, user, this));
+        let newPlayer = new Player(this.newPlayerId, user, this);
+        this.allPlayers.push(newPlayer);
+        this.systemLogs.push(new gameSystemLog(++this.logId, logType.entering, newPlayer, null, new Date()));
         this.newPlayerId += 1;
     }
 
@@ -122,10 +129,12 @@ export class Game {
             if(player.lastBet != this.bet) {
                 throw new Error('You cannot check if there is a bet!');
             }
+            this.userLogs.push(new gamePlayerLog(++this.logId, player, status, null, new Date));
             let i = this.activePlayers.indexOf(this.currentPlayer);
             i = (i+1) % this.activePlayers.length;
             this.currentPlayer = this.activePlayers[i];
         } else if(status == Status.Fold) {
+            this.userLogs.push(new gamePlayerLog(++this.logId, player, status, null, new Date));
             let i = this.activePlayers.indexOf(this.currentPlayer);
             this.activePlayers.splice(i, 1);
             this.potPlayers[0].splice(i, 1);
@@ -138,6 +147,7 @@ export class Game {
             if(amount > player.money)
                 throw new Error("You cannot bet for more then you have!");
             if(this.type == GameType.Limit) {
+                let raiseSize = amount - (this.bet-player.lastBet);
                 if(this.stage == Stage.Preflop || this.stage == Stage.Flop) {
                     if(amount != this.smallBet)
                         throw new Error("You can only raise by the small bet!");
@@ -145,6 +155,7 @@ export class Game {
                     if(amount != 2 *this.smallBet)
                         throw new Error("You can only raise by twice the small bet!");
                 }
+                this.userLogs.push(new gamePlayerLog(++this.logId, player, status, raiseSize, new Date));
                 player.lastBet += amount;
                 player.money -= amount;
                 this.bet = player.lastBet;
@@ -154,6 +165,7 @@ export class Game {
                 let raiseSize = amount - (this.bet-player.lastBet);
                 if(raiseSize != 0 && raiseSize < this.minBet)
                     throw new Error("You must raise over the min bet!");
+                this.userLogs.push(new gamePlayerLog(++this.logId, player, status, raiseSize, new Date));
                 player.lastBet += amount;
                 player.money -= amount;
                 this.bet = player.lastBet;
@@ -163,6 +175,7 @@ export class Game {
                 let raiseSize = amount - (this.bet-player.lastBet);
                 if(raiseSize > this.pot[0] + (this.bet-player.lastBet))
                     throw new Error("You cannot raise for more than the pot!");
+                this.userLogs.push(new gamePlayerLog(++this.logId, player, status, raiseSize, new Date));
                 player.lastBet += amount;
                 player.money -= amount;
                 this.bet = player.lastBet;
@@ -179,6 +192,7 @@ export class Game {
             return;
         let rnd = Math.floor(Math.random() * this.freeCards.length);
         this.openCards.push(this.freeCards[rnd]);
+        this.systemLogs.push(new gameSystemLog(++this.logId, logType.cardsToTable, null, [this.freeCards[rnd].toString()], new Date()));
         this.freeCards.splice(rnd, 1);
     }
 
@@ -186,14 +200,18 @@ export class Game {
         for(let i = 0; i < this.allPlayers.length; i++) {
             let player = this.allPlayers[i];
             if(this.activePlayers.indexOf(player.playerId) != -1) {
+                let deltCards = [];
                 let rnd = Math.floor(Math.random() * this.freeCards.length);
                 if(player.deal(this.freeCards[rnd])) {
+                    deltCards.push(this.freeCards[rnd].toString());
                     this.freeCards.splice(rnd, 1);
                 }
                 rnd = Math.floor(Math.random() * this.freeCards.length);
                 if(player.deal(this.freeCards[rnd])) {
+                    deltCards.push(this.freeCards[rnd].toString());
                     this.freeCards.splice(rnd, 1);
                 }
+                this.systemLogs.push(new gameSystemLog(++this.logId, logType.cardsToPlayer, null, deltCards, new Date()));
             }
         }
     }
@@ -258,6 +276,8 @@ export class Game {
         game.openCards = game.openCards.map(x => Card.from(x));
         game.freeCards = game.freeCards.map(x => Card.from(x));
         game.allPlayers = game.allPlayers.map(x => Player.from(x));
+        game.userLogs = game.userLogs.map(x => gamePlayerLog.from(x));
+        game.systemLogs = game.systemLogs.map(x => gameSystemLog.from(x));
         return game;
     }
 }
