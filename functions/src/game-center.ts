@@ -102,7 +102,7 @@ export class GameCenter {
             this.updateUserLeague(this.users[username]);
     }
 
-    updateUserLeague(user: User) {
+    private updateUserLeague(user: User) {
         while(this.leaguesCriteria[user.league] > 0 && user.points > this.leaguesCriteria[user.league]){
             user.points -= this.leaguesCriteria[user.league];
             user.league++;

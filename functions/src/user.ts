@@ -52,3 +52,4 @@ export class User{
 export class Admin extends User {
     constructor() {super(ADMIN_USERNAME,ADMIN_PASSWORD);}
 }
+
