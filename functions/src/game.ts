@@ -181,6 +181,7 @@ export class Game {
         smallBlindPlayer.money = smallBlindPlayer.money-smallBlindPlayer.lastBet;
         bigBlindPlayer.lastBet = this.minBet;
         bigBlindPlayer.money = bigBlindPlayer.money-bigBlindPlayer.lastBet;
+        this.bet = this.minBet;
         this.stage = Stage.Preflop;
     }
 

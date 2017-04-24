@@ -59,7 +59,7 @@ export class GameCenter {
             throw new Error('username already taken !');
         else {
             let id = ++this.lastUserId;
-            this.users[username] = new User(id, username, password);
+            this.users[username] = new User(username, password);
         }
     }
 

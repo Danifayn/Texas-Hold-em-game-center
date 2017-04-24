@@ -14,7 +14,7 @@ export class Player {
     lastBet: number = null;
     hand: Card[] = [];
     money: number = 0;
-    playingUserId: number = null;
+    playingUser: string = null;
     playingGameId: number = null;
 
     constructor(id?: number,
@@ -24,7 +24,7 @@ export class Player {
         console.log("~.1");
         this.playerId = id;
         console.log("~.2");
-        if(user) this.playingUserId = user.id;
+        if(user) this.playingUser = user.username;
         console.log("~.3");
         if(game) this.playingGameId = game.id;
     }
