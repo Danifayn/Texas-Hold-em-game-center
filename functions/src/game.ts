@@ -79,6 +79,8 @@ export class Game {
         this.spectatingAllowed = spectatingAllowed;
     }
 
+    
+
     static from(json: any): Game {
         let game: Game = assign(new Game(),json)
         game.openCards.map(x => Card.from(x));
