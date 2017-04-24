@@ -46,8 +46,9 @@ const createHandler = (f: RequestHandler) => {
     
     return admin.database().ref('/').transaction(db => {
       if(!db) return 0;
+      var gc: GameCenter;
       try{
-        const gc = GameCenter.from(db);
+        gc = GameCenter.from(db);
         const params = assign({},req.query, req.params, req.body,req.headers);
         const extractor = createExtractor(params);
 
@@ -65,6 +66,8 @@ const createHandler = (f: RequestHandler) => {
       }
       catch(e){
         error = e;
+        if(gc)
+          gc.logError(e);
         return;
       }
     }, onComplete, true);
