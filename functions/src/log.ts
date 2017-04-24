@@ -93,16 +93,13 @@ export class errorLog extends logEntry {
     actionName: string = null;
     username: string = null;
     err: string = null;
-    isCrit: boolean = null;
 
-    constructor(id?: number, action?: string, user?: string, error?: string, critical?: boolean, date?: Date) {
+    constructor(id?: number, action?: string, user?: string, error?: string, date?: Date, params?: string) {
         super(id, "", date);
         this.actionName = action;
         this.username = user;
-        this.isCrit = critical;
         this.err = error;
-        if(critical) this.massage = "[CRITIACL!!!] ";
-        this.massage += user + " tried to use " + action + " and got " + error;
+        this.massage += user + " tried to use " + action + " with the params " + params + " and got " + error;
     }
     
     static from(json: any): errorLog {

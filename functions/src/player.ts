@@ -16,6 +16,7 @@ export class Player {
     money: number = 0;
     playingUser: string = null;
     playingGameId: number = null;
+    points: number = null;
 
     constructor(id?: number,
                 user?: User,
