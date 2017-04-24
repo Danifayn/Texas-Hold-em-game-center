@@ -1,5 +1,7 @@
 package step_definitions.Data;
 
+import java.util.Collection;
+
 /**
  * Created by Daniel on 21-Apr-17.
  */
@@ -55,4 +57,60 @@ public interface Bridge {
     String getUserProfilePic(String user);
 
     void changeUserInformation(String user, String fname, String lname, String profilePic);
+
+    Collection<String> listAvailableGames(String userName);
+
+    Collection<String> listAvailableSpectatableGames(String userName);
+
+    void filterPlayerGamesByPreference(String player, String preference);
+
+    void filterPlayerGamesByPotSize(String player, Integer potSize);
+
+    void filterPlayerGamesByPlayerName(String player, String playerNameToSearch);
+
+    void startGame(String gameName);
+
+    Integer getPlayerCash(String playerName);
+
+    Collection<String> getPlayerCards(String playerName, String gameName);
+
+    Integer getPlayerBet(String playerName, String gameName);
+
+    String getCurrentPlayer(String gameName);
+
+    void dealCards(String gameName);
+
+    String lastGameAction(String playerName, String gameName);
+
+    int getGamePot(String gameName);
+
+    void setPot(String gameName, Integer pot);
+
+    void raise(String playerName, Integer raise, String gameName);
+
+    void setRoundNumber(String gameName, Integer round);
+
+    void setBigBlind(String gameName, Integer blind);
+
+    void setGameType(String gameName, String gameType);
+
+    boolean entitledToPot(String playerName, String gameName);
+
+    void fold(String playerName, String gameName);
+
+    void setPlayerRequiredBet(String playerName, String gameName, Integer chips);
+
+    void check(String playerName, String gameName);
+
+    void setPlayerChipCount(String playerName, String gameName, Integer chip);
+
+    Integer getLeaguePromotionThreshold();
+
+    void setLeaguePromotionThreshold(Integer points);
+
+    String getPlayerLeague(String playerName, String league);
+
+    void changePlayerLeague(String playerName, String league);
+
+    void setDefaultLeague(String league);
 }

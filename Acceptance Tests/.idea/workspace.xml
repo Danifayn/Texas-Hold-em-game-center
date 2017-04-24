@@ -2,21 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6b877164-6245-4e9f-94eb-3d72477cacd7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/createGame.feature" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/editUserProfile.feature" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/joinGame.feature" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/leaveGames.feature" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/GameActions.feature" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/dealCards.feature" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/filterActiveGames.feature" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/leagueActions.feature" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/listActiveGames.feature" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/startGame.feature" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/step_definitions/Data/Bridge.class" afterPath="$PROJECT_DIR$/target/test-classes/step_definitions/Data/Bridge.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/step_definitions/Data/ProxyBridge.class" afterPath="$PROJECT_DIR$/target/test-classes/step_definitions/Data/ProxyBridge.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/step_definitions/stepDefinitions.class" afterPath="$PROJECT_DIR$/target/test-classes/step_definitions/stepDefinitions.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Test Results - All_Features_in__test.html" afterPath="$PROJECT_DIR$/Test Results - All_Features_in__test.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/step_definitions/Data/Bridge.java" afterPath="$PROJECT_DIR$/src/test/java/step_definitions/Data/Bridge.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/step_definitions/Data/ProxyBridge.java" afterPath="$PROJECT_DIR$/src/test/java/step_definitions/Data/ProxyBridge.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/step_definitions/stepDefinitions.java" afterPath="$PROJECT_DIR$/src/test/java/step_definitions/stepDefinitions.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsTest.iml" afterPath="$PROJECT_DIR$/wsTest.iml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -42,26 +40,6 @@
   <component name="ExportTestResults" outputFolder="$PROJECT_DIR$" openResultsInEditor="true" userTempatePath="" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="login.feature" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/login.feature">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="registration.feature" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/registration.feature">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="9" lean-forward="true" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="107" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="CucumberRunner.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/step_definitions/CucumberRunner.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -72,31 +50,64 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="stepDefinitions.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/step_definitions/stepDefinitions.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="305" column="19" lean-forward="true" selection-start-line="305" selection-start-column="19" selection-end-line="305" selection-end-column="19" />
+              <folding>
+                <element signature="e#494#526#0" expanded="false" />
+                <element signature="e#2048#2081#0" expanded="false" />
+                <element signature="e#3141#3171#0" expanded="false" />
+                <element signature="e#6498#6530#0" expanded="false" />
+                <element signature="e#7770#7801#0" expanded="false" />
+                <element signature="e#9643#9681#0" expanded="false" />
+                <element signature="e#10974#11004#0" expanded="false" />
+                <element signature="e#12093#12121#0" expanded="false" />
+                <element signature="e#12874#12893#0" expanded="false" />
+                <element signature="e#14233#14252#0" expanded="false" />
+                <element signature="e#14487#14508#0" expanded="false" />
+                <element signature="e#17421#17444#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="filterActiveGames.feature" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/filterActiveGames.feature">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="joinGame.feature" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/joinGame.feature">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameActions.feature" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/GameActions.feature">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" column="10" lean-forward="false" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="leagueActions.feature" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/leagueActions.feature">
+          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
-              <caret line="8" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="leaveGames.feature" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/leaveGames.feature">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" column="22" lean-forward="false" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="editUserProfile.feature" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/editUserProfile.feature">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="12" lean-forward="false" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+              <caret line="8" column="23" lean-forward="false" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -105,25 +116,19 @@
       <file leaf-file-name="createGame.feature" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/createGame.feature">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-238">
-              <caret line="3" column="5" lean-forward="false" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
+            <state relative-caret-position="51">
+              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="5" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stepDefinitions.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/step_definitions/stepDefinitions.java">
+      <file leaf-file-name="startGame.feature" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/startGame.feature">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="183" column="29" lean-forward="false" selection-start-line="183" selection-start-column="29" selection-end-line="183" selection-end-column="29" />
-              <folding>
-                <element signature="e#463#495#0" expanded="false" />
-                <element signature="e#2017#2050#0" expanded="false" />
-                <element signature="e#3108#3138#0" expanded="false" />
-                <element signature="e#6465#6497#0" expanded="false" />
-                <element signature="e#7737#7768#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="289">
+              <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -131,8 +136,8 @@
       <file leaf-file-name="Bridge.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/step_definitions/Data/Bridge.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="858">
-              <caret line="56" column="8" lean-forward="false" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="8" />
+            <state relative-caret-position="490">
+              <caret line="114" column="8" lean-forward="false" selection-start-line="114" selection-start-column="4" selection-end-line="114" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -141,27 +146,31 @@
       <file leaf-file-name="ProxyBridge.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/step_definitions/Data/ProxyBridge.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1564">
-              <caret line="98" column="8" lean-forward="false" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="21" />
+            <state relative-caret-position="546">
+              <caret line="205" column="8" lean-forward="false" selection-start-line="205" selection-start-column="8" selection-end-line="205" selection-end-column="20" />
               <folding>
-                <element signature="e#1235#1236#0" expanded="true" />
-                <element signature="e#1262#1263#0" expanded="true" />
-                <element signature="e#1407#1408#0" expanded="true" />
-                <element signature="e#1435#1436#0" expanded="true" />
-                <element signature="e#1779#1780#0" expanded="true" />
-                <element signature="e#1807#1808#0" expanded="true" />
-                <element signature="e#1873#1874#0" expanded="true" />
-                <element signature="e#1901#1902#0" expanded="true" />
-                <element signature="e#2089#2090#0" expanded="true" />
-                <element signature="e#2117#2118#0" expanded="true" />
-                <element signature="e#2185#2186#0" expanded="true" />
-                <element signature="e#2209#2210#0" expanded="true" />
-                <element signature="e#2473#2474#0" expanded="true" />
-                <element signature="e#2500#2501#0" expanded="true" />
-                <element signature="e#2564#2565#0" expanded="true" />
-                <element signature="e#2591#2592#0" expanded="true" />
-                <element signature="e#2657#2658#0" expanded="true" />
-                <element signature="e#2684#2685#0" expanded="true" />
+                <element signature="e#2919#2920#0" expanded="true" />
+                <element signature="e#2946#2947#0" expanded="true" />
+                <element signature="e#3040#3041#0" expanded="true" />
+                <element signature="e#3067#3068#0" expanded="true" />
+                <element signature="e#3518#3519#0" expanded="true" />
+                <element signature="e#3545#3546#0" expanded="true" />
+                <element signature="e#3643#3644#0" expanded="true" />
+                <element signature="e#3670#3671#0" expanded="true" />
+                <element signature="e#3755#3756#0" expanded="true" />
+                <element signature="e#3782#3783#0" expanded="true" />
+                <element signature="e#3851#3852#0" expanded="true" />
+                <element signature="e#3878#3879#0" expanded="true" />
+                <element signature="e#4031#4032#0" expanded="true" />
+                <element signature="e#4058#4059#0" expanded="true" />
+                <element signature="e#4118#4119#0" expanded="true" />
+                <element signature="e#4142#4143#0" expanded="true" />
+                <element signature="e#4659#4660#0" expanded="true" />
+                <element signature="e#4687#4688#0" expanded="true" />
+                <element signature="e#5137#5138#0" expanded="true" />
+                <element signature="e#5164#5165#0" expanded="true" />
+                <element signature="e#5333#5334#0" expanded="true" />
+                <element signature="e#5360#5361#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -221,10 +230,16 @@
         <option value="$PROJECT_DIR$/src/test/java/step_definitions/CucumberRunner.java" />
         <option value="$PROJECT_DIR$/src/test/leaveGame.feature" />
         <option value="$PROJECT_DIR$/src/test/f.feature" />
-        <option value="$PROJECT_DIR$/src/test/createGame.feature" />
         <option value="$PROJECT_DIR$/src/test/leaveGames.feature" />
         <option value="$PROJECT_DIR$/src/test/joinGame.feature" />
         <option value="$PROJECT_DIR$/src/test/editUserProfile.feature" />
+        <option value="$PROJECT_DIR$/src/test/filterActiveGames.feature" />
+        <option value="$PROJECT_DIR$/src/test/listActiveGames.feature" />
+        <option value="$PROJECT_DIR$/src/test/createGame.feature" />
+        <option value="$PROJECT_DIR$/src/test/startGame.feature" />
+        <option value="$PROJECT_DIR$/src/test/dealCards.feature" />
+        <option value="$PROJECT_DIR$/src/test/GameActions.feature" />
+        <option value="$PROJECT_DIR$/src/test/leagueActions.feature" />
         <option value="$PROJECT_DIR$/src/test/java/step_definitions/stepDefinitions.java" />
         <option value="$PROJECT_DIR$/src/test/java/step_definitions/Data/Bridge.java" />
         <option value="$PROJECT_DIR$/src/test/java/step_definitions/Data/ProxyBridge.java" />
@@ -415,6 +430,9 @@
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files (x86)\nodejs\node.exe" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Daniel\OneDrive\IdeaProjects\wsTest\Texas-Hold-em-game-center\Acceptance Tests\src\test" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
     </key>
@@ -923,7 +941,7 @@
       <workItem from="1492770112951" duration="605000" />
       <workItem from="1492770744970" duration="24939000" />
       <workItem from="1492869446766" duration="1325000" />
-      <workItem from="1492981456461" duration="12775000" />
+      <workItem from="1492981456461" duration="24910000" />
     </task>
     <servers />
   </component>
@@ -946,21 +964,21 @@
     <history-entry file="All_Features_in__test - 2017.04.24 at 11h 20m 16s.xml">
       <configuration name="All Features in: test" configurationId="CucumberJavaRunConfigurationType" />
     </history-entry>
-    <history-entry file="CucumberRunner - 2017.04.22 at 01h 43m 30s.xml">
-      <configuration name="CucumberRunner" configurationId="JUnit" />
+    <history-entry file="All_Features_in__test - 2017.04.24 at 23h 41m 36s.xml">
+      <configuration name="All Features in: test" configurationId="CucumberJavaRunConfigurationType" />
     </history-entry>
-    <history-entry file="Feature__registration - 2017.04.22 at 01h 49m 19s.xml">
-      <configuration name="Feature: registration" configurationId="CucumberJavaRunConfigurationType" />
+    <history-entry file="All_Features_in__test - 2017.04.24 at 23h 43m 29s.xml">
+      <configuration name="All Features in: test" configurationId="CucumberJavaRunConfigurationType" />
     </history-entry>
-    <history-entry file="Feature__registration - 2017.04.22 at 01h 49m 28s.xml">
-      <configuration name="Feature: registration" configurationId="CucumberJavaRunConfigurationType" />
+    <history-entry file="All_Features_in__test - 2017.04.25 at 00h 37m 34s.xml">
+      <configuration name="All Features in: test" configurationId="CucumberJavaRunConfigurationType" />
     </history-entry>
     <history-entry file="Feature__registration - 2017.04.22 at 01h 49m 41s.xml">
       <configuration name="Feature: registration" configurationId="CucumberJavaRunConfigurationType" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40345000" />
+    <option name="totallyTimeSpent" value="52480000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -976,7 +994,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28118393" sideWeight="0.19583334" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28118393" sideWeight="0.8041667" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28118393" sideWeight="0.8041667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1015,60 +1033,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/java/step_definitions/stepDefinitions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1207">
-          <caret line="71" column="5" lean-forward="false" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
-          <folding>
-            <element signature="e#463#495#0" expanded="false" />
-            <element signature="e#2017#2050#0" expanded="false" />
-            <element signature="e#3108#3138#0" expanded="false" />
-            <element signature="e#6465#6497#0" expanded="false" />
-            <element signature="e#7737#7768#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test Results - All_Features_in__test.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/step_definitions/Data/Bridge.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="33" lean-forward="false" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/step_definitions/Data/Driver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/step_definitions/Data/ProxyBridge.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="23" lean-forward="false" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" column="21" lean-forward="false" selection-start-line="44" selection-start-column="21" selection-end-line="44" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/registration.feature">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -1098,11 +1062,18 @@
         <state relative-caret-position="408">
           <caret line="71" column="5" lean-forward="false" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
           <folding>
-            <element signature="e#463#495#0" expanded="false" />
-            <element signature="e#2017#2050#0" expanded="false" />
-            <element signature="e#3108#3138#0" expanded="false" />
-            <element signature="e#6465#6497#0" expanded="false" />
-            <element signature="e#7737#7768#0" expanded="false" />
+            <element signature="e#494#526#0" expanded="false" />
+            <element signature="e#2048#2081#0" expanded="false" />
+            <element signature="e#3141#3171#0" expanded="false" />
+            <element signature="e#6498#6530#0" expanded="false" />
+            <element signature="e#7770#7801#0" expanded="false" />
+            <element signature="e#9643#9681#0" expanded="false" />
+            <element signature="e#10974#11004#0" expanded="false" />
+            <element signature="e#12093#12121#0" expanded="false" />
+            <element signature="e#12874#12893#0" expanded="false" />
+            <element signature="e#14233#14252#0" expanded="false" />
+            <element signature="e#14487#14508#0" expanded="false" />
+            <element signature="e#17421#17444#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1242,18 +1213,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/joinGame.feature">
+    <entry file="file://$PROJECT_DIR$/src/test/login.feature">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        <state relative-caret-position="459">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/step_definitions/CucumberRunner.java">
+    <entry file="file://$PROJECT_DIR$/src/test/editUserProfile.feature">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="8" column="16" lean-forward="false" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+        <state relative-caret-position="153">
+          <caret line="9" column="10" lean-forward="true" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
           <folding />
         </state>
       </provider>
@@ -1266,14 +1237,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/login.feature">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/registration.feature">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1282,67 +1245,134 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/editUserProfile.feature">
+    <entry file="file://$PROJECT_DIR$/src/test/listActiveGames.feature">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="12" lean-forward="false" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+        <state relative-caret-position="272">
+          <caret line="16" column="25" lean-forward="false" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/step_definitions/Data/Bridge.java">
+    <entry file="file://$PROJECT_DIR$/src/test/dealCards.feature">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="858">
-          <caret line="56" column="8" lean-forward="false" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="8" />
+        <state relative-caret-position="187">
+          <caret line="11" column="22" lean-forward="false" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/joinGame.feature">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/startGame.feature">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/filterActiveGames.feature">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/step_definitions/CucumberRunner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="8" column="16" lean-forward="false" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/createGame.feature">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-238">
-          <caret line="3" column="5" lean-forward="false" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
+        <state relative-caret-position="51">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="5" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/GameActions.feature">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="10" lean-forward="false" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/step_definitions/Data/Bridge.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="490">
+          <caret line="114" column="8" lean-forward="false" selection-start-line="114" selection-start-column="4" selection-end-line="114" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/step_definitions/stepDefinitions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="183" column="29" lean-forward="false" selection-start-line="183" selection-start-column="29" selection-end-line="183" selection-end-column="29" />
+        <state relative-caret-position="391">
+          <caret line="305" column="19" lean-forward="true" selection-start-line="305" selection-start-column="19" selection-end-line="305" selection-end-column="19" />
           <folding>
-            <element signature="e#463#495#0" expanded="false" />
-            <element signature="e#2017#2050#0" expanded="false" />
-            <element signature="e#3108#3138#0" expanded="false" />
-            <element signature="e#6465#6497#0" expanded="false" />
-            <element signature="e#7737#7768#0" expanded="false" />
+            <element signature="e#494#526#0" expanded="false" />
+            <element signature="e#2048#2081#0" expanded="false" />
+            <element signature="e#3141#3171#0" expanded="false" />
+            <element signature="e#6498#6530#0" expanded="false" />
+            <element signature="e#7770#7801#0" expanded="false" />
+            <element signature="e#9643#9681#0" expanded="false" />
+            <element signature="e#10974#11004#0" expanded="false" />
+            <element signature="e#12093#12121#0" expanded="false" />
+            <element signature="e#12874#12893#0" expanded="false" />
+            <element signature="e#14233#14252#0" expanded="false" />
+            <element signature="e#14487#14508#0" expanded="false" />
+            <element signature="e#17421#17444#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/leagueActions.feature">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="23" lean-forward="false" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/step_definitions/Data/ProxyBridge.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1564">
-          <caret line="98" column="8" lean-forward="false" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="21" />
+        <state relative-caret-position="546">
+          <caret line="205" column="8" lean-forward="false" selection-start-line="205" selection-start-column="8" selection-end-line="205" selection-end-column="20" />
           <folding>
-            <element signature="e#1235#1236#0" expanded="true" />
-            <element signature="e#1262#1263#0" expanded="true" />
-            <element signature="e#1407#1408#0" expanded="true" />
-            <element signature="e#1435#1436#0" expanded="true" />
-            <element signature="e#1779#1780#0" expanded="true" />
-            <element signature="e#1807#1808#0" expanded="true" />
-            <element signature="e#1873#1874#0" expanded="true" />
-            <element signature="e#1901#1902#0" expanded="true" />
-            <element signature="e#2089#2090#0" expanded="true" />
-            <element signature="e#2117#2118#0" expanded="true" />
-            <element signature="e#2185#2186#0" expanded="true" />
-            <element signature="e#2209#2210#0" expanded="true" />
-            <element signature="e#2473#2474#0" expanded="true" />
-            <element signature="e#2500#2501#0" expanded="true" />
-            <element signature="e#2564#2565#0" expanded="true" />
-            <element signature="e#2591#2592#0" expanded="true" />
-            <element signature="e#2657#2658#0" expanded="true" />
-            <element signature="e#2684#2685#0" expanded="true" />
+            <element signature="e#2919#2920#0" expanded="true" />
+            <element signature="e#2946#2947#0" expanded="true" />
+            <element signature="e#3040#3041#0" expanded="true" />
+            <element signature="e#3067#3068#0" expanded="true" />
+            <element signature="e#3518#3519#0" expanded="true" />
+            <element signature="e#3545#3546#0" expanded="true" />
+            <element signature="e#3643#3644#0" expanded="true" />
+            <element signature="e#3670#3671#0" expanded="true" />
+            <element signature="e#3755#3756#0" expanded="true" />
+            <element signature="e#3782#3783#0" expanded="true" />
+            <element signature="e#3851#3852#0" expanded="true" />
+            <element signature="e#3878#3879#0" expanded="true" />
+            <element signature="e#4031#4032#0" expanded="true" />
+            <element signature="e#4058#4059#0" expanded="true" />
+            <element signature="e#4118#4119#0" expanded="true" />
+            <element signature="e#4142#4143#0" expanded="true" />
+            <element signature="e#4659#4660#0" expanded="true" />
+            <element signature="e#4687#4688#0" expanded="true" />
+            <element signature="e#5137#5138#0" expanded="true" />
+            <element signature="e#5164#5165#0" expanded="true" />
+            <element signature="e#5333#5334#0" expanded="true" />
+            <element signature="e#5360#5361#0" expanded="true" />
           </folding>
         </state>
       </provider>

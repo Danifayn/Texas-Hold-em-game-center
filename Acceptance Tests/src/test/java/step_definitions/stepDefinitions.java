@@ -4,6 +4,9 @@ import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import step_definitions.Data.Bridge;
 import step_definitions.Data.Driver;
+
+import java.util.Collection;
+
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 /**
@@ -62,7 +65,7 @@ public class stepDefinitions implements En {
         });
         Given("^\"([^\"]*)\" is registered$", (String username) -> {
             // Write code here that turns the phrase above into concrete actions
-            bridge.register(username,"12345","ihopethiswontblowupatmyface@gmail.com","bob","dylan","url");
+            bridge.register(username,"12345",(int)(Math.random()*100000)+ "@gmail.com","bob","dylan","url");
         });
 
         //endregion
@@ -170,7 +173,7 @@ public class stepDefinitions implements En {
             bridge.gameSetMinimumPlayers(gameName,bridge.gameGetPlayerCount(gameName));
         });
         //endregion
-        System.out.println();
+        //region Edit User Profile definitions
         When("^\"([^\"]*)\" asks to change password and fills pw with \"([^\"]*)\" and confirmation with \"([^\"]*)\"$", (String user, String pw, String confirmPW) -> {
             bridge.changeUserPassword(user,pw,confirmPW);
         });
@@ -190,7 +193,138 @@ public class stepDefinitions implements En {
             infoChanged &= bridge.getUserProfilePic(user).equals(profilePic);
             assertTrue(infoChanged);
         });
-
+        //endregion
+        //region List all active games
+        And("^\"([^\"]*)\" has maximum players$", (String gameName) -> {
+            bridge.register("player1","12345","mail1@gmail.com","bob","dylan","url");
+            bridge.setPlayerCash("player1",100);
+            bridge.register("player2","12345","mail1@gmail.com","bob","dylan","url");
+            bridge.setPlayerCash("player1",100);
+            bridge.createGame(gameName,"limit","10","5","10","2","2","true","player1");
+            bridge.addPlayerToGame("player2",gameName);
+        });
+        Then("^only \"([^\"]*)\" is in the available games list for \"([^\"]*)\"$", (String gameName, String userName) -> {
+            Collection<String> c = bridge.listAvailableGames(userName);
+            assertTrue(c.contains(gameName) && c.size()==1);
+        });
+        Then("^only \"([^\"]*)\" is in the available spectatable games list for \"([^\"]*)\"$", (String gameName, String userName) -> {
+            Collection<String> c = bridge.listAvailableSpectatableGames(userName);
+            assertTrue(c.contains(gameName) && c.size()==1);
+        });
+        //endregion
+        //region Filter active games
+        When("^\"([^\"]*)\" filters by preference \"([^\"]*)\"$", (String player, String preference) -> {
+            bridge.filterPlayerGamesByPreference(player,preference);
+        });
+        When("^\"([^\"]*)\" filters by pot size (\\d+)$", (String player, Integer potSize) -> {
+            // Write code here that turns the phrase above into concrete actions
+            bridge.filterPlayerGamesByPotSize(player,potSize);
+        });
+        When("^\"([^\"]*)\" filters by player name \"([^\"]*)\"$", (String player, String playerNameToSearch) -> {
+            // Write code here that turns the phrase above into concrete actions
+            bridge.filterPlayerGamesByPlayerName(player,playerNameToSearch);
+        });
+        //endregion
+        //region Start game
+        And("^\"([^\"]*)\" is in \"([^\"]*)\"$", (String playerName, String gameName) -> {
+            bridge.addPlayerToGame(playerName,gameName);
+        });
+        When("^\"([^\"]*)\" starts$", (String gameName) -> {
+            // Write code here that turns the phrase above into concrete actions
+            bridge.startGame(gameName);
+        });
+        Then("^\"([^\"]*)\" has (\\d+) cash left$", (String playerName, Integer cash) -> {
+            // Write code here that turns the phrase above into concrete actions
+            assertTrue(bridge.getPlayerCash(playerName)==cash);
+        });
+        And("^\"([^\"]*)\" has (\\d+) cards in \"([^\"]*)\"$", (String playerName, Integer cardCount, String gameName) -> {
+            // Write code here that turns the phrase above into concrete actions
+            assertTrue(bridge.getPlayerCards(playerName, gameName).size()==cardCount);
+        });
+        And("^\"([^\"]*)\" has (\\d+) betted in \"([^\"]*)\"$", (String playerName, Integer betAmount, String gameName) -> {
+            assertTrue(bridge.getPlayerBet(playerName,gameName)==betAmount);
+        });
+        And("^it is \"([^\"]*)\" turn in \"([^\"]*)\"$", (String playerName, String gameName) -> {
+            assertTrue(bridge.getCurrentPlayer(gameName).equals(playerName));
+        });
+        //endregion =
+        //region Deal cards
+        When("^cards are dealt in \"([^\"]*)\"$", (String gameName) -> {
+            // Write code here that turns the phrase above into concrete actions
+            bridge.dealCards(gameName);
+        });
+        //endregion
+        //region Game Actions
+        Given("^\"([^\"]*)\" has (\\d+) chips in \"([^\"]*)\"$", (String playerName, Integer chip, String gameName) -> {
+            bridge.setPlayerChipCount(playerName,gameName,chip);
+        });
+        And("^\"([^\"]*)\" can check in \"([^\"]*)\"$", (String playerName, String gameName) -> {
+            bridge.setPlayerRequiredBet(playerName,gameName,0);
+        });
+        When("^\"([^\"]*)\" checks in \"([^\"]*)\"$", (String playerName, String gameName) -> {
+            bridge.check(playerName,gameName);
+        });
+        Then("^\"([^\"]*)\" checked in \"([^\"]*)\"$", (String playerName, String gameName) -> {
+            assertTrue(bridge.lastGameAction(playerName,gameName) == "check");
+        });
+        And("^\"([^\"]*)\" needs to add (\\d+) chips to call in \"([^\"]*)\"$", (String playerName, Integer chips, String gameName) -> {
+            bridge.setPlayerRequiredBet(playerName,gameName,chips);
+        });
+        Then("^\"([^\"]*)\" has not checked in \"([^\"]*)\"$", (String playerName, String gameName) -> {
+            assertTrue(bridge.lastGameAction(playerName,gameName) != "check");
+        });
+        When("^\"([^\"]*)\" folds in \"([^\"]*)\"$", (String playerName, String gameName) -> {
+            bridge.fold(playerName,gameName);
+        });
+        Then("^\"([^\"]*)\" not participating in pot in \"([^\"]*)\"$", (String playerName, String gameName) -> {
+            assertTrue(!bridge.entitledToPot(playerName,gameName));
+        });
+        Given("^\"([^\"]*)\" type is \"([^\"]*)\"$", (String gameName, String gameType) -> {
+            bridge.setGameType(gameName,gameType);
+        });
+        And("^big blind is (\\d+) in \"([^\"]*)\"$", (Integer blind, String gameName) -> {
+            bridge.setBigBlind(gameName,blind);
+        });
+        And("^round number is (\\d+) in \"([^\"]*)\"$", (Integer round, String gameName) -> {
+            bridge.setRoundNumber(gameName,round);
+        });
+        When("^\"([^\"]*)\" raises (\\d+) in \"([^\"]*)\"$", (String playerName, Integer raise, String gameName) -> {
+            bridge.raise(playerName,raise,gameName);
+        });
+        And("^\"([^\"]*)\" pot is (\\d+)$", (String gameName, Integer pot) -> {
+            bridge.setPot(gameName,pot);
+        });
+        Then("^\"([^\"]*)\" raised (\\d+) in \"([^\"]*)\"$", (String playerName, Integer raise, String gameName) -> {
+            assertTrue(bridge.lastGameAction(playerName,gameName) == "raise");
+        });
+        And("^pot size increased by (\\d+) in \"([^\"]*)\" from (\\d+)$", (Integer potIncrease, String gameName, Integer potSize) -> {
+            assertTrue(bridge.getGamePot(gameName) == potIncrease + potSize);
+        });
+        Then("^\"([^\"]*)\" has not raised in \"([^\"]*)\"$", (String playerName, String gameName) -> {
+            assertTrue(bridge.lastGameAction(playerName,gameName) != "raise");
+        });
+        //endregion
+        //region League Actions
+        Given("^default league is \"([^\"]*)\"$", (String league) -> {
+            // Write code here that turns the phrase above into concrete actions
+            bridge.setDefaultLeague(league);
+        });
+        And("^league moving threshold is (\\d+) points$", (Integer points) -> {
+            bridge.setLeaguePromotionThreshold(points);
+        });
+        When("^\"([^\"]*)\" is moved to \"([^\"]*)\"$", (String playerName, String league) -> {
+            bridge.changePlayerLeague(playerName,league);
+        });
+        Then("^\"([^\"]*)\" is in league \"([^\"]*)\"$", (String playerName, String league) -> {
+            assertTrue(bridge.getPlayerLeague(playerName,league).equals(league));
+        });
+        When("^league moving threshold is changed to (\\d+)$", (Integer points) -> {
+            bridge.setLeaguePromotionThreshold(points);
+        });
+        Then("^league moving threshold is now (\\d+)$", (Integer points) -> {
+            assertTrue(bridge.getLeaguePromotionThreshold() == points);
+        });
+        //endregion
 
     }
 }

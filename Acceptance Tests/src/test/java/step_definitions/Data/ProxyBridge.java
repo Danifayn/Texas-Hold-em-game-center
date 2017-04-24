@@ -1,5 +1,7 @@
 package step_definitions.Data;
 
+import java.util.Collection;
+
 /**
  * Created by Daniel on 21-Apr-17.
  */
@@ -141,6 +143,146 @@ public class ProxyBridge implements Bridge {
 
     @Override
     public void changeUserInformation(String user, String fname, String lname, String profilePic) {
+
+    }
+
+    @Override
+    public Collection<String> listAvailableGames(String userName) {
+        return null;
+    }
+
+    @Override
+    public Collection<String> listAvailableSpectatableGames(String userName) {
+        return null;
+    }
+
+    @Override
+    public void filterPlayerGamesByPreference(String player, String preference) {
+
+    }
+
+    @Override
+    public void filterPlayerGamesByPotSize(String player, Integer potSize) {
+
+    }
+
+    @Override
+    public void filterPlayerGamesByPlayerName(String player, String playerNameToSearch) {
+
+    }
+
+    @Override
+    public void startGame(String gameName) {
+
+    }
+
+    @Override
+    public Integer getPlayerCash(String playerName) {
+        return null;
+    }
+
+    @Override
+    public Collection<String> getPlayerCards(String playerName, String gameName) {
+        return null;
+    }
+
+    @Override
+    public Integer getPlayerBet(String playerName, String gameName) {
+        return null;
+    }
+
+    @Override
+    public String getCurrentPlayer(String gameName) {
+        return null;
+    }
+
+    @Override
+    public void dealCards(String gameName) {
+
+    }
+
+    @Override
+    public String lastGameAction(String playerName, String gameName) {
+        return null;
+    }
+
+    @Override
+    public int getGamePot(String gameName) {
+        return 0;
+    }
+
+    @Override
+    public void setPot(String gameName, Integer pot) {
+
+    }
+
+    @Override
+    public void raise(String playerName, Integer raise, String gameName) {
+
+    }
+
+    @Override
+    public void setRoundNumber(String gameName, Integer round) {
+
+    }
+
+    @Override
+    public void setBigBlind(String gameName, Integer blind) {
+
+    }
+
+    @Override
+    public void setGameType(String gameName, String gameType) {
+
+    }
+
+    @Override
+    public boolean entitledToPot(String playerName, String gameName) {
+        return false;
+    }
+
+    @Override
+    public void fold(String playerName, String gameName) {
+
+    }
+
+    @Override
+    public void setPlayerRequiredBet(String playerName, String gameName, Integer chips) {
+
+    }
+
+    @Override
+    public void check(String playerName, String gameName) {
+
+    }
+
+    @Override
+    public void setPlayerChipCount(String playerName, String gameName, Integer chip) {
+
+    }
+
+    @Override
+    public Integer getLeaguePromotionThreshold() {
+        return null;
+    }
+
+    @Override
+    public void setLeaguePromotionThreshold(Integer points) {
+
+    }
+
+    @Override
+    public String getPlayerLeague(String playerName, String league) {
+        return null;
+    }
+
+    @Override
+    public void changePlayerLeague(String playerName, String league) {
+
+    }
+
+    @Override
+    public void setDefaultLeague(String league) {
 
     }
 }
