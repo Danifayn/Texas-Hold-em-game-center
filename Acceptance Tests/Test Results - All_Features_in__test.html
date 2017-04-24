@@ -572,8 +572,8 @@ jQuery.cookie = function(name, value, options) {
 <body>
 <div id="container">
 <div id="header">
-<div class="time">131 ms</div>
-<h1>All Features in: test: <strong><span class="total">62 total, </span><span class="failed">17 failed, </span><span class="passed">45 passed</span></strong>
+<div class="time">210 ms</div>
+<h1>All Features in: test: <strong><span class="total">247 total, </span><span class="failed">43 failed, </span><span class="passed">204 passed</span></strong>
 </h1>
 <div id="treecontrol">
 <ul>
@@ -591,27 +591,1418 @@ jQuery.cookie = function(name, value, options) {
 <ul id="tree">
 <li xmlns="" class="level top failed open">
 <span><em class="time">
-<div class="time">131 ms</div>
-</em>Feature: Sign in system for the Texas Hold'em lobby</span>
+<div class="time">201 ms</div>
+</em>Feature: Create a texas hold'em game</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">187 ms</div>
+</em>Scenario Outline: A player successfully creates a game</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">187 ms</div>
+</em>Examples:</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">187 ms</div>
+</em>Scenario: Line: 15</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">184 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "game" with "limit" "10" "5" "3" "2" "10" "true"</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">2 ms</div>
+</em><em class="status">passed</em>Then  "game" exists as a game</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>And  "testUser" is in the game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$12(stepDefinitions.java:72)<br/>  at ✽.And &quot;testUser&quot; is in the game(createGame.feature:12)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 16</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "game" with "no limit" "100" "5" "3" "10" "10" "false"</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Then  "game" exists as a game</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>And  "testUser" is in the game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$12(stepDefinitions.java:72)<br/>  at ✽.And &quot;testUser&quot; is in the game(createGame.feature:12)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 17</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "game" with "pot limit" "100" "5" "3" "10" "10" "false"</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Then  "game" exists as a game</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>And  "testUser" is in the game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$12(stepDefinitions.java:72)<br/>  at ✽.And &quot;testUser&quot; is in the game(createGame.feature:12)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em>Scenario Outline: A player attempts to create a game but fills a field with a negative number</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em>Examples:</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 25</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "-1" "5" "3" "2" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:22)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em>Scenario: Line: 26</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "100" "-5" "3" "2" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:22)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 27</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "100" "5" "-3" "2" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:22)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 28</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "100" "5" "3" "-2" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:22)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 29</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "100" "5" "3" "2" "-10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:22)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">9 ms</div>
+</em>Scenario Outline: A player attempts to create a game but fills a number field with a word</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">9 ms</div>
+</em>Examples:</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">7 ms</div>
+</em>Scenario: Line: 37</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">7 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "one" "5" "3" "2" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:34)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 38</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "100" "five" "3" "2" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:34)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 39</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "100" "5" "three" "2" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:34)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 40</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "100" "5" "3" "two" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:34)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">2 ms</div>
+</em>Scenario: Line: 41</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">2 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "100" "5" "3" "2" "ten" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:34)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em>Scenario Outline: A player attempts to create a game but does not fill a field</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em>Examples:</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 49</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "" "5" "3" "2" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:46)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 50</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "100" "" "3" "2" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:46)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 51</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "100" "5" "" "2" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:46)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 52</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "100" "5" "3" "" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:46)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em>Scenario: Line: 53</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "100" "5" "3" "2" "" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:46)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em>Scenario Outline: A player attempts to create a game but can't afford the buy-in he set</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em>Examples:</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em>Scenario: Line: 61</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 10 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "100" "5" "3" "2" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:58)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 62</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 0 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "1" "5" "3" "2" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:58)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">2 ms</div>
+</em>Scenario Outline: A player attempts to create a game but sets up player count incorrectly</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">2 ms</div>
+</em>Examples:</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 70</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "10" "5" "3" "1" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:67)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">2 ms</div>
+</em>Scenario: Line: 71</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "10" "5" "3" "0" "10" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">2 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:67)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 72</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "Game" with "limit" "10" "5" "3" "5" "4" "true"</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "game" does not exist as a game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$22(stepDefinitions.java:114)<br/>  at ✽.Then &quot;game&quot; does not exist as a game(createGame.feature:67)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: A player attempts to create a game but a game with the same name already exists</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "game" has not been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "game" has been created</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" creates "game" with "limit" "10" "5" "3" "2" "10" "true"</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Then  "game" exists as a game</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is not in the game</span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level top failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Feature: Join game</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario Outline: Player successfully joins a game</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Examples:</span>
+<ul>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 14</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "Game" has 10 to join in the game</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" requests to join the game</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "testUser" is in the game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$12(stepDefinitions.java:72)<br/>  at ✽.Then &quot;testUser&quot; is in the game(joinGame.feature:11)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 15</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 100 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "Game" has 100 to join in the game</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" requests to join the game</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "testUser" is in the game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$12(stepDefinitions.java:72)<br/>  at ✽.Then &quot;testUser&quot; is in the game(joinGame.feature:11)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Player attempts to join a full game</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  game is full</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" requests to join the game</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Then  "testUser" is not in the game</span>
+</li>
+</ul>
+</li>
+<li class="level suite open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario Outline: Player attempts to join a game but can't pay buy-in</span>
 <ul>
 <li class="level suite open">
 <span><em class="time">
-<div class="time">131 ms</div>
-</em>Scenario Outline: Correct username/password combination sign in</span>
-<ul>
-<li class="level suite open">
-<span><em class="time">
-<div class="time">131 ms</div>
+<div class="time">0 ms</div>
 </em>Examples:</span>
 <ul>
 <li class="level suite open">
 <span><em class="time">
-<div class="time">131 ms</div>
+<div class="time">0 ms</div>
+</em>Scenario: Line: 29</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 0 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "Game" has 1 to join in the game</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" requests to join the game</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Then  "testUser" is not in the game</span>
+</li>
+</ul>
+</li>
+<li class="level suite open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Line: 30</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 10 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "Game" has 11 to join in the game</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" requests to join the game</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Then  "testUser" is not in the game</span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario: Spectator successfully joins a game</span>
+<ul>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" is registered</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "testUser" is logged in</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>Given  "testUser" has 0 cash</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  "Game" has 100 to join in the game</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And  game is full</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>When  "testUser" requests to spectate the game</span>
+</li>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">failed</em>Then  "testUser" is spectating the game</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError<br/>at org.junit.Assert.fail(Assert.java:86)<br/>  at org.junit.Assert.assertTrue(Assert.java:41)<br/>  at org.junit.Assert.assertTrue(Assert.java:52)<br/>  at step_definitions.stepDefinitions.lambda$new$19(stepDefinitions.java:102)<br/>  at ✽.Then &quot;testUser&quot; is spectating the game(joinGame.feature:37)<br/></span>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level top failed open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Feature: Sign in system for the Texas Hold'em lobby</span>
+<ul>
+<li class="level suite open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Scenario Outline: Correct username/password combination sign in</span>
+<ul>
+<li class="level suite open">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em>Examples:</span>
+<ul>
+<li class="level suite open">
+<span><em class="time">
+<div class="time">0 ms</div>
 </em>Scenario: Line: 9</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">129 ms</div>
+<div class="time">0 ms</div>
 </em><em class="status">passed</em>Given  "testUser" not logged in</span>
 </li>
 <li class="level test">
@@ -621,7 +2012,7 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">2 ms</div>
+<div class="time">0 ms</div>
 </em><em class="status">passed</em>Then  logged in as "testUser"</span>
 </li>
 </ul>
@@ -777,17 +2168,17 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level top failed open">
 <span><em class="time">
-<div class="time">0 ms</div>
+<div class="time">9 ms</div>
 </em>Feature: Registration system</span>
 <ul>
 <li class="level suite open">
 <span><em class="time">
-<div class="time">0 ms</div>
+<div class="time">1 ms</div>
 </em>Scenario Outline: A new user successfully registers to the system</span>
 <ul>
 <li class="level suite open">
 <span><em class="time">
-<div class="time">0 ms</div>
+<div class="time">1 ms</div>
 </em>Examples:</span>
 <ul>
 <li class="level suite open">
@@ -858,12 +2249,12 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level suite open">
 <span><em class="time">
-<div class="time">0 ms</div>
+<div class="time">1 ms</div>
 </em>Scenario: Line: 12</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">0 ms</div>
+<div class="time">1 ms</div>
 </em><em class="status">passed</em>Given  "testUser" not registered</span>
 </li>
 <li class="level test">
@@ -884,22 +2275,22 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level suite failed open">
 <span><em class="time">
-<div class="time">0 ms</div>
+<div class="time">8 ms</div>
 </em>Scenario Outline: An illegal email is entered while registering</span>
 <ul>
 <li class="level suite failed open">
 <span><em class="time">
-<div class="time">0 ms</div>
+<div class="time">8 ms</div>
 </em>Examples:</span>
 <ul>
 <li class="level suite failed open">
 <span><em class="time">
-<div class="time">0 ms</div>
+<div class="time">1 ms</div>
 </em>Scenario: Line: 21</span>
 <ul>
 <li class="level test">
 <span><em class="time">
-<div class="time">0 ms</div>
+<div class="time">1 ms</div>
 </em><em class="status">passed</em>Given  "testUser" not registered</span>
 </li>
 <li class="level test">
@@ -975,7 +2366,7 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level suite failed open">
 <span><em class="time">
-<div class="time">0 ms</div>
+<div class="time">1 ms</div>
 </em>Scenario: Line: 24</span>
 <ul>
 <li class="level test">
@@ -990,7 +2381,7 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test failed open">
 <span><em class="time">
-<div class="time">0 ms</div>
+<div class="time">1 ms</div>
 </em><em class="status">failed</em>Then  register as "testUser" failed</span>
 <ul>
 <li class="text">
@@ -1056,7 +2447,7 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level suite failed open">
 <span><em class="time">
-<div class="time">0 ms</div>
+<div class="time">6 ms</div>
 </em>Scenario: Line: 27</span>
 <ul>
 <li class="level test">
@@ -1066,12 +2457,12 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">0 ms</div>
+<div class="time">4 ms</div>
 </em><em class="status">passed</em>When  register is filled with: "testUser", "123", "hi my name is bob", "Bob", "Dylan", "URL"</span>
 </li>
 <li class="level test failed open">
 <span><em class="time">
-<div class="time">0 ms</div>
+<div class="time">2 ms</div>
 </em><em class="status">failed</em>Then  register as "testUser" failed</span>
 <ul>
 <li class="text">
@@ -1254,7 +2645,7 @@ jQuery.cookie = function(name, value, options) {
 </div>
 </div>
 <div id="footer">
-<p>Generated by IntelliJ IDEA on 4/22/17 1:46 AM</p>
+<p>Generated by IntelliJ IDEA on 4/24/17 11:20 AM</p>
 </div>
 </body>
 </html>
