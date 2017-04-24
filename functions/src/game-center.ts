@@ -109,7 +109,7 @@ export class GameCenter {
         }
     }
 
-    logError(e: Error) {
+    logError(url: string, params: any, e: Error) {
         
     }
 

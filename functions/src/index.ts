@@ -47,10 +47,12 @@ const createHandler = (f: RequestHandler) => {
     return admin.database().ref('/').transaction(db => {
       if(!db) return 0;
       var gc: GameCenter;
+      var params: any;
+      var extractor: Extractor;
       try{
         gc = GameCenter.from(db);
-        const params = assign({},req.query, req.params, req.body,req.headers);
-        const extractor = createExtractor(params);
+        params = assign({},req.query, req.params, req.body,req.headers);
+        extractor = createExtractor(params);
 
         let user = null;
         if(params.username && params.password){
@@ -67,7 +69,7 @@ const createHandler = (f: RequestHandler) => {
       catch(e){
         error = e;
         if(gc)
-          gc.logError(e);
+          gc.logError(req.url,params,e);
         return;
       }
     }, onComplete, true);
