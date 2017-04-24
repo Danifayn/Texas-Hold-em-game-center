@@ -109,6 +109,10 @@ export class GameCenter {
         }
     }
 
+    logError(url: string, params: any, e: Error) {
+        
+    }
+
     // factory method to create a GameCenter instance from the json data from the db
     public static from(json: any): GameCenter{
         let gc: GameCenter = assign(new GameCenter(), json);
