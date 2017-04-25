@@ -17,6 +17,7 @@ export class Player {
     playingUser: string = null;
     playingGameId: number = null;
     points: number = null;
+    isActive: boolean = true;
 
     constructor(id?: number,
                 user?: User,

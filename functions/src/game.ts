@@ -115,10 +115,20 @@ export class Game {
     }
 
     addPlayer(user: User): void {
-        let newPlayer = new Player(this.newPlayerId, user, this);
-        this.allPlayers.push(newPlayer);
-        this.systemLogs.push(new gameSystemLog(++this.logId, logType.entering, newPlayer, null, new Date()));
-        this.newPlayerId += 1;
+        let exist = false;
+        this.allPlayers.forEach(x => exist = exist || (x.playingUser == user.username));
+        if (exist) {
+            let newPlayer = new Player(this.newPlayerId, user, this);
+            this.allPlayers.push(newPlayer);
+            this.systemLogs.push(new gameSystemLog(++this.logId, logType.entering, newPlayer, null, new Date()));
+            this.newPlayerId += 1;
+        } else {
+            this.allPlayers.forEach(x => {if(x.playingUser == user.username) x.isActive == true;});
+        }
+    }
+
+    removePlayer(user: User): void {
+        this.allPlayers.forEach(x => {if(x.playingUser == user.username) x.isActive == false;});
     }
 
     doAction(status: Status, amount: number, player: Player): void {
@@ -248,7 +258,7 @@ export class Game {
             player.lastBet = 0;
         })
         this.activePlayers = [];
-        this.allPlayers.map(x => this.activePlayers.push(x.playerId));
+        this.allPlayers.map(x => {if (x.isActive) this.activePlayers.push(x.playerId);});
         this.dealCardsToPlayer();
         if(this.smallBet == null) {
             this.smallBet = this.allPlayers[0].playerId;

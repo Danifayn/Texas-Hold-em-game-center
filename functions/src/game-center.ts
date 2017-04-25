@@ -62,6 +62,7 @@ export class GameCenter {
            throw new Error('game not found');
         this.games[gameId] = null;
         user.leaveGame(this.games[gameId]);
+        this.games[gameId].removePlayer(user);
         this.updateUserLeague(user);
         this.logs.push(new logEntry(++this.logId, user.username + " left the game with id " + gameId, new Date()));
     }
