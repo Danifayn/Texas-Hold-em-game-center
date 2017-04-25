@@ -1,6 +1,7 @@
 import { Game, GameType } from './game';
 import { User, Admin, ADMIN_USERNAME } from './user';
 import * as assign from 'object.assign';
+import {errorLog, logEntry} from "./log";
 
 export class GameCenter {
     private defaultLeague: number;
@@ -10,6 +11,12 @@ export class GameCenter {
     private lastGameId = 0;
     private leaguesCriteria = [100,100,100,100,100,100,100,100,100,-1/*infinity*/];
     private lastUserId = 0;
+
+    private errorLogId: number = 0;
+    private errorLogs: errorLog[] = [];
+    private logId: number = 0;
+    private logs: logEntry[] = [];
+
 
     createGame(user: User, 
                 gameType: GameType, 
@@ -26,11 +33,11 @@ export class GameCenter {
         game.addPlayer(user);
         this.games[id] = game;
         user.joinGame(game);
+        this.logs.push(new logEntry(++this.logId, user.username + " created a game with the id " + id, new Date()));
         return id;
     }
 
     joinGame(user: User, gameId: number) {
-        console.log("entering gcjg");
         if(!user)
            throw new Error('must be logged in to use this method !');
         if(!this.games[gameId])
@@ -38,6 +45,7 @@ export class GameCenter {
         if(user.activeGamesIds.indexOf(gameId) != -1)
            throw new Error('cannot join twice !');
         user.joinGame(this.games[gameId]);
+        this.logs.push(new logEntry(++this.logId, user.username + " joind the game with id " + gameId, new Date()));
     }
 
     spectateGame(user: User, gameId: number) {
@@ -46,6 +54,7 @@ export class GameCenter {
         if(!this.games[gameId])
            throw new Error('game not found');
         user.spectateGame(this.games[gameId]);
+        this.logs.push(new logEntry(++this.logId, user.username + " spectates the game with id " + gameId, new Date()));
     }
 
     leaveGame(user: User, gameId: number) {
@@ -54,8 +63,9 @@ export class GameCenter {
         if(!this.games[gameId])
            throw new Error('game not found');
         user.leaveGame(this.games[gameId]);
-        this.games[gameId] = null;
+        this.games[gameId].removePlayer(user);
         this.updateUserLeague(user);
+        this.logs.push(new logEntry(++this.logId, user.username + " left the game with id " + gameId, new Date()));
     }
 
     register(username: string, password: string, email: string) {
@@ -67,6 +77,7 @@ export class GameCenter {
             let id = ++this.lastUserId;
             this.users[username] = new User(username, password, email, this.defaultLeague);
         }
+        this.logs.push(new logEntry(++this.logId, username + " has registered with the password " + password, new Date()));
     }
 
     getUser(username: string): User{
@@ -81,6 +92,7 @@ export class GameCenter {
         if(!(user instanceof Admin))
             throw new Error('must be an admin to use this method');
         this.defaultLeague = league;
+        this.logs.push(new logEntry(++this.logId, user.username + " has set the default league to be " + league, new Date()));
     }
 
     setUserLeague(user: User, username: string, league: number) {
@@ -89,6 +101,7 @@ export class GameCenter {
         if(!this.users[username])
             throw new Error('user not found');
         this.users[username].setLeague(league);
+        this.logs.push(new logEntry(++this.logId, user.username + " has set " + username + "s league to be" + league, new Date()));
     }
 
     setLeagueCriteria(user: User, league: number, criteria: number) {
@@ -98,7 +111,9 @@ export class GameCenter {
             throw new Error('league must be between 0 and 10');
         if(criteria < 0)
             throw new Error('criteria must be positive');
-        this.leaguesCriteria[league] = criteria
+        this.leaguesCriteria[league] = criteria;
+
+        this.logs.push(new logEntry(++this.logId, user.username + " has set " + league + " league cretiria to be " + criteria, new Date()));
 
         for(let username in this.users)
             this.updateUserLeague(this.users[username]);
@@ -108,11 +123,12 @@ export class GameCenter {
         while(this.leaguesCriteria[user.league] > 0 && user.points > this.leaguesCriteria[user.league]){
             user.points -= this.leaguesCriteria[user.league];
             user.league++;
+            this.logs.push(new logEntry(++this.logId, user.username + " league was updated to " + user.league, new Date()));
         }
     }
 
     logError(url: string, params: any, e: Error) {
-        
+        this.errorLogs.push(new errorLog(++this.errorLogId, url, params.username, e.message, new Date(), JSON.stringify(params)));
     }
 
     // factory method to create a GameCenter instance from the json data from the db

@@ -86,9 +86,9 @@ export class Game {
     currentPlayer: number = null;
     activePlayers: number[] = [];
     smallBet: number = null;
-    pot: number[] = [0];
-    potPlayers: number[][] = [];
+    pot: number = 0;
     newPlayerId: number = 0;
+    bigBlind: number = null;
 
     userLogs: gamePlayerLog[] = [];
     systemLogs : gameSystemLog[] = [];
@@ -115,10 +115,20 @@ export class Game {
     }
 
     addPlayer(user: User): void {
-        let newPlayer = new Player(this.newPlayerId, user, this);
-        this.allPlayers.push(newPlayer);
-        this.systemLogs.push(new gameSystemLog(++this.logId, logType.entering, newPlayer, null, new Date()));
-        this.newPlayerId += 1;
+        let exist = false;
+        this.allPlayers.forEach(x => exist = exist || (x.playingUser == user.username));
+        if (exist) {
+            let newPlayer = new Player(this.newPlayerId, user, this);
+            this.allPlayers.push(newPlayer);
+            this.systemLogs.push(new gameSystemLog(++this.logId, logType.entering, newPlayer, null, new Date()));
+            this.newPlayerId += 1;
+        } else {
+            this.allPlayers.forEach(x => {if(x.playingUser == user.username) x.isActive == true;});
+        }
+    }
+
+    removePlayer(user: User): void {
+        this.allPlayers.forEach(x => {if(x.playingUser == user.username) x.isActive == false;});
     }
 
     doAction(status: Status, amount: number, player: Player): void {
@@ -137,10 +147,12 @@ export class Game {
             this.userLogs.push(new gamePlayerLog(++this.logId, player, status, null, new Date));
             let i = this.activePlayers.indexOf(this.currentPlayer);
             this.activePlayers.splice(i, 1);
-            this.potPlayers[0].splice(i, 1);
             i = i % this.activePlayers.length;
             this.currentPlayer = this.activePlayers[i];
-            return;
+            if(player.playerId == this.bigBlind)
+                this.bigBlind = this.currentPlayer;
+            if(this.activePlayers.length == 1)
+                this.finishARound();
         } else if(status == Status.Raise) {
             if(amount <= 0)
                 throw new Error("You cannot raise by zero or by a negative number!");
@@ -159,7 +171,7 @@ export class Game {
                 player.lastBet += amount;
                 player.money -= amount;
                 this.bet = player.lastBet;
-                this.pot[0] += amount;
+                this.pot += amount;
             } else
             if(this.type == GameType.NoLimit) {
                 let raiseSize = amount - (this.bet-player.lastBet);
@@ -169,21 +181,43 @@ export class Game {
                 player.lastBet += amount;
                 player.money -= amount;
                 this.bet = player.lastBet;
-                this.pot[0] += amount;
+                this.pot += amount;
                 this.minBet = raiseSize;
             } else {
                 let raiseSize = amount - (this.bet-player.lastBet);
-                if(raiseSize > this.pot[0] + (this.bet-player.lastBet))
+                if(raiseSize > this.pot + (this.bet-player.lastBet))
                     throw new Error("You cannot raise for more than the pot!");
                 this.userLogs.push(new gamePlayerLog(++this.logId, player, status, raiseSize, new Date));
                 player.lastBet += amount;
                 player.money -= amount;
                 this.bet = player.lastBet;
-                this.pot[0] += amount;
+                this.pot += amount;
             }
             let i = this.activePlayers.indexOf(this.currentPlayer);
             i = (i+1) % this.activePlayers.length;
             this.currentPlayer = this.activePlayers[i];
+        }
+        if(player.playerId == this.bigBlind) {
+            let isOver = true;
+            for(let i = 0; i < this.activePlayers.length; i++) {
+                isOver = isOver && (this.getPlayerByID(this.activePlayers[i]).lastBet == this.bet);
+            }
+            if(isOver) {
+                if(this.stage == Stage.Preflop) {
+                    this.dealCard();
+                    this.dealCard();
+                    this.dealCard();
+                    this.stage = Stage.Flop;
+                } else if(this.stage == Stage.Flop) {
+                    this.dealCard();
+                    this.stage = Stage.Turn;
+                } else if(this.stage == Stage.Turn) {
+                    this.dealCard();
+                    this.stage = Stage.River;
+                } else if(this.stage == Stage.River) {
+                    this.finishARound();
+                }
+            }
         }
     }
 
@@ -224,9 +258,7 @@ export class Game {
             player.lastBet = 0;
         })
         this.activePlayers = [];
-        this.potPlayers = [[]];
-        this.allPlayers.map(x => this.activePlayers.push(x.playerId));
-        this.allPlayers.map(x => this.potPlayers[0].push(x.playerId));
+        this.allPlayers.map(x => {if (x.isActive) this.activePlayers.push(x.playerId);});
         this.dealCardsToPlayer();
         if(this.smallBet == null) {
             this.smallBet = this.allPlayers[0].playerId;
@@ -240,32 +272,47 @@ export class Game {
         this.currentPlayer = this.activePlayers[(this.activePlayers.indexOf(this.currentPlayer) + 1)%this.activePlayers.length];
         smallBlindPlayer.lastBet = Math.floor(this.minBet/2);
         smallBlindPlayer.money = smallBlindPlayer.money-smallBlindPlayer.lastBet;
-        this.pot[0] = smallBlindPlayer.lastBet;
+        this.pot = smallBlindPlayer.lastBet;
         bigBlindPlayer.lastBet = this.minBet;
         bigBlindPlayer.money = bigBlindPlayer.money-bigBlindPlayer.lastBet;
-        this.pot[0] += bigBlindPlayer.lastBet;
+        this.pot += bigBlindPlayer.lastBet;
         this.bet = this.minBet;
         this.stage = Stage.Preflop;
+        this.bigBlind = bigBlindPlayer.playerId;
     }
 
     finishARound(): void {
-        let Hand = require('pokersolver').Hand;
-        if(this.pot.length == 0) 
-            return;
-        if(this.potPlayers[0].length == 1) {
-            this.getPlayerByID(this.potPlayers[0][0]).money += this.pot[0];
+        var PokerEvaluator = require("poker-evaluator");
+        if(this.activePlayers.length == 1) {
+            this.getPlayerByID(this.activePlayers[0]).money += this.pot;
+            this.getPlayerByID(this.activePlayers[0]).points += 20;
         } else {
-            //fix this after adding functionallity
-            //check https://github.com/chenosaurus/poker-evaluator
-            this.getPlayerByID(this.potPlayers[0][0]).money += this.pot[0];
+            let evaledHands = this.activePlayers.map(pId => {
+                let hand = this.getPlayerByID(pId).hand.concat(this.openCards);
+                return PokerEvaluator.evalHand(hand.map(x => x.toString()));
+            });
+            let maxVal = -1;
+            let maxP = 0;
+            for(let i = 0; i < evaledHands.length; i++) {
+                if(evaledHands[i].value > maxVal) {
+                    maxVal = evaledHands[i].value;
+                    maxP = i;
+                }
+            }
+            this.getPlayerByID(this.activePlayers[maxP]).money += this.pot;
+            this.getPlayerByID(this.activePlayers[maxP]).points += 20;
         }
-        this.pot.splice(0,1);
-        this.potPlayers.splice(0,1);
-        this.finishARound();
     }
 
     getPlayerByID(id: number): Player {
         let pList = this.allPlayers.filter(p => {return p.playerId == id});
+        if(pList.length == 0)
+            return null;
+        return pList[0];
+    }
+
+    getPlayerByUsername(name: string): Player {
+        let pList = this.allPlayers.filter(p => {return p.playingUser == name});
         if(pList.length == 0)
             return null;
         return pList[0];
