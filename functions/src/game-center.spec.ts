@@ -3,6 +3,7 @@ import { setUserLeague, register } from './index';
 import { User, Admin } from './user';
 import { GameCenter } from './game-center';
 import { Game, GameType } from "./game";
+import {gamePlayerLog} from "./log";
 /// <reference path="../typings/globals/jasmine/index.d.ts" />
 
 class UserStub implements User {
@@ -13,6 +14,7 @@ class UserStub implements User {
   points: number;
   activeGamesIds: number[];
   spectatingGamesIds: number[];
+  favTurns: gamePlayerLog[] = [];
   public joinGame(game: Game): void {
     throw new Error('Method not implemented.');
   }
@@ -29,6 +31,9 @@ class UserStub implements User {
     throw new Error('Method not implemented.');
   }
   public setLeague(leauge: number): void {
+    throw new Error('Method not implemented.');
+  }
+  public addFave(turn: gamePlayerLog) {
     throw new Error('Method not implemented.');
   }
 }
@@ -91,8 +96,8 @@ describe("Game Center", function() {
 
   it("should not allow registeration twice", () => {
     expect(()=>{
-      gc.register('moshe','moshe');
-      gc.register('moshe','moshe');
+      gc.register('moshe','moshe','mail@someMail.com');
+      gc.register('moshe','moshe','mail@someMail.com');
     }).toThrowError();
   });
 
