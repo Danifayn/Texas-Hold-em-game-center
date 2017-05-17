@@ -46,4 +46,8 @@ Other  way to checkout:
 
 # Acceptance Tests
 ## Acceptance Tests with Cucumber
-link to guid: `https://semaphoreci.com/community/tutorials/introduction-to-writing-acceptance-tests-with-cucumber`
+1. Go to VSCode.
+2. Press `Ctrl+Shift+X`
+3. Enter `Cucumber` in the search bar
+4. Click install.
+5. After installing, restart VSCode.
