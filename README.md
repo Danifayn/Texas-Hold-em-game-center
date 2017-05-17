@@ -50,4 +50,4 @@ Other  way to checkout:
 2. Press `Ctrl+Shift+X`
 3. Enter `Cucumber` in the search bar
 4. Click install.
-5. After installing, restart VSCode.
+5. After installing, click on `reload`.
