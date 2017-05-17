@@ -43,3 +43,7 @@ Basically you need to know two things:
 Other  way to checkout:
 1. Click on the name branch at the left bottom of the screen.
 2. Choose the wanted branch.
+
+# Acceptance Tests
+## Acceptance Tests with Cucumber
+link to guid: `https://semaphoreci.com/community/tutorials/introduction-to-writing-acceptance-tests-with-cucumber`
