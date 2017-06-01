@@ -6,7 +6,7 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as assign from 'object.assign';
 import {gamePlayerLog} from "./log";
-import * as SL from "./sl"
+import * as SL from "./serviceLayer"
 admin.initializeApp(functions.config().firebase);
 
 export const register = createHandler((gc,extractor) => SL.register(gc, extractor.string('username'),extractor.string('password'),extractor.string('email')));
