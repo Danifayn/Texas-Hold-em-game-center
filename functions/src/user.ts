@@ -16,11 +16,13 @@ export class User{
 
     favTurns: gamePlayerLog[] = [];
 
-    constructor(username?: string, password?: string, email?: string, league?: number) {
+    constructor(username?: string, password?: string, email?: string, league?: number, points?: number) {
         this.username = username;
         this.password = password;
         this.email = email;
         if(league) this.league = league;
+        if(points) this.points = points;
+        else this.points = 0;
     }
 
     static from(json: any): User {
@@ -40,8 +42,8 @@ export class User{
 
     public leaveGame(game: Game) {
         this.points += game.getPlayerByUsername(this.username).points;
-        this.activeGamesIds = this.activeGamesIds.filter(x => x !== game.id);
-        this.spectatingGamesIds = this.spectatingGamesIds.filter(x => x !== game.id);
+        this.activeGamesIds = this.activeGamesIds.filter(x => x != game.id);
+        this.spectatingGamesIds = this.spectatingGamesIds.filter(x => x != game.id);
     }
 
     public setEmail(email: string) {

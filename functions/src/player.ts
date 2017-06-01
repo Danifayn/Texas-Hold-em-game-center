@@ -16,7 +16,7 @@ export class Player {
     money: number = 0;
     playingUser: string = null;
     playingGameId: number = null;
-    points: number = null;
+    points: number = 0;
     isActive: boolean = true;
 
     constructor(id?: number,
@@ -26,10 +26,11 @@ export class Player {
         this.playerId = id;
         if(user) this.playingUser = user.username;
         if(game) this.playingGameId = game.id;
+        this.points = 0;
     }
 
     deal(c:Card): boolean {
-        if(this.hand.length < 5) {
+        if(this.hand.length < 2) {
             this.hand.push(c);
             return true;
         }

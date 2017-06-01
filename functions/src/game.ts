@@ -26,8 +26,8 @@ export enum CardRank {
     King,
 }
 
-const cardName = ['A', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'];
-const cardType = ['s', 'c', 'h', 'd'];
+export const cardName = ['A', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'];
+export const cardType = ['s', 'c', 'h', 'd'];
 
 export class Card {
     type: CardType = CardType.Spade;
@@ -68,7 +68,7 @@ export enum GameType {
     PotLimit
 }
 
-export class Game {
+export abstract class Game {
     id: number;
     stage: Stage = Stage.Preflop;
     openCards: Card[] = [];
@@ -112,13 +112,15 @@ export class Game {
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
         this.spectatingAllowed = spectatingAllowed;
+        this.newPlayerId = 0;
     }
 
     addPlayer(user: User): void {
         let exist = false;
-        this.allPlayers.forEach(x => exist = exist || (x.playingUser == user.username));
-        if (exist) {
+        this.allPlayers.forEach(x => exist = (exist || (x.playingUser == user.username)));
+        if (!exist) {
             let newPlayer = new Player(this.newPlayerId, user, this);
+            newPlayer.money = this.initialChips;
             this.allPlayers.push(newPlayer);
             this.systemLogs.push(new gameSystemLog(++this.logId, logType.entering, newPlayer, null, new Date()));
             this.newPlayerId += 1;
@@ -128,7 +130,7 @@ export class Game {
     }
 
     removePlayer(user: User): void {
-        this.allPlayers.forEach(x => {if(x.playingUser == user.username) x.isActive == false;});
+        this.allPlayers.forEach(x => {if(x.playingUser == user.username) x.isActive = false;});
     }
 
     doAction(status: Status, amount: number, player: Player): void {
@@ -136,66 +138,11 @@ export class Game {
             throw new Error('Not your turn!');
         }
         if(status == Status.Check) {
-            if(player.lastBet != this.bet) {
-                throw new Error('You cannot check if there is a bet!');
-            }
-            this.userLogs.push(new gamePlayerLog(++this.logId, player, status, null, new Date));
-            let i = this.activePlayers.indexOf(this.currentPlayer);
-            i = (i+1) % this.activePlayers.length;
-            this.currentPlayer = this.activePlayers[i];
+            this.doCheck(player);
         } else if(status == Status.Fold) {
-            this.userLogs.push(new gamePlayerLog(++this.logId, player, status, null, new Date));
-            let i = this.activePlayers.indexOf(this.currentPlayer);
-            this.activePlayers.splice(i, 1);
-            i = i % this.activePlayers.length;
-            this.currentPlayer = this.activePlayers[i];
-            if(player.playerId == this.bigBlind)
-                this.bigBlind = this.currentPlayer;
-            if(this.activePlayers.length == 1)
-                this.finishARound();
+            this.doFold(player);
         } else if(status == Status.Raise) {
-            if(amount <= 0)
-                throw new Error("You cannot raise by zero or by a negative number!");
-            if(amount > player.money)
-                throw new Error("You cannot bet for more then you have!");
-            if(this.type == GameType.Limit) {
-                let raiseSize = amount - (this.bet-player.lastBet);
-                if(this.stage == Stage.Preflop || this.stage == Stage.Flop) {
-                    if(amount != this.smallBet)
-                        throw new Error("You can only raise by the small bet!");
-                } else {
-                    if(amount != 2 *this.smallBet)
-                        throw new Error("You can only raise by twice the small bet!");
-                }
-                this.userLogs.push(new gamePlayerLog(++this.logId, player, status, raiseSize, new Date));
-                player.lastBet += amount;
-                player.money -= amount;
-                this.bet = player.lastBet;
-                this.pot += amount;
-            } else
-            if(this.type == GameType.NoLimit) {
-                let raiseSize = amount - (this.bet-player.lastBet);
-                if(raiseSize != 0 && raiseSize < this.minBet)
-                    throw new Error("You must raise over the min bet!");
-                this.userLogs.push(new gamePlayerLog(++this.logId, player, status, raiseSize, new Date));
-                player.lastBet += amount;
-                player.money -= amount;
-                this.bet = player.lastBet;
-                this.pot += amount;
-                this.minBet = raiseSize;
-            } else {
-                let raiseSize = amount - (this.bet-player.lastBet);
-                if(raiseSize > this.pot + (this.bet-player.lastBet))
-                    throw new Error("You cannot raise for more than the pot!");
-                this.userLogs.push(new gamePlayerLog(++this.logId, player, status, raiseSize, new Date));
-                player.lastBet += amount;
-                player.money -= amount;
-                this.bet = player.lastBet;
-                this.pot += amount;
-            }
-            let i = this.activePlayers.indexOf(this.currentPlayer);
-            i = (i+1) % this.activePlayers.length;
-            this.currentPlayer = this.activePlayers[i];
+            this.doRaise(player, amount);
         }
         if(player.playerId == this.bigBlind) {
             let isOver = true;
@@ -221,6 +168,43 @@ export class Game {
         }
     }
 
+    doCheck(player: Player) : void {
+        if(player.lastBet != this.bet) {
+                throw new Error('You cannot check if there is a bet!');
+            }
+            this.userLogs.push(new gamePlayerLog(++this.logId, player, Status.Check, null, new Date));
+            let i = this.activePlayers.indexOf(this.currentPlayer);
+            i = (i+1) % this.activePlayers.length;
+            this.currentPlayer = this.activePlayers[i];
+    }
+
+    doFold(player: Player) : void {
+            this.userLogs.push(new gamePlayerLog(++this.logId, player, Status.Fold, null, new Date));
+            let i = this.activePlayers.indexOf(this.currentPlayer);
+            this.activePlayers.splice(i, 1);
+            i = i % this.activePlayers.length;
+            this.currentPlayer = this.activePlayers[i];
+            if(player.playerId == this.bigBlind)
+                this.bigBlind = this.currentPlayer;
+            if(this.activePlayers.length == 1)
+                this.finishARound();
+    }
+
+    doRaise(player: Player, amount: number) : void {
+            if(amount <= 0)
+                throw new Error("You cannot raise by zero or by a negative number!");
+            if(amount > player.money)
+                throw new Error("You cannot bet for more then you have!");
+
+            this.doRaiseBody(player, amount);
+
+            let i = this.activePlayers.indexOf(this.currentPlayer);
+            i = (i+1) % this.activePlayers.length;
+            this.currentPlayer = this.activePlayers[i];
+    }
+
+    abstract doRaiseBody(player: Player, amount: number) : void;
+
     dealCard(): void {
         if(this.openCards.length >= 5)
             return;
@@ -245,7 +229,7 @@ export class Game {
                     deltCards.push(this.freeCards[rnd].toString());
                     this.freeCards.splice(rnd, 1);
                 }
-                this.systemLogs.push(new gameSystemLog(++this.logId, logType.cardsToPlayer, null, deltCards, new Date()));
+                this.systemLogs.push(new gameSystemLog(++this.logId, logType.cardsToPlayer, player, deltCards, new Date()));
             }
         }
     }
@@ -317,9 +301,117 @@ export class Game {
             return null;
         return pList[0];
     }
-
+    
     static from(json: any): Game {
-        let game: Game = assign(new Game(),json);
+        let game: Game = assign(new limitGame(),json);
+        game.openCards = game.openCards.map(x => Card.from(x));
+        game.freeCards = game.freeCards.map(x => Card.from(x));
+        game.allPlayers = game.allPlayers.map(x => Player.from(x));
+        game.userLogs = game.userLogs.map(x => gamePlayerLog.from(x));
+        game.systemLogs = game.systemLogs.map(x => gameSystemLog.from(x));
+        return game;
+    }
+}
+
+export class limitGame extends Game {
+    constructor(id?: number,
+                league?: number,
+                buyin?: number,
+                initialChips?: number,
+                minBet?: number,
+                minPlayers?: number,
+                maxPlayers?: number,
+                spectatingAllowed?: boolean) {
+        super(id, league, GameType.Limit, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
+    }
+
+    doRaiseBody(player: Player, amount: number) {
+                let raiseSize = amount - (this.bet-player.lastBet);
+                if(this.stage == Stage.Preflop || this.stage == Stage.Flop) {
+                    if(raiseSize != this.minBet && raiseSize != 0)
+                        throw new Error("You can only raise by the small bet!");
+                } else {
+                    if(raiseSize != 2 *this.minBet && raiseSize != 0)
+                        throw new Error("You can only raise by twice the small bet!");
+                }
+                this.userLogs.push(new gamePlayerLog(++this.logId, player, Status.Raise, raiseSize, new Date));
+                player.lastBet += amount;
+                player.money -= amount;
+                this.bet = player.lastBet;
+                this.pot += amount;
+    }
+    
+    static from(json: any): Game {
+        let game: Game = assign(new noLimitGame(),json);
+        game.openCards = game.openCards.map(x => Card.from(x));
+        game.freeCards = game.freeCards.map(x => Card.from(x));
+        game.allPlayers = game.allPlayers.map(x => Player.from(x));
+        game.userLogs = game.userLogs.map(x => gamePlayerLog.from(x));
+        game.systemLogs = game.systemLogs.map(x => gameSystemLog.from(x));
+        return game;
+    }
+}
+
+export class noLimitGame extends Game {
+    constructor(id?: number,
+                league?: number,
+                buyin?: number,
+                initialChips?: number,
+                minBet?: number,
+                minPlayers?: number,
+                maxPlayers?: number,
+                spectatingAllowed?: boolean) {
+        super(id, league, GameType.NoLimit, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
+    }
+
+    doRaiseBody(player: Player, amount: number) {
+                let raiseSize = amount - (this.bet-player.lastBet);
+                if(raiseSize != 0 && raiseSize < this.minBet)
+                    throw new Error("You must raise over the min bet!");
+                this.userLogs.push(new gamePlayerLog(++this.logId, player, Status.Raise, raiseSize, new Date));
+                player.lastBet += amount;
+                player.money -= amount;
+                this.bet = player.lastBet;
+                this.pot += amount;
+                this.minBet = raiseSize;
+    }
+    
+    static from(json: any): Game {
+        let game: Game = assign(new noLimitGame(),json);
+        game.openCards = game.openCards.map(x => Card.from(x));
+        game.freeCards = game.freeCards.map(x => Card.from(x));
+        game.allPlayers = game.allPlayers.map(x => Player.from(x));
+        game.userLogs = game.userLogs.map(x => gamePlayerLog.from(x));
+        game.systemLogs = game.systemLogs.map(x => gameSystemLog.from(x));
+        return game;
+    }
+}
+
+export class potLimitGame extends Game {
+    constructor(id?: number,
+                league?: number,
+                buyin?: number,
+                initialChips?: number,
+                minBet?: number,
+                minPlayers?: number,
+                maxPlayers?: number,
+                spectatingAllowed?: boolean) {
+        super(id, league, GameType.PotLimit, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
+    }
+
+    doRaiseBody(player: Player, amount: number) {
+                let raiseSize = amount - (this.bet-player.lastBet);
+                if(raiseSize > this.pot + (this.bet-player.lastBet))
+                    throw new Error("You cannot raise for more than the pot!");
+                this.userLogs.push(new gamePlayerLog(++this.logId, player, Status.Raise, raiseSize, new Date));
+                player.lastBet += amount;
+                player.money -= amount;
+                this.bet = player.lastBet;
+                this.pot += amount;
+    }
+    
+    static from(json: any): Game {
+        let game: Game = assign(new noLimitGame(),json);
         game.openCards = game.openCards.map(x => Card.from(x));
         game.freeCards = game.freeCards.map(x => Card.from(x));
         game.allPlayers = game.allPlayers.map(x => Player.from(x));
