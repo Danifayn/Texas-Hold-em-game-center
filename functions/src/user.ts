@@ -2,9 +2,6 @@ import { Game } from './game';
 import * as assign from 'object.assign';
 import {gamePlayerLog} from "./log";
 
-export const ADMIN_USERNAME = 'admin';
-export const ADMIN_PASSWORD = 'admin';
-
 export class User{
     username: string;
     password: string;
@@ -25,7 +22,7 @@ export class User{
 
     static from(json: any): User {
         let user = null;
-        user = json.username === ADMIN_USERNAME && json.password === ADMIN_PASSWORD ? assign(new Admin(), json) : assign(new User(), json);
+        user = assign(new User(), json);
         user.favTurns = user.favTurns.map(x => gamePlayerLog.from(x));
         return user;
     }
@@ -54,9 +51,5 @@ export class User{
     public setLeague(leauge: number) {
         this.league = leauge;
     }
-}
-
-export class Admin extends User {
-    constructor() {super(ADMIN_USERNAME,ADMIN_PASSWORD);}
 }
 

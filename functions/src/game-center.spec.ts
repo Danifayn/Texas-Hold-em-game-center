@@ -1,6 +1,6 @@
 /// <reference path="../typings/globals/jasmine/index.d.ts" />
 import { setUserLeague, register } from './index';
-import { User, Admin } from './user';
+import { User } from './user';
 import { GameCenter } from './game-center';
 import { Game, GameType } from "./game";
 import {gamePlayerLog} from "./log";
@@ -8,7 +8,6 @@ import {UserMock} from "./stubs/userMock";
 
 describe("Game Center", function() {
   var gc: GameCenter;
-  var admin: Admin;
   var user1: User;
   var user2: User;
   var mUser: UserMock;
@@ -16,7 +15,6 @@ describe("Game Center", function() {
 
   beforeEach(()=>{
     gc = GameCenter.from({});
-    admin = new Admin();
     gc.register('user1','user1','user1@email.com');
     user1 = gc.getUser('user1');
     gc.register('user2','user2','user2@email.com');

@@ -1,5 +1,5 @@
 import { Game, GameType, limitGame, noLimitGame, potLimitGame } from './game';
-import { User, Admin, ADMIN_USERNAME } from './user';
+import { User } from './user';
 import * as assign from 'object.assign';
 import {errorLog, logEntry} from "./log";
 
@@ -173,8 +173,6 @@ export class GameCenter {
         gc.users = Object.keys(gc.users).reduce((acc,k) => ({...acc, [k]: User.from(gc.users[k])}),{});
         gc.games = Object.keys(gc.games).reduce((acc,k) => ({...acc, [k]: Game.from(gc.games[k])}),{});
 
-        if(!gc.users[ADMIN_USERNAME])
-            gc.users[ADMIN_USERNAME] = new Admin()
         return gc;
     }
 }
