@@ -1,5 +1,5 @@
-import { createExtractor } from './service';
 /// <reference path="../typings/globals/jasmine/index.d.ts" />
+import { createExtractor } from './service';
 
 describe("Extractor", function() {
     it('should retreive params correctly',()=>{

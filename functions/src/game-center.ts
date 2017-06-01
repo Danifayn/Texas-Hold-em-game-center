@@ -1,4 +1,4 @@
-import { Game, GameType } from './game';
+import { Game, GameType, limitGame, noLimitGame, potLimitGame } from './game';
 import { User, Admin, ADMIN_USERNAME } from './user';
 import * as assign from 'object.assign';
 import {errorLog, logEntry} from "./log";
@@ -29,7 +29,15 @@ export class GameCenter {
         if(!user)
            throw new Error('must be logged in to use this method !');
         let id = ++this.lastGameId;
-        let game = new Game(id,user.league,gameType,buyin,initialChips,minBet,minPlayers,maxPlayers,spectatingAllowed);
+        let game = null;
+        if(gameType == GameType.Limit)
+            game = new limitGame(id,user.league,buyin,initialChips,minBet,minPlayers,maxPlayers,spectatingAllowed);
+        if(gameType == GameType.NoLimit)
+            game = new noLimitGame(id,user.league,buyin,initialChips,minBet,minPlayers,maxPlayers,spectatingAllowed);
+        if(gameType == GameType.PotLimit)
+            game = new potLimitGame(id,user.league,buyin,initialChips,minBet,minPlayers,maxPlayers,spectatingAllowed);
+        if(game == null)
+            throw new Error("game has no type!!");
         game.addPlayer(user);
         this.games[id] = game;
         user.joinGame(game);
@@ -75,7 +83,7 @@ export class GameCenter {
             throw new Error('username already taken !');
         else {
             let id = ++this.lastUserId;
-            this.users[username] = new User(username, password, email, this.defaultLeague);
+            this.users[username] = new User(username, password, email, this.defaultLeague, 0);
         }
         this.logs.push(new logEntry(++this.logId, username + " has registered with the password " + password, new Date()));
     }
@@ -89,15 +97,15 @@ export class GameCenter {
     }
       
     setDefaultLeague(user: User, league: number) {
-        if(!(user instanceof Admin))
-            throw new Error('must be an admin to use this method');
+        if(!this.isHighestRanking(user))
+            throw new Error('must be an highest ranking to use this method');
         this.defaultLeague = league;
         this.logs.push(new logEntry(++this.logId, user.username + " has set the default league to be " + league, new Date()));
     }
 
     setUserLeague(user: User, username: string, league: number) {
-        if(!(user instanceof Admin))
-            throw new Error('must be an admin to use this method');
+        if(!this.isHighestRanking(user))
+            throw new Error('must be an highest ranking to use this method');
         if(!this.users[username])
             throw new Error('user not found');
         this.users[username].setLeague(league);
@@ -105,8 +113,8 @@ export class GameCenter {
     }
 
     setLeagueCriteria(user: User, league: number, criteria: number) {
-        if(!(user instanceof Admin))
-            throw new Error('must be an admin to use this method');
+        if(!this.isHighestRanking(user))
+            throw new Error('must be an highest ranking to use this method');
         if(!(0 <= league && league < this.leaguesCriteria.length))
             throw new Error('league must be between 0 and 10');
         if(criteria < 0)
@@ -117,6 +125,21 @@ export class GameCenter {
 
         for(let username in this.users)
             this.updateUserLeague(this.users[username]);
+    }
+
+    isHighestRanking(user:User) : boolean {
+        let isHigh = true;
+        //for(let i = 0; i < this.lastUserId && isHigh; i++) {//change
+        for(var newUser in this.users) {
+            if(newUser) {
+                if(this.users[newUser].league > user.league)
+                    isHigh = false;
+                else if(this.users[newUser].league == user.league && 
+                        this.users[newUser].points > user.points)
+                    isHigh = false;
+            }
+        }
+        return isHigh;
     }
 
     private updateUserLeague(user: User) {
@@ -130,6 +153,19 @@ export class GameCenter {
     logError(url: string, params: any, e: Error) {
         this.errorLogs.push(new errorLog(++this.errorLogId, url, params.username, e.message, new Date(), JSON.stringify(params)));
     }
+
+    getPlayableGames(user: User) : number[]{
+        let gamesIndexes = [];
+
+        for(var newGame in this.games) {
+            if(this.games[newGame]){
+                if(this.games[newGame].league == user.league)
+                    gamesIndexes.push(newGame);
+            }
+        }
+
+        return gamesIndexes;
+    };
 
     // factory method to create a GameCenter instance from the json data from the db
     public static from(json: any): GameCenter{

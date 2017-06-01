@@ -6,55 +6,48 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as assign from 'object.assign';
 import {gamePlayerLog} from "./log";
+import * as SL from "./sl"
 admin.initializeApp(functions.config().firebase);
 
-export const register = createHandler((gc,extractor) => gc.register(extractor.string('username'),extractor.string('password'),extractor.string('email')));
+export const register = createHandler((gc,extractor) => SL.register(gc, extractor.string('username'),extractor.string('password'),extractor.string('email')));
+
 export const createGame = createHandler((gc,extractor,user) => 
-  gc.createGame(user,
-    extractor.number('gameType'),
-    extractor.number('buyin'),
-    extractor.number('initialChips'),
-    extractor.number('minBet'),
-    extractor.number('minPlayers'),
-    extractor.number('maxPlayers'),
-    extractor.boolean('spectatingAllowed')
-  )
-);
-export const joinGame = createHandler((gc,extractor,user) => {
-  gc.joinGame(user, extractor.number('gameId'));
-  gc.getGame(extractor.number('gameId')).addPlayer(user);
-});
-export const spectateGame = createHandler((gc,extractor,user) => gc.spectateGame(user, extractor.number('gameId')));
-export const leaveGame = createHandler((gc,extractor,user) => gc.leaveGame(user,extractor.number('gameId')));
+  SL.createGame(gc, 
+                user, 
+                extractor.number('gameType'), 
+                extractor.number('buyin'),
+                extractor.number('initialChips'), 
+                extractor.number('minBet'),
+                extractor.number('minPlayers'),
+                extractor.number('maxPlayers'),
+                extractor.boolean('spectatingAllowed')));
 
-//check/fold/raise
-export const playerAction = createHandler((gc,extractor,user) => {
-  let playerID = extractor.number('playerId');
-  let game = gc.getGame(extractor.number('gameId'));
-  let player = game.getPlayerByID(extractor.number('playerId'));
-  player.status = extractor.number('newStatus');
-  game.doAction(player.status, extractor.number('newBet'), player);
-});
+export const joinGame = createHandler((gc,extractor,user) => SL.joinGame(gc, user, extractor.number('gameId')));
 
-//start round
-export const startRound = createHandler((gc,extractor,user) => gc.getGame(extractor.number('gameId')).startARound());
+export const spectateGame = createHandler((gc,extractor,user) => SL.spectateGame(gc, user, extractor.number('gameId')));
 
-export const changePassword = createHandler((gc,extractor,user) => user.setPassword(extractor.string('newPassword')));
+export const leaveGame = createHandler((gc,extractor,user) => SL.leaveGame(gc, user,extractor.number('gameId')));
 
-export const changeEmail = createHandler((gc,extractor,user) =>  user.setEmail(extractor.string('newEmail')));
+export const playerAction = createHandler((gc,extractor,user) => 
+  SL.playerAction(gc, 
+                  user, 
+                  extractor.number('playerId'), 
+                  extractor.number('gameId'), 
+                  extractor.number('newStatus'), 
+                  extractor.number('newBet')));
 
-export const setDefaultLeague = createHandler((gc,extractor,user) => gc.setDefaultLeague(user,extractor.number('defaultLeague')));
-export const setUserLeague = createHandler((gc,extractor,user) => gc.setUserLeague(user,extractor.string('user'),extractor.number('league')));
-export const setLeagueCriteria = createHandler((gc,extractor,user) => gc.setLeagueCriteria(user,extractor.number('league'),extractor.number('criteria')));
+export const startRound = createHandler((gc,extractor,user) => SL.startRound(gc, extractor.number('gameId')));
 
-export const adFavTurn = createHandler((gc, extractor, user) => {
-  let Turns = gc.getGame(extractor.number('gameId')).userLogs;
-  let favTurn = null;
-  for(let i = 0; i < Turns.length; i++) {
-    if(Turns[i].logId == extractor.number('logId'))
-      favTurn = Turns[i]
-  }
-  if(favTurn == null)
-    throw new Error("The turn does not exist!!!");
-  user.favTurns.push(favTurn);
-});
+export const changePassword = createHandler((gc,extractor,user) => SL.changePassword(gc, user, extractor.string('newPassword')));
+
+export const changeEmail = createHandler((gc,extractor,user) =>  SL.changeEmail(gc, user, extractor.string('newEmail')));
+
+export const setDefaultLeague = createHandler((gc,extractor,user) => SL.setDefaultLeague(gc, user,extractor.number('defaultLeague')));
+
+export const setUserLeague = createHandler((gc,extractor,user) => SL.setUserLeague(gc, user, extractor.number('league'), extractor.string('user')));
+
+export const setLeagueCriteria = createHandler((gc,extractor,user) => SL.setLeagueCriteria(gc, user,extractor.number('league'),extractor.number('criteria')));
+
+export const adFavTurn = createHandler((gc, extractor, user) => SL.adFavTurn(gc, user, extractor.number('gameId'), extractor.number('logId')));
+
+export const getPlayableGames = createHandler((gc,extractor,user) => SL.getPlayableGames(gc, user));
