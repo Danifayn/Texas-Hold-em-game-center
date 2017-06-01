@@ -14,8 +14,6 @@ export class User{
     activeGamesIds: number[] = [];
     spectatingGamesIds: number[] = [];
 
-    favTurns: gamePlayerLog[] = [];
-
     constructor(username?: string, password?: string, email?: string, league?: number, points?: number) {
         this.username = username;
         this.password = password;
@@ -55,10 +53,6 @@ export class User{
     }
     public setLeague(leauge: number) {
         this.league = leauge;
-    }
-
-    public addFave(turn: gamePlayerLog) {
-        this.favTurns.push(turn);
     }
 }
 

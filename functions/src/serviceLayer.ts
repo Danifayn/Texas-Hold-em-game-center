@@ -76,18 +76,6 @@ export const setLeagueCriteria = (gc: GameCenter, user: User, league: number, cr
     gc.setLeagueCriteria(user,league,criteria);
 };
 
-export const adFavTurn = (gc: GameCenter,user: User, gameId: number, logId: number) => {
-  let Turns = gc.getGame(gameId).userLogs;
-  let favTurn = null;
-  for(let i = 0; i < Turns.length; i++) {
-    if(Turns[i].logId == logId)
-      favTurn = Turns[i]
-  }
-  if(favTurn == null)
-    throw new Error("The turn does not exist!!!");
-  user.favTurns.push(favTurn);
-};
-
 export const getPlayableGames = (gc: GameCenter, user: User) => {
     gc.getPlayableGames(user);
 };

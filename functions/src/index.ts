@@ -48,6 +48,4 @@ export const setUserLeague = createHandler((gc,extractor,user) => SL.setUserLeag
 
 export const setLeagueCriteria = createHandler((gc,extractor,user) => SL.setLeagueCriteria(gc, user,extractor.number('league'),extractor.number('criteria')));
 
-export const adFavTurn = createHandler((gc, extractor, user) => SL.adFavTurn(gc, user, extractor.number('gameId'), extractor.number('logId')));
-
 export const getPlayableGames = createHandler((gc,extractor,user) => SL.getPlayableGames(gc, user));
