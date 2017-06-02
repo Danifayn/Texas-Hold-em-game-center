@@ -80,7 +80,7 @@ export const endGame = (gc: GameCenter, user: User, gID: number) => {
     let finishedgame = gc.getGame(gID);
     finishedgame.allPlayers.forEach(player => {
         let user = gc.getUser(player.playingUser);
-        user.endGame(finishedgame);
+        gc.quitGame(user, gID);
     });
     finishedgame.endGame();
 }

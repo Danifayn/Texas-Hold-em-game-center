@@ -72,8 +72,19 @@ export class GameCenter {
            throw new Error('game not found');
         user.leaveGame(this.games[gameId]);
         this.games[gameId].removePlayer(user);
-        this.updateUserLeague(user);
         this.logs.push(new logEntry(++this.logId, user.username + " left the game with id " + gameId, new Date()));
+    }
+
+    quitGame(user: User, gameId: number) {
+        if(!user)
+           throw new Error('must be logged in to use this method !');
+        if(!this.games[gameId])
+           throw new Error('game not found');
+        user.leaveGame(this.games[gameId]);
+        user.endGame(this.games[gameId]);
+        if(user.gamesPlayed == 10)
+            this.updateUserLeague(user);
+        this.logs.push(new logEntry(++this.logId, user.username + " quit the game with id " + gameId, new Date()));
     }
 
     register(username: string, password: string, email: string) {
@@ -117,15 +128,32 @@ export class GameCenter {
     }
 
     private updateUserLeague(user: User) {
-        if(user.league == -1)
-            return;
         while(user.league < this.leaguesCriteria.length && 
-                this.leaguesCriteria[user.league] > 0 && 
                 user.points > this.leaguesCriteria[user.league]){
-            user.points -= this.leaguesCriteria[user.league];
             user.league++;
-            this.logs.push(new logEntry(++this.logId, user.username + " league was updated to " + user.league, new Date()));
         }
+        user.points = 0;
+        this.logs.push(new logEntry(++this.logId, user.username + " league was updated to " + user.league, new Date()));
+    }
+
+    private weeklyUpdate() {
+        let usernum = 0;
+        for(let username in this.users)
+            if(this.users[username].league != -1)
+                usernum++;
+        let leaguenum = Math.min(10, usernum/2);
+        let scores = [];
+        for(let username in this.users)
+            if(this.users[username].league != -1)
+                scores.push(this.users[username].points);
+        scores.sort((a,b)=>a-b);
+        this.leaguesCriteria = [];
+        for(let i = 0; i < leaguenum; i++) {
+            this.leaguesCriteria.push(scores[i*usernum/leaguenum]);
+        }
+        for(let username in this.users)
+            if(this.users[username].league != -1)
+                this.updateUserLeague(this.users[username]);
     }
 
     logError(url: string, params: any, e: Error) {

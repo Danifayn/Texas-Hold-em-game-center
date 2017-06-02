@@ -31,7 +31,6 @@ export class User{
     }
 
     public leaveGame(game: Game) {
-        this.points += game.getPlayerByUsername(this.username).points;
         this.activeGamesIds = this.activeGamesIds.filter(x => x != game.id);
         this.spectatingGamesIds = this.spectatingGamesIds.filter(x => x != game.id);
     }
