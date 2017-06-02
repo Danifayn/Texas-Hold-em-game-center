@@ -52,8 +52,8 @@ Other  way to checkout:
 4. Click install.
 5. After installing, click on `reload`.
 
-#Timed Events
-##Adding or Changing Events
+# Timed Events
+## Adding or Changing Events
 1.Go to [Cron Jobs](https://cron-job.org)
 2. Login using:
     - Email - `texas.holdem.workshop@gmail.com`
