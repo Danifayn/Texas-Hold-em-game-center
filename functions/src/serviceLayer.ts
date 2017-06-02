@@ -64,10 +64,6 @@ export const changeEmail = (gc: GameCenter, user: User, newEmail: string) => {
     user.setEmail(newEmail);
 };
 
-export const setDefaultLeague = (gc: GameCenter, user: User, defaultLeague: number) => {
-    gc.setDefaultLeague(user,defaultLeague);
-};
-
 export const setUserLeague = (gc: GameCenter,user: User, league: number, userToChange: string) => {
     gc.setUserLeague(user,userToChange,league);
 };
@@ -79,3 +75,12 @@ export const setLeagueCriteria = (gc: GameCenter, user: User, league: number, cr
 export const getPlayableGames = (gc: GameCenter, user: User) => {
     gc.getPlayableGames(user);
 };
+
+export const endGame = (gc: GameCenter, user: User, gID: number) => {
+    let finishedgame = gc.getGame(gID);
+    finishedgame.allPlayers.forEach(player => {
+        let user = gc.getUser(player.playingUser);
+        user.endGame(finishedgame);
+    });
+    finishedgame.endGame();
+}

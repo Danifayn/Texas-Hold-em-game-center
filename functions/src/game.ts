@@ -119,11 +119,14 @@ export abstract class Game {
         let exist = false;
         this.allPlayers.forEach(x => exist = (exist || (x.playingUser == user.username)));
         if (!exist) {
-            let newPlayer = new Player(this.newPlayerId, user, this);
-            newPlayer.money = this.initialChips;
-            this.allPlayers.push(newPlayer);
-            this.systemLogs.push(new gameSystemLog(++this.logId, logType.entering, newPlayer, null, new Date()));
-            this.newPlayerId += 1;
+            if(user.money >= this.buyin) {
+                user.money -= this.buyin;
+                let newPlayer = new Player(this.newPlayerId, user, this);
+                newPlayer.money = this.initialChips;
+                this.allPlayers.push(newPlayer);
+                this.systemLogs.push(new gameSystemLog(++this.logId, logType.entering, newPlayer, null, new Date()));
+                this.newPlayerId += 1;
+            }
         } else {
             this.allPlayers.forEach(x => {if(x.playingUser == user.username) x.isActive == true;});
         }
@@ -186,6 +189,7 @@ export abstract class Game {
             this.currentPlayer = this.activePlayers[i];
             if(player.playerId == this.bigBlind)
                 this.bigBlind = this.currentPlayer;
+            //player.playingUser
             if(this.activePlayers.length == 1)
                 this.finishARound();
     }
@@ -269,7 +273,7 @@ export abstract class Game {
         var PokerEvaluator = require("poker-evaluator");
         if(this.activePlayers.length == 1) {
             this.getPlayerByID(this.activePlayers[0]).money += this.pot;
-            this.getPlayerByID(this.activePlayers[0]).points += 20;
+            this.getPlayerByID(this.activePlayers[0]).points += 5;
         } else {
             let evaledHands = this.activePlayers.map(pId => {
                 let hand = this.getPlayerByID(pId).hand.concat(this.openCards);
@@ -284,7 +288,7 @@ export abstract class Game {
                 }
             }
             this.getPlayerByID(this.activePlayers[maxP]).money += this.pot;
-            this.getPlayerByID(this.activePlayers[maxP]).points += 20;
+            this.getPlayerByID(this.activePlayers[maxP]).points += 5;
         }
     }
 
@@ -300,6 +304,13 @@ export abstract class Game {
         if(pList.length == 0)
             return null;
         return pList[0];
+    }
+
+    endGame() {
+        this.spectatingAllowed = false;
+        this.allPlayers = [];
+        this.currentPlayer = null;
+        this.activePlayers = []
     }
     
     static from(json: any): Game {

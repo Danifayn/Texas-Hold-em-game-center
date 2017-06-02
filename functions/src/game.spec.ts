@@ -146,7 +146,7 @@ describe("Game", function() {
     glimit.doAction(Status.Check, 0, p2);
     expect(
       Math.max(p1.points,p2.points,p3.points)-Math.min(p1.points,p2.points,p3.points)
-    ).toBe(20);
+    ).toBe(5);
     expect(
       Math.max(p1.money,p2.money,p3.money)-Math.min(p1.money,p2.money,p3.money)
     ).toBe(3*glimit.minBet);

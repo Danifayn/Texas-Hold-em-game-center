@@ -42,10 +42,10 @@ export const changePassword = createHandler((gc,extractor,user) => SL.changePass
 
 export const changeEmail = createHandler((gc,extractor,user) =>  SL.changeEmail(gc, user, extractor.string('newEmail')));
 
-export const setDefaultLeague = createHandler((gc,extractor,user) => SL.setDefaultLeague(gc, user,extractor.number('defaultLeague')));
-
 export const setUserLeague = createHandler((gc,extractor,user) => SL.setUserLeague(gc, user, extractor.number('league'), extractor.string('user')));
 
 export const setLeagueCriteria = createHandler((gc,extractor,user) => SL.setLeagueCriteria(gc, user,extractor.number('league'),extractor.number('criteria')));
 
 export const getPlayableGames = createHandler((gc,extractor,user) => SL.getPlayableGames(gc, user));
+
+export const endAGame = createHandler((gc,extractor,user) => SL.endGame(gc, user, extractor.number('gID')));

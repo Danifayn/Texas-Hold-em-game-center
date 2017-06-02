@@ -27,14 +27,6 @@ describe("Game Center", function() {
     mUser.setPoints(Math.min(user1.points, user2.points)-1);
     mUser.setLeague(Math.min(user1.league, user2.league)-1);
 
-    expect(
-      gc.isHighestRanking(mUser)
-    ).toBe(false);
-
-    expect(()=>{
-      gc.setDefaultLeague(mUser,3);
-    }).toThrowError();
-
     expect(()=>{
       gc.setUserLeague(mUser,'someusername',3);
     }).toThrowError();
@@ -44,22 +36,20 @@ describe("Game Center", function() {
     }).toThrowError();
   });
 
-  it('should update default league correctly', ()=>{
+  it('should set default league correctly', ()=>{
     mUser.setPoints(Math.max(user1.points, user2.points)+1);
     mUser.setLeague(Math.max(user1.league, user2.league)+1);
 
-    gc.setDefaultLeague(mUser,5);
     gc.register('newcomer','newcomer','newcomer@email.com');
-    expect(gc.getUser('newcomer').league).toBe(5);
+    expect(gc.getUser('newcomer').league).toBe(-1);
   });
 
   it('should be able to set a user`s league', ()=>{
     mUser.setPoints(Math.max(user1.points, user2.points)+1);
     mUser.setLeague(Math.max(user1.league, user2.league)+1);
 
-    gc.setDefaultLeague(mUser,5);
     gc.register('newcomer','newcomer','newcomer@email.com');
-    expect(gc.getUser('newcomer').league).toBe(5);
+    expect(gc.getUser('newcomer').league).toBe(-1);
     mUser.setLeague(Math.max(mUser.league, gc.getUser('newcomer').league)+1);
     gc.setUserLeague(mUser,'newcomer',2);
     expect(gc.getUser('newcomer').league).toBe(2);

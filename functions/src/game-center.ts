@@ -4,7 +4,7 @@ import * as assign from 'object.assign';
 import {errorLog, logEntry} from "./log";
 
 export class GameCenter {
-    private defaultLeague: number;
+    private defaultLeague: number = -1;
     
     private users: {[username:string]: User} = {};
     private games: {[id: number]: Game} = {};
@@ -95,17 +95,8 @@ export class GameCenter {
     getGame(gameId: number): Game{
         return this.games[gameId];
     }
-      
-    setDefaultLeague(user: User, league: number) {
-        if(!this.isHighestRanking(user))
-            throw new Error('must be an highest ranking to use this method');
-        this.defaultLeague = league;
-        this.logs.push(new logEntry(++this.logId, user.username + " has set the default league to be " + league, new Date()));
-    }
 
     setUserLeague(user: User, username: string, league: number) {
-        if(!this.isHighestRanking(user))
-            throw new Error('must be an highest ranking to use this method');
         if(!this.users[username])
             throw new Error('user not found');
         this.users[username].setLeague(league);
@@ -113,8 +104,6 @@ export class GameCenter {
     }
 
     setLeagueCriteria(user: User, league: number, criteria: number) {
-        if(!this.isHighestRanking(user))
-            throw new Error('must be an highest ranking to use this method');
         if(!(0 <= league && league < this.leaguesCriteria.length))
             throw new Error('league must be between 0 and 10');
         if(criteria < 0)
@@ -127,23 +116,12 @@ export class GameCenter {
             this.updateUserLeague(this.users[username]);
     }
 
-    isHighestRanking(user:User) : boolean {
-        let isHigh = true;
-        //for(let i = 0; i < this.lastUserId && isHigh; i++) {//change
-        for(var newUser in this.users) {
-            if(newUser) {
-                if(this.users[newUser].league > user.league)
-                    isHigh = false;
-                else if(this.users[newUser].league == user.league && 
-                        this.users[newUser].points > user.points)
-                    isHigh = false;
-            }
-        }
-        return isHigh;
-    }
-
     private updateUserLeague(user: User) {
-        while(this.leaguesCriteria[user.league] > 0 && user.points > this.leaguesCriteria[user.league]){
+        if(user.league == -1)
+            return;
+        while(user.league < this.leaguesCriteria.length && 
+                this.leaguesCriteria[user.league] > 0 && 
+                user.points > this.leaguesCriteria[user.league]){
             user.points -= this.leaguesCriteria[user.league];
             user.league++;
             this.logs.push(new logEntry(++this.logId, user.username + " league was updated to " + user.league, new Date()));
@@ -159,7 +137,7 @@ export class GameCenter {
 
         for(var newGame in this.games) {
             if(this.games[newGame]){
-                if(this.games[newGame].league == user.league)
+                if(this.games[newGame].league == user.league || user.league == -1)
                     gamesIndexes.push(newGame);
             }
         }

@@ -10,6 +10,8 @@ export class User{
     points: number = 0;
     activeGamesIds: number[] = [];
     spectatingGamesIds: number[] = [];
+    gamesPlayed: number = 0;
+    money = 200;
 
     constructor(username?: string, password?: string, email?: string, league?: number, points?: number) {
         this.username = username;
@@ -18,13 +20,6 @@ export class User{
         if(league) this.league = league;
         if(points) this.points = points;
         else this.points = 0;
-    }
-
-    static from(json: any): User {
-        let user = null;
-        user = assign(new User(), json);
-        user.favTurns = user.favTurns.map(x => gamePlayerLog.from(x));
-        return user;
     }
 
     public joinGame(game: Game) {
@@ -50,6 +45,17 @@ export class User{
     }
     public setLeague(leauge: number) {
         this.league = leauge;
+    }
+
+    public endGame(game: Game) {
+        this.gamesPlayed++;
+        this.money += (game.buyin*game.getPlayerByUsername(this.username).money)/game.initialChips;
+    }
+
+    static from(json: any): User {
+        let user = null;
+        user = assign(new User(), json);
+        return user;
     }
 }
 

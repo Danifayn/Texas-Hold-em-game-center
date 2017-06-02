@@ -1,4 +1,4 @@
-import { User, Admin } from '../user';
+import { User } from '../user';
 import { Game } from "../game";
 import {gamePlayerLog} from "../log";
 
@@ -11,6 +11,7 @@ export class UserMock implements User {
   activeGamesIds: number[];
   spectatingGamesIds: number[];
   favTurns: gamePlayerLog[] = [];
+  gamesPlayed: number = 0;
 
   public constructor() {}
 
