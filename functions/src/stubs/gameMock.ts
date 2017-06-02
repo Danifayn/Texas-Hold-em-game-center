@@ -93,4 +93,8 @@ export class GameMock implements Game {
     setID(id: number) {
         this.id = id;
     }
+
+    endGame() {
+    throw new Error('Method not implemented.');
+    }
 }

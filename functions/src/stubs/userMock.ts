@@ -12,6 +12,7 @@ export class UserMock implements User {
   spectatingGamesIds: number[];
   favTurns: gamePlayerLog[] = [];
   gamesPlayed: number = 0;
+  money: number = 200;
 
   public constructor() {}
 
@@ -31,6 +32,9 @@ export class UserMock implements User {
     throw new Error('Method not implemented.');
   }
   public addFave(turn: gamePlayerLog) {
+    throw new Error('Method not implemented.');
+  }
+  public endGame(game: Game) {
     throw new Error('Method not implemented.');
   }
 

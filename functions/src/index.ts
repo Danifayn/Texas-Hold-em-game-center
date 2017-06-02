@@ -49,3 +49,5 @@ export const setLeagueCriteria = createHandler((gc,extractor,user) => SL.setLeag
 export const getPlayableGames = createHandler((gc,extractor,user) => SL.getPlayableGames(gc, user));
 
 export const endAGame = createHandler((gc,extractor,user) => SL.endGame(gc, user, extractor.number('gID')));
+
+export const weeklyUpdate = createHandler((gc,extractor,user) => SL.weeklyUpdate(gc, user));

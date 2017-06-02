@@ -84,3 +84,7 @@ export const endGame = (gc: GameCenter, user: User, gID: number) => {
     });
     finishedgame.endGame();
 }
+
+export const weeklyUpdate = (gc: GameCenter, user:User) => {
+    gc.weeklyUpdate();
+}

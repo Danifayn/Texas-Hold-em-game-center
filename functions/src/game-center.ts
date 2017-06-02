@@ -17,6 +17,8 @@ export class GameCenter {
     private logId: number = 0;
     private logs: logEntry[] = [];
 
+    test: number = 0;
+
 
     createGame(user: User, 
                 gameType: GameType, 
@@ -136,7 +138,7 @@ export class GameCenter {
         this.logs.push(new logEntry(++this.logId, user.username + " league was updated to " + user.league, new Date()));
     }
 
-    private weeklyUpdate() {
+    weeklyUpdate() {
         let usernum = 0;
         for(let username in this.users)
             if(this.users[username].league != -1)
