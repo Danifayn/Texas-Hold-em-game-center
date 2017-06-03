@@ -308,7 +308,7 @@ export abstract class Game {
         game.deck = game.deck.map(x => Cards.Card.from(x));
         game.allPlayers = game.allPlayers.map(x => Player.from(x));
         game.userLogs = game.userLogs.map(x => logs.gamePlayerLog.from(x));
-        game.systemLogs = game.systemLogs.map(x => logs.gameSystemLog.from(x));
+        game.systemLogs = game.systemLogs.map(x => logs.gameSystemLog.from(x));//
         return game;
     }
 

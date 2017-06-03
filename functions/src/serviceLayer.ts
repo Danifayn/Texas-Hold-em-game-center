@@ -88,3 +88,15 @@ export const endGame = (gc: GameCenter, user: User, gID: number) => {
 export const weeklyUpdate = (gc: GameCenter, user:User) => {
     gc.weeklyUpdate();
 }
+
+export const reset = (gc: GameCenter) => {
+    gc.reset();
+    gc.register("test1", "123456", "test1@test.com");
+    gc.register("test2", "asdasd", "test2@test.com");
+    gc.register("test3", "111111", "test3@test.com");
+    gc.createGame(gc.getUser("test1"), 0, 10, 20, 2, 2, 4, false);
+    gc.createGame(gc.getUser("test2"), 1, 10, 20, 2, 2, 4, true);
+    gc.joinGame(gc.getUser("test3"), 1);
+    gc.getGame(1).addPlayer(gc.getUser("test3"));
+    gc.spectateGame(gc.getUser("test3"), 2);
+}

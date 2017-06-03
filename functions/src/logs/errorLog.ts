@@ -17,6 +17,7 @@ export class errorLog extends logEntry {
 
     static from(json: any): errorLog {
         let log: errorLog = assign(new errorLog(), json);
+        log.timestamp = assign(new Date, log.timestamp);
         return log;
     }
 }

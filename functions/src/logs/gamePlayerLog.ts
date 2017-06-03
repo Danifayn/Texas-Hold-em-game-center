@@ -27,6 +27,7 @@ export class gamePlayerLog extends logEntry {
 
     static from(json: any): gamePlayerLog {
         let log: gamePlayerLog = assign(new gamePlayerLog(), json);
+        log.timestamp = assign(new Date, log.timestamp);
         return log;
     }
 }

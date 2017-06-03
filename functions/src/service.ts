@@ -44,7 +44,7 @@ export const createHandler = (f: RequestHandler) => {
     
     return admin.database().ref('/').transaction(db => {
       if(!db) return 0;
-      var gc: GameCenter;
+      var gc: GameCenter = new GameCenter();
       var params: any;
       var extractor: Extractor;
       try{

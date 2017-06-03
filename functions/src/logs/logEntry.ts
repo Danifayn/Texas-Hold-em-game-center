@@ -14,6 +14,7 @@ export class logEntry {
 
     static from(json: any): logEntry {
         let log: logEntry = assign(new logEntry(), json);
+        log.timestamp = assign(new Date, log.timestamp);
         return log;
     }
 }

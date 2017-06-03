@@ -19,6 +19,22 @@ export class GameCenter {
 
     test: number = 0;
 
+    reset() {    
+        this.defaultLeague = -1;
+
+        this.users = {};
+        this.games = {};
+        this.lastGameId = 0;
+        this.leaguesCriteria = [100, 200, 300, 400, 500, 600, 700, 800, 900, -1/*infinity*/];
+        this.lastUserId = 0;
+
+        this.errorLogId  = 0;
+        this.errorLogs = [];
+        this.logId = 0;
+        this.logs = [];
+
+        this.test = 0;
+    }
 
     createGame(user: User,
         gameType: Games.GameType,
@@ -159,7 +175,7 @@ export class GameCenter {
     }
 
     logError(url: string, params: any, e: Error) {
-        this.errorLogs.push(new logs.errorLog(++this.errorLogId, url, params.username, e.message, new Date(), JSON.stringify(params)));
+        this.errorLogs.push(new logs.errorLog(++this.errorLogId, url, "a", e.message, new Date(), JSON.stringify(params)));
     }
 
     getPlayableGames(user: User): number[] {

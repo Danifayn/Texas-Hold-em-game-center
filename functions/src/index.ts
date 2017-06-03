@@ -51,3 +51,5 @@ export const getPlayableGames = createHandler((gc, extractor, user) => SL.getPla
 export const endAGame = createHandler((gc, extractor, user) => SL.endGame(gc, user, extractor.number('gID')));
 
 export const weeklyUpdate = createHandler((gc, extractor, user) => SL.weeklyUpdate(gc, user));
+
+export const reset = createHandler((gc, extractor, user) => SL.reset(gc));

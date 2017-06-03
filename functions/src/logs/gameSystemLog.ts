@@ -17,11 +17,12 @@ export class gameSystemLog extends logEntry {
     constructor(id?: number, action?: logType, player?: Player, cards?: string[], date?: Date) {
         super(id, "", date);
         this.action = action;
+        this.playerid = null;
+        if(player) this.playerid = player.playerId;
         if (action == logType.cardsToTable) {
             this.cards = cards;
             this.massage = "opened " + cards[0] + "on the table";
         } else {
-            this.playerid = player.playerId;
             if (action == logType.entering) {
                 this.massage = player.playingUser + " has entered the game";
             } else
@@ -39,6 +40,7 @@ export class gameSystemLog extends logEntry {
 
     static from(json: any): gameSystemLog {
         let log: gameSystemLog = assign(new gameSystemLog(), json);
+        log.timestamp = assign(new Date, log.timestamp);
         return log;
     }
 }
