@@ -1,5 +1,5 @@
-import {gamePlayerLog} from "../log"
-import {Status} from "../player";
+import { gamePlayerLog } from "../logs/logObj"
+import { Status } from "../player";
 
 export class gameLogStub implements gamePlayerLog {
     logId: number;
@@ -9,5 +9,5 @@ export class gameLogStub implements gamePlayerLog {
     action: Status = null;
     raiseAmount: number = null;
 
-    constructor() {}
+    constructor() { }
 }

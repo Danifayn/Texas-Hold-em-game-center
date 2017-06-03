@@ -5,7 +5,7 @@ import { Player } from './player';
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as assign from 'object.assign';
-import {gamePlayerLog} from "./log";
+import {gamePlayerLog} from "./logs/logObj";
 
 export const register = (gc: GameCenter, username: string, password: string, email: string) => {
     gc.register(username, password, email);

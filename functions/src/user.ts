@@ -1,8 +1,7 @@
-import { Game } from './game';
+import * as Games from './games/gameObj';
 import * as assign from 'object.assign';
-import {gamePlayerLog} from "./log";
 
-export class User{
+export class User {
     username: string;
     password: string;
     email: string;
@@ -17,22 +16,22 @@ export class User{
         this.username = username;
         this.password = password;
         this.email = email;
-        if(league) this.league = league;
-        if(points) this.points = points;
+        if (league) this.league = league;
+        if (points) this.points = points;
         else this.points = 0;
     }
 
-    public joinGame(game: Game) {
-        this.activeGamesIds.push(game.id);
+    public joinGame(game: Games.Game) {
+        this.activeGamesIds.push(game.gameId);
     }
 
-    public spectateGame(game: Game) {
-        this.spectatingGamesIds.push(game.id);
+    public spectateGame(game: Games.Game) {
+        this.spectatingGamesIds.push(game.gameId);
     }
 
-    public leaveGame(game: Game) {
-        this.activeGamesIds = this.activeGamesIds.filter(x => x != game.id);
-        this.spectatingGamesIds = this.spectatingGamesIds.filter(x => x != game.id);
+    public leaveGame(game: Games.Game) {
+        this.activeGamesIds = this.activeGamesIds.filter(x => x != game.gameId);
+        this.spectatingGamesIds = this.spectatingGamesIds.filter(x => x != game.gameId);
     }
 
     public setEmail(email: string) {
@@ -46,9 +45,9 @@ export class User{
         this.league = leauge;
     }
 
-    public endGame(game: Game) {
+    public endGame(game: Games.Game) {
         this.gamesPlayed++;
-        this.money += (game.buyin*game.getPlayerByUsername(this.username).money)/game.initialChips;
+        this.money += (game.buyin * game.getPlayerByUsername(this.username).money) / game.initialChips;
     }
 
     static from(json: any): User {

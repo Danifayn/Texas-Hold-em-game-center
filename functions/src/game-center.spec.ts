@@ -2,8 +2,8 @@
 import { setUserLeague, register } from './index';
 import { User } from './user';
 import { GameCenter } from './game-center';
-import { Game, GameType } from "./game";
-import {gamePlayerLog} from "./log";
+import { Game, GameType } from "./games/gameObj";
+import {gamePlayerLog} from "./logs/logObj";
 import {UserMock} from "./stubs/userMock";
 
 describe("Game Center", function() {
@@ -22,19 +22,6 @@ describe("Game Center", function() {
     gameId = gc.createGame(user1, GameType.NoLimit, 20, 100, 10, 2, 23, false);
     mUser = new UserMock();
   })
-
-  it('should not allow managing leagues for non-admin user', ()=>{
-    mUser.setPoints(Math.min(user1.points, user2.points)-1);
-    mUser.setLeague(Math.min(user1.league, user2.league)-1);
-
-    expect(()=>{
-      gc.setUserLeague(mUser,'someusername',3);
-    }).toThrowError();
-
-    expect(()=>{
-      gc.setLeagueCriteria(mUser,4,300);
-    }).toThrowError();
-  });
 
   it('should set default league correctly', ()=>{
     mUser.setPoints(Math.max(user1.points, user2.points)+1);
@@ -63,8 +50,9 @@ describe("Game Center", function() {
     let gameId = gc.createGame(user1, GameType.NoLimit,50,50,50,2,21,true); // create and join the game
 
     user1.points += 313
+    user1.gamesPlayed = 9;
 
-    gc.leaveGame(user1,gameId); // leave
+    gc.quitGame(user1,gameId); // leave
     expect(user1.league).toBe(3);
   });
 

@@ -1,5 +1,5 @@
 /// <reference path="../typings/globals/jasmine/index.d.ts" />
-import {Game, limitGame, noLimitGame, potLimitGame, GameType} from "./game";
+import {Game, limitGame, noLimitGame, potLimitGame, GameType} from "./games/gameObj";
 import {UserMock} from "./stubs/userMock"
 import {PlayerStub} from "./stubs/playerStub"
 import {Status} from "./player";
@@ -29,7 +29,7 @@ describe("Game", function() {
 
     expect(
       glimit.getPlayerByUsername("u1").playingGameId
-    ).toBe(glimit.id);
+    ).toBe(glimit.gameId);
 
     expect(
       glimit.getPlayerByUsername("u1").isActive
@@ -57,7 +57,7 @@ describe("Game", function() {
     glimit.startARound();
 
     expect(
-      glimit.freeCards.length
+      glimit.deck.length
     ).toBe(46);
 
     let p1 = glimit.getPlayerByUsername("u1");
@@ -105,7 +105,7 @@ describe("Game", function() {
     glimit.doAction(Status.Check, 0, p2);
 
     expect(
-      glimit.openCards.length
+      glimit.tableCards.length
     ).toBe(3);
   });
 
@@ -124,21 +124,21 @@ describe("Game", function() {
     glimit.doAction(Status.Raise, glimit.minBet-(Math.floor(glimit.minBet/2)), p1);
     glimit.doAction(Status.Check, 0, p2);
     expect(
-      glimit.openCards.length
+      glimit.tableCards.length
     ).toBe(3);
 
     glimit.doAction(Status.Check, 0, p3);
     glimit.doAction(Status.Check, 0, p1);
     glimit.doAction(Status.Check, 0, p2);
     expect(
-      glimit.openCards.length
+      glimit.tableCards.length
     ).toBe(4);
 
     glimit.doAction(Status.Check, 0, p3);
     glimit.doAction(Status.Check, 0, p1);
     glimit.doAction(Status.Check, 0, p2);
     expect(
-      glimit.openCards.length
+      glimit.tableCards.length
     ).toBe(5);
 
     glimit.doAction(Status.Check, 0, p3);

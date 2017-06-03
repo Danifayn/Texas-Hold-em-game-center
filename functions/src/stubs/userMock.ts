@@ -1,6 +1,6 @@
 import { User } from '../user';
-import { Game } from "../game";
-import {gamePlayerLog} from "../log";
+import { Game } from "../games/gameObj";
+import { gamePlayerLog } from "../logs/logObj";
 
 export class UserMock implements User {
   username: string;
@@ -14,7 +14,7 @@ export class UserMock implements User {
   gamesPlayed: number = 0;
   money: number = 200;
 
-  public constructor() {}
+  public constructor() { }
 
   public joinGame(game: Game): void {
     throw new Error('Method not implemented.');
