@@ -1,8 +1,8 @@
-/// <reference path="../typings/globals/jasmine/index.d.ts" />
-import {Game, limitGame, noLimitGame, potLimitGame, GameType} from "./games/gameObj";
-import {UserMock} from "./stubs/userMock"
-import {PlayerStub} from "./stubs/playerStub"
-import {Status} from "./player";
+/// <reference path="../../typings/globals/jasmine/index.d.ts" />
+import {Game, limitGame, noLimitGame, potLimitGame, GameType} from "./gameObj";
+import {UserMock} from "../stubs/userMock"
+import {PlayerStub} from "../stubs/playerStub"
+import {Status} from "../player";
 
 describe("Game", function() {
   var glimit: Game;

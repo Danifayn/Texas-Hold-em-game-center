@@ -3,10 +3,6 @@ import { Player, Status } from "../player";
 import { User } from "../user";
 import * as logs from "../logs/logObj";
 import * as Cards from "./card";
-
-/*import { limitGame } from "./limitGame";
-import { noLimitGame } from "./noLimitGame";
-import { potLimitGame } from "./potLimitGame";*/
 import * as GT from "./gameObj";
 
 export enum Stage {

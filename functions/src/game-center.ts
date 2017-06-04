@@ -1,5 +1,6 @@
 import * as Games from './games/gameObj';
 import { User } from './user';
+import { userStats } from './userStats'
 import * as assign from 'object.assign';
 import * as logs from "./logs/logObj";
 
@@ -7,6 +8,7 @@ export class GameCenter {
     private defaultLeague: number = -1;
 
     private users: { [username: string]: User } = {};
+    private stats: { [username: string]: userStats} = {};
     private games: { [id: number]: Games.Game } = {};
     private lastGameId = 0;
     private leaguesCriteria = [100, 200, 300, 400, 500, 600, 700, 800, 900, -1/*infinity*/];
@@ -23,6 +25,7 @@ export class GameCenter {
         this.defaultLeague = -1;
 
         this.users = {};
+        this.stats = {};
         this.games = {};
         this.lastGameId = 0;
         this.leaguesCriteria = [100, 200, 300, 400, 500, 600, 700, 800, 900, -1/*infinity*/];
@@ -98,8 +101,10 @@ export class GameCenter {
             throw new Error('must be logged in to use this method !');
         if (!this.games[gameId])
             throw new Error('game not found');
-        user.leaveGame(this.games[gameId]);
-        user.endGame(this.games[gameId]);
+        let game = this.games[gameId];
+        user.leaveGame(game);
+        user.endGame(game);
+        this.stats[user.username].update((game.buyin * game.getPlayerByUsername(user.username).money) / game.initialChips, game.buyin);
         if (user.gamesPlayed == 10)
             this.updateUserLeague(user);
         this.logs.push(new logs.logEntry(++this.logId, user.username + " quit the game with id " + gameId, new Date()));
@@ -113,6 +118,7 @@ export class GameCenter {
         else {
             let id = ++this.lastUserId;
             this.users[username] = new User(username, password, email, this.defaultLeague, 0);
+            this.stats[username] = new userStats(username);
         }
         this.logs.push(new logs.logEntry(++this.logId, username + " has registered with the password " + password, new Date()));
     }
@@ -195,6 +201,7 @@ export class GameCenter {
     public static from(json: any): GameCenter {
         let gc: GameCenter = assign(new GameCenter(), json);
         gc.users = Object.keys(gc.users).reduce((acc, k) => ({ ...acc, [k]: User.from(gc.users[k]) }), {});
+        gc.stats = Object.keys(gc.stats).reduce((acc, k) => ({ ...acc, [k]: userStats.from(gc.stats[k]) }), {});
         gc.games = Object.keys(gc.games).reduce((acc, k) => ({ ...acc, [k]: Games.Game.from(gc.games[k]) }), {});
 
         return gc;
