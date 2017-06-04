@@ -5,7 +5,7 @@ import { Player } from './player';
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as assign from 'object.assign';
-import {gamePlayerLog} from "./log";
+import * as Game from "./games/gameObj";
 
 export const register = (gc: GameCenter, username: string, password: string, email: string) => {
     gc.register(username, password, email);
@@ -64,10 +64,6 @@ export const changeEmail = (gc: GameCenter, user: User, newEmail: string) => {
     user.setEmail(newEmail);
 };
 
-export const setDefaultLeague = (gc: GameCenter, user: User, defaultLeague: number) => {
-    gc.setDefaultLeague(user,defaultLeague);
-};
-
 export const setUserLeague = (gc: GameCenter,user: User, league: number, userToChange: string) => {
     gc.setUserLeague(user,userToChange,league);
 };
@@ -76,18 +72,31 @@ export const setLeagueCriteria = (gc: GameCenter, user: User, league: number, cr
     gc.setLeagueCriteria(user,league,criteria);
 };
 
-export const adFavTurn = (gc: GameCenter,user: User, gameId: number, logId: number) => {
-  let Turns = gc.getGame(gameId).userLogs;
-  let favTurn = null;
-  for(let i = 0; i < Turns.length; i++) {
-    if(Turns[i].logId == logId)
-      favTurn = Turns[i]
-  }
-  if(favTurn == null)
-    throw new Error("The turn does not exist!!!");
-  user.favTurns.push(favTurn);
-};
-
 export const getPlayableGames = (gc: GameCenter, user: User) => {
     gc.getPlayableGames(user);
 };
+
+export const endGame = (gc: GameCenter, user: User, gID: number) => {
+    let finishedgame = gc.getGame(gID);
+    finishedgame.allPlayers.forEach(player => {
+        let user = gc.getUser(player.playingUser);
+        gc.quitGame(user, gID);
+    });
+    finishedgame.endGame();
+}
+
+export const weeklyUpdate = (gc: GameCenter, user:User) => {
+    gc.weeklyUpdate();
+}
+
+export const reset = (gc: GameCenter) => {
+    gc.reset();
+    gc.register("test1", "123456", "test1@test.com");
+    gc.register("test2", "asdasd", "test2@test.com");
+    gc.register("test3", "111111", "test3@test.com");
+    gc.createGame(gc.getUser("test1"), 0, 10, 20, 2, 2, 4, false);
+    gc.createGame(gc.getUser("test2"), 1, 10, 20, 2, 2, 4, true);
+    gc.joinGame(gc.getUser("test3"), 1);
+    gc.getGame(1).addPlayer(gc.getUser("test3"));
+    gc.spectateGame(gc.getUser("test3"), 2);
+}

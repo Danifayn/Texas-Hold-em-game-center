@@ -1,5 +1,5 @@
-import {Card, CardType, CardRank} from "../game"
-import {Player, Status} from "../player"
+import { Card, CardType, CardRank } from "../games/gameObj"
+import { Player, Status } from "../player"
 
 export class PlayerStub implements Player {
     playerId: number;
@@ -14,7 +14,7 @@ export class PlayerStub implements Player {
 
     constructor() { }
 
-    deal(c:Card): boolean {
+    dealCards(c: Card): boolean {
         throw new Error('Method not implemented.');
     }
 }

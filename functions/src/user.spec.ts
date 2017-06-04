@@ -45,9 +45,6 @@ describe("User", function() {
         let pn = user.points;
 
         user.leaveGame(g);
-        expect(
-            user.points
-        ).toBe(pn+100);
 
         expect(
             user.activeGamesIds.length
@@ -77,14 +74,5 @@ describe("User", function() {
         expect(
             user.league
         ).toBe(1);
-    });
-    
-    it('should allow to addFave', ()=>{
-        let log = new gameLogStub();
-        let n = user.favTurns.length;
-        user.addFave(new gameLogStub);
-        expect(
-            user.favTurns.length
-        ).toBe(n+1);
     });
 });

@@ -13,25 +13,25 @@ describe("Player", function() {
 
   it('should allow up to 2 cards', ()=>{
     expect(
-      player.deal(cards[0])
+      player.dealCards(cards[0])
     ).toBe(true);
 
     expect(
-      player.deal(cards[1])
+      player.dealCards(cards[1])
     ).toBe(true);
   });
 
   it('should not allow more then 2 cards', ()=>{
     expect(
-      player.deal(cards[0])
+      player.dealCards(cards[0])
     ).toBe(true);
 
     expect(
-      player.deal(cards[1])
+      player.dealCards(cards[1])
     ).toBe(true);
 
     expect(
-      player.deal(cards[2])
+      player.dealCards(cards[2])
     ).toBe(false);
   });
 });

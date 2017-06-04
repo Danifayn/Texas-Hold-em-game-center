@@ -1,14 +1,13 @@
 /// <reference path="../typings/globals/jasmine/index.d.ts" />
 import { setUserLeague, register } from './index';
-import { User, Admin } from './user';
+import { User } from './user';
 import { GameCenter } from './game-center';
-import { Game, GameType } from "./game";
-import {gamePlayerLog} from "./log";
+import { Game, GameType } from "./games/gameObj";
+import {gamePlayerLog} from "./logs/logObj";
 import {UserMock} from "./stubs/userMock";
 
 describe("Game Center", function() {
   var gc: GameCenter;
-  var admin: Admin;
   var user1: User;
   var user2: User;
   var mUser: UserMock;
@@ -16,7 +15,6 @@ describe("Game Center", function() {
 
   beforeEach(()=>{
     gc = GameCenter.from({});
-    admin = new Admin();
     gc.register('user1','user1','user1@email.com');
     user1 = gc.getUser('user1');
     gc.register('user2','user2','user2@email.com');
@@ -25,43 +23,20 @@ describe("Game Center", function() {
     mUser = new UserMock();
   })
 
-  it('should not allow managing leagues for non-admin user', ()=>{
-    mUser.setPoints(Math.min(user1.points, user2.points)-1);
-    mUser.setLeague(Math.min(user1.league, user2.league)-1);
-
-    expect(
-      gc.isHighestRanking(mUser)
-    ).toBe(false);
-
-    expect(()=>{
-      gc.setDefaultLeague(mUser,3);
-    }).toThrowError();
-
-    expect(()=>{
-      gc.setUserLeague(mUser,'someusername',3);
-    }).toThrowError();
-
-    expect(()=>{
-      gc.setLeagueCriteria(mUser,4,300);
-    }).toThrowError();
-  });
-
-  it('should update default league correctly', ()=>{
+  it('should set default league correctly', ()=>{
     mUser.setPoints(Math.max(user1.points, user2.points)+1);
     mUser.setLeague(Math.max(user1.league, user2.league)+1);
 
-    gc.setDefaultLeague(mUser,5);
     gc.register('newcomer','newcomer','newcomer@email.com');
-    expect(gc.getUser('newcomer').league).toBe(5);
+    expect(gc.getUser('newcomer').league).toBe(-1);
   });
 
   it('should be able to set a user`s league', ()=>{
     mUser.setPoints(Math.max(user1.points, user2.points)+1);
     mUser.setLeague(Math.max(user1.league, user2.league)+1);
 
-    gc.setDefaultLeague(mUser,5);
     gc.register('newcomer','newcomer','newcomer@email.com');
-    expect(gc.getUser('newcomer').league).toBe(5);
+    expect(gc.getUser('newcomer').league).toBe(-1);
     mUser.setLeague(Math.max(mUser.league, gc.getUser('newcomer').league)+1);
     gc.setUserLeague(mUser,'newcomer',2);
     expect(gc.getUser('newcomer').league).toBe(2);
@@ -75,8 +50,9 @@ describe("Game Center", function() {
     let gameId = gc.createGame(user1, GameType.NoLimit,50,50,50,2,21,true); // create and join the game
 
     user1.points += 313
+    user1.gamesPlayed = 9;
 
-    gc.leaveGame(user1,gameId); // leave
+    gc.quitGame(user1,gameId); // leave
     expect(user1.league).toBe(3);
   });
 

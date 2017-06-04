@@ -1,11 +1,7 @@
-import { Game } from './game';
+import * as Games from './games/gameObj';
 import * as assign from 'object.assign';
-import {gamePlayerLog} from "./log";
 
-export const ADMIN_USERNAME = 'admin';
-export const ADMIN_PASSWORD = 'admin';
-
-export class User{
+export class User {
     username: string;
     password: string;
     email: string;
@@ -13,37 +9,29 @@ export class User{
     points: number = 0;
     activeGamesIds: number[] = [];
     spectatingGamesIds: number[] = [];
-
-    favTurns: gamePlayerLog[] = [];
+    gamesPlayed: number = 0;
+    money = 200;
 
     constructor(username?: string, password?: string, email?: string, league?: number, points?: number) {
         this.username = username;
         this.password = password;
         this.email = email;
-        if(league) this.league = league;
-        if(points) this.points = points;
+        if (league) this.league = league;
+        if (points) this.points = points;
         else this.points = 0;
     }
 
-    static from(json: any): User {
-        let user = null;
-        user = json.username === ADMIN_USERNAME && json.password === ADMIN_PASSWORD ? assign(new Admin(), json) : assign(new User(), json);
-        user.favTurns = user.favTurns.map(x => gamePlayerLog.from(x));
-        return user;
+    public joinGame(game: Games.Game) {
+        this.activeGamesIds.push(game.gameId);
     }
 
-    public joinGame(game: Game) {
-        this.activeGamesIds.push(game.id);
+    public spectateGame(game: Games.Game) {
+        this.spectatingGamesIds.push(game.gameId);
     }
 
-    public spectateGame(game: Game) {
-        this.spectatingGamesIds.push(game.id);
-    }
-
-    public leaveGame(game: Game) {
-        this.points += game.getPlayerByUsername(this.username).points;
-        this.activeGamesIds = this.activeGamesIds.filter(x => x != game.id);
-        this.spectatingGamesIds = this.spectatingGamesIds.filter(x => x != game.id);
+    public leaveGame(game: Games.Game) {
+        this.activeGamesIds = this.activeGamesIds.filter(x => x != game.gameId);
+        this.spectatingGamesIds = this.spectatingGamesIds.filter(x => x != game.gameId);
     }
 
     public setEmail(email: string) {
@@ -57,12 +45,15 @@ export class User{
         this.league = leauge;
     }
 
-    public addFave(turn: gamePlayerLog) {
-        this.favTurns.push(turn);
+    public endGame(game: Games.Game) {
+        this.gamesPlayed++;
+        this.money += (game.buyin * game.getPlayerByUsername(this.username).money) / game.initialChips;
     }
-}
 
-export class Admin extends User {
-    constructor() {super(ADMIN_USERNAME,ADMIN_PASSWORD);}
+    static from(json: any): User {
+        let user = null;
+        user = assign(new User(), json);
+        return user;
+    }
 }
 

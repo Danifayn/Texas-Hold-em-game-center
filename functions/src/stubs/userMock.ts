@@ -1,6 +1,6 @@
-import { User, Admin } from '../user';
-import { Game } from "../game";
-import {gamePlayerLog} from "../log";
+import { User } from '../user';
+import { Game } from "../games/gameObj";
+import { gamePlayerLog } from "../logs/logObj";
 
 export class UserMock implements User {
   username: string;
@@ -11,8 +11,10 @@ export class UserMock implements User {
   activeGamesIds: number[];
   spectatingGamesIds: number[];
   favTurns: gamePlayerLog[] = [];
+  gamesPlayed: number = 0;
+  money: number = 200;
 
-  public constructor() {}
+  public constructor() { }
 
   public joinGame(game: Game): void {
     throw new Error('Method not implemented.');
@@ -30,6 +32,9 @@ export class UserMock implements User {
     throw new Error('Method not implemented.');
   }
   public addFave(turn: gamePlayerLog) {
+    throw new Error('Method not implemented.');
+  }
+  public endGame(game: Game) {
     throw new Error('Method not implemented.');
   }
 

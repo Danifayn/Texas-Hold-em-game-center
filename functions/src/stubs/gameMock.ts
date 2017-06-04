@@ -1,85 +1,79 @@
-import {Game, GameType, Card, Stage} from "../game"
-import {Status} from "../player"
-import{UserMock} from "./usermock"
-import {gamePlayerLog, gameSystemLog} from "../log"
-import {PlayerStub} from "./playerStub"
+import { Game, GameType, Stage } from "../games/gameObj"
+import { Status } from "../player"
+import { UserMock } from "./usermock"
+import * as logs from "../logs/logObj"
+import * as Cards from "../games/card"
+import { PlayerStub } from "./playerStub"
 
-export class GameMock implements Game {
-    id: number;
-    stage: Stage = Stage.Preflop;
-    openCards: Card[] = [];
-    freeCards: Card[] = [];
-    bet: number = 0;
-    type: GameType = GameType.NoLimit;
+export class GameMock extends Game {
+    gameId: number;
+    spectatingAllowed: boolean = true;
+    type: GameType = null;
     buyin: number = 0;
     league: number = 0;
-    initialChips: number = 1;
+    newPlayerId: number = 0;
     minBet: number = 1;
+    initialChips: number = 1;
     minPlayers: number = 2;
     maxPlayers: number = 23;
-    spectatingAllowed: boolean = true;
+
+    stage: Stage = Stage.Preflop;
+    pot: number = 0;
+    bet: number = 0;
+
     allPlayers: PlayerStub[] = [];
     currentPlayer: number = null;
     activePlayers: number[] = [];
-    smallBet: number = null;
-    pot: number = 0;
-    newPlayerId: number = 0;
+    smallBlind: number = null;
     bigBlind: number = null;
 
-    userLogs: gamePlayerLog[] = [];
-    systemLogs : gameSystemLog[] = [];
+    tableCards: Cards.Card[] = [];
+    deck: Cards.Card[] = [];
+
+    userLogs: logs.gamePlayerLog[] = [];
+    systemLogs: logs.gameSystemLog[] = [];
     logId: number = 0;
 
     ps: PlayerStub;
 
-    constructor() {}
+    constructor() {
+        super();
+     }
 
     addPlayer(user: UserMock): void {
-    throw new Error('Method not implemented.');
+        throw new Error('Method not implemented.');
     }
 
     removePlayer(user: UserMock): void {
-    throw new Error('Method not implemented.');
+        throw new Error('Method not implemented.');
     }
 
     doAction(status: Status, amount: number, player: PlayerStub): void {
-    throw new Error('Method not implemented.');
+        throw new Error('Method not implemented.');
     }
 
-    doCheck(player: PlayerStub) : void {
-    throw new Error('Method not implemented.');
-    }
-
-    doFold(player: PlayerStub) : void {
-    throw new Error('Method not implemented.');
-    }
-
-    doRaise(player: PlayerStub, amount: number) : void {
-    throw new Error('Method not implemented.');
-    }
-
-    doRaiseBody(player: PlayerStub, amount: number) : void{
-    throw new Error('Method not implemented.');
-    }
-
-    dealCard(): void {
-    throw new Error('Method not implemented.');
-    }
-
-    dealCardsToPlayer(): void {
-    throw new Error('Method not implemented.');
+    raiseBody(player: PlayerStub, amount: number): void {
+        throw new Error('Method not implemented.');
     }
 
     startARound(): void {
-    throw new Error('Method not implemented.');
+        throw new Error('Method not implemented.');
     }
 
     finishARound(): void {
-    throw new Error('Method not implemented.');
+        throw new Error('Method not implemented.');
     }
 
     getPlayerByID(id: number): PlayerStub {
-    throw new Error('Method not implemented.');
+        throw new Error('Method not implemented.');
+    }
+
+    endGame() {
+        throw new Error('Method not implemented.');
+    }
+
+    static from(json: any): Game {
+        throw new Error('Method not implemented.');
     }
 
     getPlayerByUsername(name: string): PlayerStub {
@@ -91,6 +85,6 @@ export class GameMock implements Game {
     }
 
     setID(id: number) {
-        this.id = id;
+        this.gameId = id;
     }
 }
