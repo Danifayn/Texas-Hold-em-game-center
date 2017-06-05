@@ -1,4 +1,9 @@
 path / {
   read() { true }
-  write() { true }
+  write() { false }
+}
+
+path /users/{username} {
+  read() { username == "test1" }
+  write() { false }
 }
