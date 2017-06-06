@@ -1,5 +1,6 @@
 import { User } from './user';
 import { GameCenter } from './game-center';
+import { env } from './env'
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as assign from 'object.assign';
@@ -45,26 +46,27 @@ export const createHandler = (f: RequestHandler) => {
     return admin.database().ref('/').transaction(db => {
       if(!db) return 0;
       var gc: GameCenter = new GameCenter();
+      var everything: env = new env();
       var params: any;
       var extractor: Extractor;
       try{
-        gc = GameCenter.from(db);
+        everything = env.from(db);
         params = assign({},req.query, req.params, req.body,req.headers);
         extractor = createExtractor(params);
 
         let user = null;
+        gc = everything.test;
         if(params.token){
+          gc = everything.real;
           admin.auth().verifyIdToken(params.token)
           .then(function(decodedToken) {
             var uid = decodedToken.uid;
             user = gc.getUserById(uid);
           }).catch(function(error) {
-            user = gc.getUser(params.username);
-            if(!user || user.password !== params.password)
-              user = null;
+            return false;
           });
         }
-        if(params.username && params.password){
+        else if(params.username && params.password){
           user = gc.getUser(params.username);
           if(!user || user.password !== params.password)
             user = null;
@@ -73,7 +75,7 @@ export const createHandler = (f: RequestHandler) => {
         result = f(gc, extractor , user);
         if(result === undefined)
           result = true;
-        return gc;
+        return everything;
       }
       catch(e){
         error = e;

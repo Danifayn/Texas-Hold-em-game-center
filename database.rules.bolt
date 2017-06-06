@@ -1,4 +1,7 @@
-pat /games/{gid}/privates/allPlayers/{pid} is Player
+path /games/{gid}/privates/allPlayers/{pid} is Player {
+  read() { false }
+  write() { false }
+}
 
 
 path / {

@@ -288,7 +288,7 @@ export abstract class Game {
     private static getTypedGame(json: any): Game {
         let gType;
         try {
-            gType = json.type;
+            gType = json.publics.type;
         } catch (e) {
             return null;
         }
