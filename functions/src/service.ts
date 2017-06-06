@@ -49,7 +49,7 @@ export const createHandler = (f: RequestHandler) => {
     if (params.token) {
       return admin.auth().verifyIdToken(params.token)
         .then(function (decodedToken) {
-          admin.database().ref('/').transaction(db => {
+          return admin.database().ref('/').transaction(db => {
             if (!db) return 0;
             var gc: GameCenter = new GameCenter();
             var everything: env = new env();
@@ -78,8 +78,10 @@ export const createHandler = (f: RequestHandler) => {
             }
           }, onComplete, true);
         }).catch(function (error) {
-          result = false;
-          return;
+          return admin.database().ref('/').transaction(db => {
+            result = false;
+            return;
+          }, onComplete, true);
           /*admin.database().ref('/').transaction(db => {
             if (!db) return 0;
             var gc: GameCenter = new GameCenter();
