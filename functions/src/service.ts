@@ -47,9 +47,9 @@ export const createHandler = (f: RequestHandler) => {
     params = assign({}, req.query, req.params, req.body, req.headers);
 
     if (params.token) {
-      admin.auth().verifyIdToken(params.token)
+      return admin.auth().verifyIdToken(params.token)
         .then(function (decodedToken) {
-          return admin.database().ref('/').transaction(db => {
+          admin.database().ref('/').transaction(db => {
             if (!db) return 0;
             var gc: GameCenter = new GameCenter();
             var everything: env = new env();
@@ -59,7 +59,7 @@ export const createHandler = (f: RequestHandler) => {
               extractor = createExtractor(params);
 
               let user = gc.getUserById(decodedToken.uid);
-              if(!user) {
+              if (!user) {
                 user = new User();
                 user.uId = decodedToken.uid;
               }
@@ -78,7 +78,9 @@ export const createHandler = (f: RequestHandler) => {
             }
           }, onComplete, true);
         }).catch(function (error) {
-          return admin.database().ref('/').transaction(db => {
+          result = false;
+          return;
+          /*admin.database().ref('/').transaction(db => {
             if (!db) return 0;
             var gc: GameCenter = new GameCenter();
             var everything: env = new env();
@@ -99,7 +101,7 @@ export const createHandler = (f: RequestHandler) => {
                 gc.logError(req.url, params, e);
               return;
             }
-          }, onComplete, true);
+          }, onComplete, true);*/
         });
     } else {
       return admin.database().ref('/').transaction(db => {

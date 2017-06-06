@@ -9,7 +9,7 @@ import { gamePlayerLog } from "./logs/logObj";
 import * as SL from "./serviceLayer"
 admin.initializeApp(functions.config().firebase);
 
-export const register = createHandler((gc, extractor, user) => SL.register(gc, extractor.string('username'), extractor.string('password'), extractor.string('email'), user.uId));
+export const register = createHandler((gc, extractor, user) => SL.register(gc, extractor.string('username'), extractor.string('password'), extractor.string('email'), (user)?user.uId:null));
 
 export const createGame = createHandler((gc, extractor, user) =>
   SL.createGame(gc,
