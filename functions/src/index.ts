@@ -9,21 +9,7 @@ import { gamePlayerLog } from "./logs/logObj";
 import * as SL from "./serviceLayer"
 admin.initializeApp(functions.config().firebase);
 
-export const register = createHandler((gc, extractor) => {
-  let uid = "nothing";
-  try {
-    let token = extractor.string('token');
-    admin.auth().verifyIdToken(token)
-          .then(function(decodedToken) {
-            uid = decodedToken.uid;
-          }).catch(function(error) {
-            uid = "kaki";
-          });
-  } catch(error) {
-    uid = "noToken";
-  }
-  SL.register(gc, extractor.string('username'), extractor.string('password'), extractor.string('email'), uid);
-});
+export const register = createHandler((gc, extractor, user) => SL.register(gc, extractor.string('username'), extractor.string('password'), extractor.string('email'), user.uId));
 
 export const createGame = createHandler((gc, extractor, user) =>
   SL.createGame(gc,
