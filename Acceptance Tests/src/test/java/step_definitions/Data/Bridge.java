@@ -7,68 +7,70 @@ import java.util.Collection;
  */
 public interface Bridge {
     void setUpDatabase();
+    
+    //NOT FINISHED!!!!
 
-    void logIn(String username, String password);
+    void logIn(String username, String password);//not using (login is done using firebase)
 
-    boolean loggedIn(String username);
+    boolean loggedIn(String username);//not using
 
-    void logOut(String username);
+    void logOut(String username);//not using
 
-    void register(String username, String password, String email, String firstName, String lastName, String profilePicURL);
+    void register(String username, String password, String email, String firstName, String lastName, String profilePicURL);//using register
 
-    void forceLogIn(String username);
+    void forceLogIn(String username);//not using
 
-    boolean userExists(String username);
+    boolean userExists(String username);//using isUserExisting
 
-    void deleteUser(String username);
+    void deleteUser(String username);//using deleteUser
 
-    void createGame(String gameName, String gameType, String buyIn, String chips, String minBet, String minPlayers, String maxPlayers, String spectatorsAllowed, String playerName);
+    void createGame(String gameName, String gameType, String buyIn, String chips, String minBet, String minPlayers, String maxPlayers, String spectatorsAllowed, String playerName);//using createGame
 
-    boolean gameExists(String game);
+    boolean gameExists(String game);//using gameExists
 
-    void deleteGame(String game);
+    void deleteGame(String game);//using deleteGame
 
-    boolean playerInGame(String playerName, String game);
+    boolean playerInGame(String playerName, String game);//using isUSerPlaying
 
-    void addPlayerToGame(String playerName, String game);
+    void addPlayerToGame(String playerName, String game);//using joinGame
 
-    void setPlayerCash(String playerName, Integer cash);
+    void setPlayerCash(String playerName, Integer cash);//user has cash, player has chips
 
-    void addSpectator(String playerName, String game);
+    void addSpectator(String playerName, String game);//using spectate
 
-    boolean spectatorInGame(String playerName, String game);
+    boolean spectatorInGame(String playerName, String game);//using isUserSpectating
 
-    boolean gameCanStart(String gameName);
+    boolean gameCanStart(String gameName);//using isGameReady
 
-    void removeUserFromGame(String userName, String gameName);
+    void removeUserFromGame(String userName, String gameName);//using leaveGame
 
-    boolean isPlayerSpectatingGame(String playerName, String gameName);
+    boolean isPlayerSpectatingGame(String playerName, String gameName);//same as spectatorInGame
 
-    int gameGetPlayerCount(String gameName);
+    int gameGetPlayerCount(String gameName);//using getGamePlayerAmount
 
-    void gameSetMinimumPlayers(String gameName, int minimumAmount);
+    void gameSetMinimumPlayers(String gameName, int minimumAmount);//using setMinPlayers
 
-    void changeUserPassword(String user, String pw, String confirmPW);
+    void changeUserPassword(String user, String pw, String confirmPW);//using changepassword
 
-    String getUserFirstName(String user);
+    String getUserFirstName(String user);//user doesnt have a first name
 
-    String getUserLastName(String user);
+    String getUserLastName(String user);//user doesnt have a last name
 
-    String getUserProfilePic(String user);
+    String getUserProfilePic(String user);//not using
 
-    void changeUserInformation(String user, String fname, String lname, String profilePic);
+    void changeUserInformation(String user, String fname, String lname, String profilePic);//user has only name mail and pass
 
-    Collection<String> listAvailableGames(String userName);
+    Collection<String> listAvailableGames(String userName);//using getPlayablegameNames
 
-    Collection<String> listAvailableSpectatableGames(String userName);
+    Collection<String> listAvailableSpectatableGames(String userName);//using getSpectatablegameNames
 
-    void filterPlayerGamesByPreference(String player, String preference);
+    void filterPlayerGamesByPreference(String player, String preference);//done on client side
 
-    void filterPlayerGamesByPotSize(String player, Integer potSize);
+    void filterPlayerGamesByPotSize(String player, Integer potSize);//done on client side
 
-    void filterPlayerGamesByPlayerName(String player, String playerNameToSearch);
+    void filterPlayerGamesByPlayerName(String player, String playerNameToSearch);//done on client side
 
-    void startGame(String gameName);
+    void startGame(String gameName);//using startGame
 
     Integer getPlayerCash(String playerName);
 
@@ -78,39 +80,39 @@ public interface Bridge {
 
     String getCurrentPlayer(String gameName);
 
-    void dealCards(String gameName);
+    void dealCards(String gameName);//automatic action
 
-    String lastGameAction(String playerName, String gameName);
+    String lastGameAction(String playerName, String gameName);//not saved, only per user
 
     int getGamePot(String gameName);
 
     void setPot(String gameName, Integer pot);
 
-    void raise(String playerName, Integer raise, String gameName);
+    void raise(String playerName, Integer raise, String gameName);//using doAction
 
-    void setRoundNumber(String gameName, Integer round);
+    void setRoundNumber(String gameName, Integer round);//not using round number
 
     void setBigBlind(String gameName, Integer blind);
 
-    void setGameType(String gameName, String gameType);
+    void setGameType(String gameName, String gameType);//cannot change type, type is set in creation
 
-    boolean entitledToPot(String playerName, String gameName);
+    boolean entitledToPot(String playerName, String gameName);//what?
 
-    void fold(String playerName, String gameName);
+    void fold(String playerName, String gameName);//using doAction
 
-    void setPlayerRequiredBet(String playerName, String gameName, Integer chips);
+    void setPlayerRequiredBet(String playerName, String gameName, Integer chips);//what?
 
-    void check(String playerName, String gameName);
+    void check(String playerName, String gameName);//using doAction
 
     void setPlayerChipCount(String playerName, String gameName, Integer chip);
 
     Integer getLeaguePromotionThreshold();
 
-    void setLeaguePromotionThreshold(Integer points);
+    void setLeaguePromotionThreshold(Integer points);//using setLeagueCriteria
 
     String getPlayerLeague(String playerName, String league);
 
-    void changePlayerLeague(String playerName, String league);
+    void changePlayerLeague(String playerName, String league);//using setUserLeague
 
     void setDefaultLeague(String league);
 }
