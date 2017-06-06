@@ -7,7 +7,7 @@ import * as logs from "./logs/logObj";
 export class GameCenter {
     private defaultLeague: number = -1;
 
-    private users: { [username: string]: User } = {};
+    private users: { [uid: number]: User } = {};
     private stats: { [username: string]: userStats} = {};
     private games: { [id: number]: Games.Game } = {};
     private lastGameId = 0;
@@ -104,27 +104,44 @@ export class GameCenter {
         let game = this.games[gameId];
         user.leaveGame(game);
         user.endGame(game);
-        this.stats[user.username].update((game.buyin * game.getPlayerByUsername(user.username).money) / game.initialChips, game.buyin);
+        this.stats[user.username].update((game.buyin * game.getPlayerByUserId(user.uId).money) / game.initialChips, game.buyin);
         if (user.gamesPlayed == 10)
             this.updateUserLeague(user);
         this.logs.push(new logs.logEntry(++this.logId, user.username + " quit the game with id " + gameId, new Date()));
     }
 
-    register(username: string, password: string, email: string) {
+    register(username: string, password: string, email: string, token?: string) {
         if (/^[a-zA-Z0-9- ]*$/.test(username) == false)
             throw new Error('username cannot contain special characters !');
-        if (this.users[username])
+        if (this.getUser(username))
             throw new Error('username already taken !');
         else {
-            let id = ++this.lastUserId;
-            this.users[username] = new User(username, password, email, this.defaultLeague, 0);
-            this.stats[username] = new userStats(username);
+            if(token){
+                admin.auth().verifyIdToken(token)
+                .then(function(decodedToken) {
+                    var uid = decodedToken.uid;
+                    this.users[uid] = new User(uid, username, password, email, this.defaultLeague, 0);
+                    this.stats[username] = new userStats(username);
+                }).catch(function(error) {
+                    throw error;
+                });
+            } else {
+                this.users[username+"'s uId"] = new User(username+"'s uId", username, password, email, this.defaultLeague, 0);
+                this.stats[username] = new userStats(username);
+            }
         }
         this.logs.push(new logs.logEntry(++this.logId, username + " has registered with the password " + password, new Date()));
     }
 
+    getUserById(uId: string): User {
+        return this.users[uId];
+    }
+
     getUser(username: string): User {
-        return this.users[username];
+        for (let uid in this.users)
+            if(this.users[uid].username == username)
+                return this.users[uid];
+        return null;
     }
 
     getGame(gameId: number): Games.Game {
@@ -132,9 +149,9 @@ export class GameCenter {
     }
 
     setUserLeague(user: User, username: string, league: number) {
-        if (!this.users[username])
+        if (!this.getUser(username))
             throw new Error('user not found');
-        this.users[username].setLeague(league);
+        this.getUser(username).setLeague(league);
         this.logs.push(new logs.logEntry(++this.logId, user.username + " has set " + username + "s league to be" + league, new Date()));
     }
 
@@ -147,8 +164,8 @@ export class GameCenter {
 
         this.logs.push(new logs.logEntry(++this.logId, user.username + " has set " + league + " league cretiria to be " + criteria, new Date()));
 
-        for (let username in this.users)
-            this.updateUserLeague(this.users[username]);
+        for (let uid in this.users)
+            this.updateUserLeague(this.users[uid]);
     }
 
     private updateUserLeague(user: User) {
@@ -162,22 +179,22 @@ export class GameCenter {
 
     weeklyUpdate() {
         let usernum = 0;
-        for (let username in this.users)
-            if (this.users[username].league != -1)
+        for (let uid in this.users)
+            if (this.users[uid].league != -1)
                 usernum++;
         let leaguenum = Math.min(10, usernum / 2);
         let scores = [];
-        for (let username in this.users)
-            if (this.users[username].league != -1)
-                scores.push(this.users[username].points);
+        for (let uid in this.users)
+            if (this.users[uid].league != -1)
+                scores.push(this.users[uid].points);
         scores.sort((a, b) => a - b);
         this.leaguesCriteria = [];
         for (let i = 0; i < leaguenum; i++) {
             this.leaguesCriteria.push(scores[i * usernum / leaguenum]);
         }
-        for (let username in this.users)
-            if (this.users[username].league != -1)
-                this.updateUserLeague(this.users[username]);
+        for (let uid in this.users)
+            if (this.users[uid].league != -1)
+                this.updateUserLeague(this.users[uid]);
     }
 
     logError(url: string, params: any, e: Error) {

@@ -18,33 +18,36 @@ describe("Game", function() {
     gpotlimit = new potLimitGame(2, 1, 5, 20, 4, 2, 5, true);
     user1= new UserMock();
     user1.username = "u1";
+    user1.uId = "u1";
     user2= new UserMock();
     user2.username = "u2";
+    user2.uId = "u2";
     user3= new UserMock();
     user3.username = "u3";
+    user3.uId = "u3";
   });
 
   it('should allow to add a new player', ()=>{
     glimit.addPlayer(user1);
 
     expect(
-      glimit.getPlayerByUsername("u1").playingGameId
+      glimit.getPlayerByUserId("u1").playingGameId
     ).toBe(glimit.gameId);
 
     expect(
-      glimit.getPlayerByUsername("u1").isActive
+      glimit.getPlayerByUserId("u1").isActive
     ).toBe(true);
     
     glimit.removePlayer(user1);
 
     expect(
-      glimit.getPlayerByUsername("u1").isActive
+      glimit.getPlayerByUserId("u1").isActive
     ).toBe(false);
     
     glimit.addPlayer(user2);
 
     expect(
-      glimit.getPlayerByUsername("u1").isActive
+      glimit.getPlayerByUserId("u1").isActive
     ).toBe(false);
   });
 
@@ -60,9 +63,9 @@ describe("Game", function() {
       glimit.deck.length
     ).toBe(46);
 
-    let p1 = glimit.getPlayerByUsername("u1");
-    let p2 = glimit.getPlayerByUsername("u2");
-    let p3 = glimit.getPlayerByUsername("u3");
+    let p1 = glimit.getPlayerByUserId("u1");
+    let p2 = glimit.getPlayerByUserId("u2");
+    let p3 = glimit.getPlayerByUserId("u3");
 
     expect(
       p1.money > p2.money
@@ -96,9 +99,9 @@ describe("Game", function() {
 
     glimit.startARound();
 
-    let p1 = glimit.getPlayerByUsername("u1");
-    let p2 = glimit.getPlayerByUsername("u2");
-    let p3 = glimit.getPlayerByUsername("u3");
+    let p1 = glimit.getPlayerByUserId("u1");
+    let p2 = glimit.getPlayerByUserId("u2");
+    let p3 = glimit.getPlayerByUserId("u3");
 
     glimit.doAction(Status.Raise, glimit.minBet, p3);
     glimit.doAction(Status.Raise, glimit.minBet-(Math.floor(glimit.minBet/2)), p1);
@@ -116,9 +119,9 @@ describe("Game", function() {
 
     glimit.startARound();
 
-    let p1 = glimit.getPlayerByUsername("u1");
-    let p2 = glimit.getPlayerByUsername("u2");
-    let p3 = glimit.getPlayerByUsername("u3");
+    let p1 = glimit.getPlayerByUserId("u1");
+    let p2 = glimit.getPlayerByUserId("u2");
+    let p3 = glimit.getPlayerByUserId("u3");
 
     glimit.doAction(Status.Raise, glimit.minBet, p3);
     glimit.doAction(Status.Raise, glimit.minBet-(Math.floor(glimit.minBet/2)), p1);

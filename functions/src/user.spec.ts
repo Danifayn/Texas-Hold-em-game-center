@@ -9,7 +9,7 @@ describe("User", function() {
     var g: GameMock;
 
     beforeEach(()=>{
-        user = new User("u","p1","e1",0,0);
+        user = new User("test","u","p1","e1",0,0);
         g = new GameMock();
         g.setID(7);
     })

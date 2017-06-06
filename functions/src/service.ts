@@ -53,6 +53,17 @@ export const createHandler = (f: RequestHandler) => {
         extractor = createExtractor(params);
 
         let user = null;
+        if(params.token){
+          admin.auth().verifyIdToken(params.token)
+          .then(function(decodedToken) {
+            var uid = decodedToken.uid;
+            user = gc.getUserById(uid);
+          }).catch(function(error) {
+            user = gc.getUser(params.username);
+            if(!user || user.password !== params.password)
+              user = null;
+          });
+        }
         if(params.username && params.password){
           user = gc.getUser(params.username);
           if(!user || user.password !== params.password)

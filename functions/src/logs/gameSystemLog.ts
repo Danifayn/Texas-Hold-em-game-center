@@ -24,16 +24,16 @@ export class gameSystemLog extends logEntry {
             this.massage = "opened " + cards[0] + "on the table";
         } else {
             if (action == logType.entering) {
-                this.massage = player.playingUser + " has entered the game";
+                this.massage = player.userId + " has entered the game";
             } else
                 if (action == logType.leaving) {
-                    this.massage = player.playingUser + " has left the game";
+                    this.massage = player.userId + " has left the game";
                 } else
                     if (action == logType.cardsToPlayer) {
                         this.cards = cards;
                         this.massage = "delt ";
                         cards.forEach(x => this.massage += x + " ");
-                        this.massage += "to " + player.playingUser;
+                        this.massage += "to " + player.userId;
                     }
         }
     }

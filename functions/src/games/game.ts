@@ -19,33 +19,8 @@ export enum GameType {
 }
 
 export abstract class Game {
-    gameId: number;
-    spectatingAllowed: boolean = true;
-    type: GameType = null;
-    buyin: number = 0;
-    league: number = 0;
-    newPlayerId: number = 0;
-    minBet: number = 1;
-    initialChips: number = 1;
-    minPlayers: number = 2;
-    maxPlayers: number = 23;
-
-    stage: Stage = Stage.Preflop;
-    pot: number = 0;
-    bet: number = 0;
-
-    allPlayers: Player[] = [];
-    currentPlayer: number = null;
-    activePlayers: number[] = [];
-    smallBlind: number = null;
-    bigBlind: number = null;
-
-    tableCards: Cards.Card[] = [];
-    deck: Cards.Card[] = [];
-
-    userLogs: logs.gamePlayerLog[] = [];
-    systemLogs: logs.gameSystemLog[] = [];
-    logId: number = 0;
+    publics: gamePublics;
+    privates: gamePrivates;
 
     constructor(id?: number,
         league?: number,
@@ -56,6 +31,10 @@ export abstract class Game {
         minPlayers?: number,
         maxPlayers?: number,
         spectatingAllowed?: boolean) {
+
+        this.publics = new gamePublics();
+        this.privates = new gamePrivates();
+
         this.gameId = id;
         this.type = gameType;
         this.buyin = buyin;
@@ -70,7 +49,7 @@ export abstract class Game {
 
     addPlayer(user: User): void {
         let exist = false;
-        this.allPlayers.forEach(x => exist = (exist || (x.playingUser == user.username)));
+        this.allPlayers.forEach(x => exist = (exist || (x.userId == user.uId)));
         if (!exist) {
             this.addNewPlayer(user);
         } else {
@@ -90,11 +69,11 @@ export abstract class Game {
     }
 
     private restoreOldPlayer(user: User) {
-        this.allPlayers.forEach(x => { if (x.playingUser == user.username) x.isActive == true; });
+        this.allPlayers.forEach(x => { if (x.userId == user.uId) x.isActive == true; });
     }
 
     removePlayer(user: User): void {
-        this.allPlayers.forEach(x => { if (x.playingUser == user.username) x.isActive = false; });
+        this.allPlayers.forEach(x => { if (x.userId == user.uId) x.isActive = false; });
     }
 
     doAction(status: Status, amount: number, player: Player): void {
@@ -194,10 +173,10 @@ export abstract class Game {
 
     private dealSingleCardToPlayer(player: Player) {
         let rnd = Math.floor(Math.random() * this.deck.length);
+        this.systemLogs.push(new logs.gameSystemLog(++this.logId, logs.logType.cardsToPlayer, player, [this.deck[rnd].toString()], new Date()));
         if (player.dealCards(this.deck[rnd])) {
             this.deck.splice(rnd, 1);
         }
-        this.systemLogs.push(new logs.gameSystemLog(++this.logId, logs.logType.cardsToPlayer, player, [this.deck[rnd].toString()], new Date()));
     }
 
     startARound(): void {
@@ -281,8 +260,8 @@ export abstract class Game {
         return pList[0];
     }
 
-    getPlayerByUsername(name: string): Player {
-        let pList = this.allPlayers.filter(p => { return p.playingUser == name });
+    getPlayerByUserId(uId: string): Player {
+        let pList = this.allPlayers.filter(p => { return p.userId == uId });
         if (pList.length == 0)
             return null;
         return pList[0];
@@ -300,11 +279,9 @@ export abstract class Game {
         if (game == null)
             throw new Error("cannot create Game!");
 
-        game.tableCards = game.tableCards.map(x => Cards.Card.from(x));
-        game.deck = game.deck.map(x => Cards.Card.from(x));
-        game.allPlayers = game.allPlayers.map(x => Player.from(x));
-        game.userLogs = game.userLogs.map(x => logs.gamePlayerLog.from(x));
-        game.systemLogs = game.systemLogs.map(x => logs.gameSystemLog.from(x));//
+        game.publics = gamePublics.from(game.publics);
+        game.privates = gamePrivates.from(game.privates);
+
         return game;
     }
 
@@ -322,5 +299,212 @@ export abstract class Game {
         if (gType == GameType.PotLimit)
             return assign(new GT.potLimitGame(), json);
         return null;
+    }
+
+    get gameId():number {
+	return this.publics.gameId;
+    }
+    set gameId(setter:number) {
+        this.publics.gameId = setter;
+    }
+
+    get spectatingAllowed():boolean {
+        return this.publics.spectatingAllowed;
+    }
+    set spectatingAllowed(setter:boolean) {
+        this.publics.spectatingAllowed = setter;
+    }
+
+    get type():GameType {
+        return this.publics.type;
+    }
+    set type(setter:GameType) {
+        this.publics.type = setter;
+    }
+
+    get buyin():number {
+        return this.publics.buyin;
+    }
+    set buyin(setter:number) {
+        this.publics.buyin = setter;
+    }
+
+    get league():number {
+        return this.publics.league;
+    }
+    set league(setter:number) {
+        this.publics.league = setter;
+    }
+
+    get minBet():number {
+        return this.publics.minBet;
+    }
+    set minBet(setter:number) {
+        this.publics.minBet = setter;
+    }
+
+    get initialChips():number {
+        return this.publics.initialChips;
+    }
+    set initialChips(setter:number) {
+        this.publics.initialChips = setter;
+    }
+
+    get minPlayers():number {
+        return this.publics.minPlayers;
+    }
+    set minPlayers(setter:number) {
+        this.publics.minPlayers = setter;
+    }
+
+    get maxPlayers():number {
+        return this.publics.maxPlayers;
+    }
+    set maxPlayers(setter:number) {
+        this.publics.maxPlayers = setter;
+    }
+
+    get stage():Stage {
+        return this.publics.stage;
+    }
+    set stage(setter:Stage) {
+        this.publics.stage = setter;
+    }
+
+    get pot():number {
+        return this.publics.pot;
+    }
+    set pot(setter:number) {
+        this.publics.pot = setter;
+    }
+
+    get bet():number {
+        return this.publics.bet;
+    }
+    set bet(setter:number) {
+        this.publics.bet = setter;
+    }
+
+    get smallBlind():number {
+        return this.publics.smallBlind;
+    }
+    set smallBlind(setter:number) {
+        this.publics.smallBlind = setter;
+    }
+
+    get bigBlind():number {
+        return this.publics.bigBlind;
+    }
+    set bigBlind(setter:number) {
+        this.publics.bigBlind = setter;
+    }
+    
+    get tableCards():Cards.Card[] {
+        return this.publics.tableCards;
+    }
+    set tableCards(setter:Cards.Card[]) {
+        this.publics.tableCards = setter;
+    }
+
+    get newPlayerId():number {
+        return this.privates.newPlayerId;
+    }
+    set newPlayerId(setter:number) {
+        this.privates.newPlayerId = setter;
+    }
+
+    get allPlayers():Player[] {
+        return this.privates.allPlayers;
+    }
+    set allPlayers(setter:Player[]) {
+        this.privates.allPlayers = setter;
+    }
+
+    get currentPlayer():number {
+        return this.privates.currentPlayer;
+    }
+    set currentPlayer(setter:number) {
+        this.privates.currentPlayer = setter;
+    }
+
+    get activePlayers():number[] {
+        return this.privates.activePlayers;
+    }
+    set activePlayers(setter:number[]) {
+        this.privates.activePlayers = setter;
+    }
+
+    get deck():Cards.Card[] {
+        return this.privates.deck;
+    }
+    set deck(setter:Cards.Card[]) {
+        this.privates.deck = setter;
+    }
+
+    get userLogs():logs.gamePlayerLog[] {
+        return this.privates.userLogs;
+    }
+    set userLogs(setter:logs.gamePlayerLog[]) {
+        this.privates.userLogs = setter;
+    }
+
+    get systemLogs():logs.gameSystemLog[] {
+        return this.privates.systemLogs;
+    }
+    set systemLogs(setter:logs.gameSystemLog[]) {
+        this.privates.systemLogs = setter;
+    }
+
+    get logId():number {
+        return this.privates.logId;
+    }
+    set logId(setter:number) {
+        this.privates.logId = setter;
+    }
+}
+
+class gamePublics {
+    gameId: number;
+    spectatingAllowed: boolean = true;
+    type: GameType = null;
+    buyin: number = 0;
+    league: number = 0;
+    minBet: number = 1;
+    initialChips: number = 1;
+    minPlayers: number = 2;
+    maxPlayers: number = 23;
+    stage: Stage = Stage.Preflop;
+    pot: number = 0;
+    bet: number = 0;
+    smallBlind: number = null;
+    bigBlind: number = null;
+    tableCards: Cards.Card[] = [];
+
+    static from(json: any): gamePublics {
+        let game: gamePublics = assign(new gamePublics(), json);
+
+        game.tableCards = game.tableCards.map(x => Cards.Card.from(x));
+        return game;
+    }
+}
+
+class gamePrivates {
+    newPlayerId: number = 0;
+    allPlayers: Player[] = [];
+    currentPlayer: number = null;
+    activePlayers: number[] = [];
+    deck: Cards.Card[] = [];
+    userLogs: logs.gamePlayerLog[] = [];
+    systemLogs: logs.gameSystemLog[] = [];
+    logId: number = 0;
+
+    static from(json: any): gamePrivates {
+        let game: gamePrivates = assign(new gamePrivates(), json);
+
+        game.deck = game.deck.map(x => Cards.Card.from(x));
+        game.allPlayers = game.allPlayers.map(x => Player.from(x));
+        game.userLogs = game.userLogs.map(x => logs.gamePlayerLog.from(x));
+        game.systemLogs = game.systemLogs.map(x => logs.gameSystemLog.from(x));
+        return game;
     }
 }

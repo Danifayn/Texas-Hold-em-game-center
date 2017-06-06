@@ -7,8 +7,8 @@ import * as admin from 'firebase-admin'
 import * as assign from 'object.assign';
 import * as Game from "./games/gameObj";
 
-export const register = (gc: GameCenter, username: string, password: string, email: string) => {
-    gc.register(username, password, email);
+export const register = (gc: GameCenter, username: string, password: string, email: string, token?: string) => {
+    gc.register(username, password, email, token);
 };
 
 
@@ -79,7 +79,7 @@ export const getPlayableGames = (gc: GameCenter, user: User) => {
 export const endGame = (gc: GameCenter, user: User, gID: number) => {
     let finishedgame = gc.getGame(gID);
     finishedgame.allPlayers.forEach(player => {
-        let user = gc.getUser(player.playingUser);
+        let user = gc.getUserById(player.userId);
         gc.quitGame(user, gID);
     });
     finishedgame.endGame();
