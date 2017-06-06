@@ -129,6 +129,9 @@ export class GameCenter {
     }
 
     getUserById(uId: string): User {
+        console.log('------ getUserById: ' + uId);
+        console.log('------ users: ' , this.users);
+        console.log(`------ users[${uId}]: ` + this.users[uId]);
         return this.users[uId];
     }
 
