@@ -13,9 +13,9 @@ describe("Game", function() {
   var user3: UserMock;
 
   beforeEach(() => {
-    glimit = new limitGame(0, 1, 5, 20, 4, 2, 5, true);
-    gnolimit = new noLimitGame(1, 1, 5, 20, 4, 2, 5, true);
-    gpotlimit = new potLimitGame(2, 1, 5, 20, 4, 2, 5, true);
+    glimit = new limitGame(0, "limit", 1, 5, 20, 4, 2, 5, true);
+    gnolimit = new noLimitGame(1, "nolimit", 1, 5, 20, 4, 2, 5, true);
+    gpotlimit = new potLimitGame(2, "potlimit", 1, 5, 20, 4, 2, 5, true);
     user1= new UserMock();
     user1.username = "u1";
     user1.uId = "u1";

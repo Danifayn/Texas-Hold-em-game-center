@@ -40,6 +40,7 @@ export class GameCenter {
     }
 
     createGame(user: User,
+        gameName: string,
         gameType: Games.GameType,
         buyin: number,
         initialChips: number,
@@ -52,11 +53,11 @@ export class GameCenter {
         let id = ++this.lastGameId;
         let game = null;
         if (gameType == Games.GameType.Limit)
-            game = new Games.limitGame(id, user.league, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
+            game = new Games.limitGame(id, gameName, user.league, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
         if (gameType == Games.GameType.NoLimit)
-            game = new Games.noLimitGame(id, user.league, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
+            game = new Games.noLimitGame(id, gameName, user.league, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
         if (gameType == Games.GameType.PotLimit)
-            game = new Games.potLimitGame(id, user.league, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
+            game = new Games.potLimitGame(id, gameName, user.league, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
         if (game == null)
             throw new Error("game has no type!!");
         game.addPlayer(user);
@@ -110,21 +111,15 @@ export class GameCenter {
         this.logs.push(new logs.logEntry(++this.logId, user.username + " quit the game with id " + gameId, new Date()));
     }
 
-    register(username: string, password: string, email: string, token?: string) {
+    register(username: string, password: string, email: string, uid?: string) {
         if (/^[a-zA-Z0-9- ]*$/.test(username) == false)
             throw new Error('username cannot contain special characters !');
         if (this.getUser(username))
             throw new Error('username already taken !');
         else {
-            if(token){
-                admin.auth().verifyIdToken(token)
-                .then(function(decodedToken) {
-                    var uid = decodedToken.uid;
+            if(uid){
                     this.users[uid] = new User(uid, username, password, email, this.defaultLeague, 0);
                     this.stats[username] = new userStats(username);
-                }).catch(function(error) {
-                    throw error;
-                });
             } else {
                 this.users[username+"'s uId"] = new User(username+"'s uId", username, password, email, this.defaultLeague, 0);
                 this.stats[username] = new userStats(username);

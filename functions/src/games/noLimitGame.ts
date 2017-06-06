@@ -5,6 +5,7 @@ import * as logs from "../logs/logObj";
 
 export class noLimitGame extends Game {
     constructor(id?: number,
+        name?: string,
         league?: number,
         buyin?: number,
         initialChips?: number,
@@ -12,7 +13,7 @@ export class noLimitGame extends Game {
         minPlayers?: number,
         maxPlayers?: number,
         spectatingAllowed?: boolean) {
-        super(id, league, GameType.NoLimit, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
+        super(id, name, league, GameType.NoLimit, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
     }
 
     raiseBody(player: Player, amount: number) {

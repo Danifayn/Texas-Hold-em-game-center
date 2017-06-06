@@ -23,6 +23,7 @@ export abstract class Game {
     privates: gamePrivates;
 
     constructor(id?: number,
+        name?: string,
         league?: number,
         gameType?: GameType,
         buyin?: number,
@@ -36,6 +37,7 @@ export abstract class Game {
         this.privates = new gamePrivates();
 
         this.gameId = id;
+        this.gameName = name;
         this.type = gameType;
         this.buyin = buyin;
         this.league = league;
@@ -308,6 +310,13 @@ export abstract class Game {
         this.publics.gameId = setter;
     }
 
+    get gameName():string {
+	return this.publics.gameName;
+    }
+    set gameName(setter:string) {
+        this.publics.gameName = setter;
+    }
+
     get spectatingAllowed():boolean {
         return this.publics.spectatingAllowed;
     }
@@ -465,6 +474,7 @@ export abstract class Game {
 
 class gamePublics {
     gameId: number;
+    gameName: string = "no name";
     spectatingAllowed: boolean = true;
     type: GameType = null;
     buyin: number = 0;

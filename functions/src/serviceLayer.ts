@@ -3,17 +3,17 @@ import { User } from './user';
 import { GameCenter } from './game-center';
 import { Player } from './player';
 import * as functions from 'firebase-functions'
-import * as admin from 'firebase-admin'
 import * as assign from 'object.assign';
 import * as Game from "./games/gameObj";
 
-export const register = (gc: GameCenter, username: string, password: string, email: string, token?: string) => {
-    gc.register(username, password, email, token);
+export const register = (gc: GameCenter, username: string, password: string, email: string, uid?: string) => {
+    gc.register(username, password, email, uid);
 };
 
 
 export const createGame = ( gc: GameCenter, 
                             user: User,
+                            gameName: string,
                             gameType: number,
                             buyin: number,
                             initialChips: number,
@@ -21,7 +21,7 @@ export const createGame = ( gc: GameCenter,
                             minPlayers: number,
                             maxPlayers: number,
                             spectatingAllowed: boolean) => {
-    return gc.createGame(user, gameType, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
+    return gc.createGame(user, gameName, gameType, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
 };
 
 export const joinGame = (gc: GameCenter, user: User, gameId: number) => {
@@ -94,8 +94,8 @@ export const reset = (gc: GameCenter) => {
     gc.register("test1", "123456", "test1@test.com");
     gc.register("test2", "asdasd", "test2@test.com");
     gc.register("test3", "111111", "test3@test.com");
-    gc.createGame(gc.getUser("test1"), 0, 10, 20, 2, 2, 4, false);
-    gc.createGame(gc.getUser("test2"), 1, 10, 20, 2, 2, 4, true);
+    gc.createGame(gc.getUser("test1"), "game1", 0, 10, 20, 2, 2, 4, false);
+    gc.createGame(gc.getUser("test2"), "game2", 1, 10, 20, 2, 2, 4, true);
     gc.joinGame(gc.getUser("test3"), 1);
     gc.getGame(1).addPlayer(gc.getUser("test3"));
     gc.spectateGame(gc.getUser("test3"), 2);

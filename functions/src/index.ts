@@ -9,11 +9,26 @@ import { gamePlayerLog } from "./logs/logObj";
 import * as SL from "./serviceLayer"
 admin.initializeApp(functions.config().firebase);
 
-export const register = createHandler((gc, extractor) => SL.register(gc, extractor.string('username'), extractor.string('password'), extractor.string('email')));
+export const register = createHandler((gc, extractor) => {
+  let uid = "nothing";
+  try {
+    let token = extractor.string('token');
+    admin.auth().verifyIdToken(token)
+          .then(function(decodedToken) {
+            uid = decodedToken.uid;
+          }).catch(function(error) {
+            uid = "kaki";
+          });
+  } catch(error) {
+    uid = "noToken";
+  }
+  SL.register(gc, extractor.string('username'), extractor.string('password'), extractor.string('email'), uid);
+});
 
 export const createGame = createHandler((gc, extractor, user) =>
   SL.createGame(gc,
     user,
+    extractor.string('gameName'),
     extractor.number('gameType'),
     extractor.number('buyin'),
     extractor.number('initialChips'),
@@ -53,3 +68,12 @@ export const endAGame = createHandler((gc, extractor, user) => SL.endGame(gc, us
 export const weeklyUpdate = createHandler((gc, extractor, user) => SL.weeklyUpdate(gc, user));
 
 export const reset = createHandler((gc, extractor, user) => SL.reset(gc));
+/*
+export const isUserExisting = 1;
+export const deleteUSer = 1;
+export const isGameExisting = 1;
+export const deleteGame = 1;
+export const isUSerPlaying = 1;
+export const isUserSpectating = 1;
+export const isGameReady = 1;
+*/

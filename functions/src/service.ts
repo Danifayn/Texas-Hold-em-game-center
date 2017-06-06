@@ -63,7 +63,7 @@ export const createHandler = (f: RequestHandler) => {
             var uid = decodedToken.uid;
             user = gc.getUserById(uid);
           }).catch(function(error) {
-            return false;
+            user = null;
           });
         }
         else if(params.username && params.password){
