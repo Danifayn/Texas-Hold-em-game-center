@@ -71,7 +71,11 @@ export const createHandler = (f: RequestHandler) => {
             }
             catch(e){
               error = e;
-              return undefined; // cancel transaction
+              let ev = new env();
+              if(db)
+                ev = env.from(db);
+              ev.test.logError(req.url,params,e);
+              return ev; // cancel transaction and save error
             }
           }, onComplete, true);
         })
@@ -85,15 +89,19 @@ export const createHandler = (f: RequestHandler) => {
               ev = env.from(db);
             console.log('----- ev = ', ev);
             try{
-              const user = ev.real.getUser(params.username);
+              const user = ev.test.getUser(params.username);
               if(!user || user.password != params.password)
                 throw new Error('user not found or passwordsd don`t match');
-              result = f(ev.real,extractor,ev.real.getUser(params.username),user.uId);
+              result = f(ev.test,extractor,ev.test.getUser(params.username),user.uId);
               return ev; // write transaction
             }
             catch(e){
               error = e;
-              return undefined; // cancel transaction
+              let ev = new env();
+              if(db)
+                ev = env.from(db);
+              ev.test.logError(req.url,params,e);
+              return ev; // cancel transaction and save error
             }
           }, onComplete, true);
     }
