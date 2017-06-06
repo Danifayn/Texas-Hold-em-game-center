@@ -67,6 +67,7 @@ export abstract class Game {
             this.allPlayers.push(newPlayer);
             this.systemLogs.push(new logs.gameSystemLog(++this.logId, logs.logType.entering, newPlayer, null, new Date()));
             this.newPlayerId += 1;
+            this.playerAmount += 1;
         }
     }
 
@@ -415,6 +416,13 @@ export abstract class Game {
         this.publics.tableCards = setter;
     }
 
+    get playerAmount():number {
+        return this.publics.playerAmount;
+    }
+    set playerAmount(setter:number) {
+        this.publics.playerAmount = setter;
+    }
+
     get newPlayerId():number {
         return this.privates.newPlayerId;
     }
@@ -489,6 +497,7 @@ class gamePublics {
     smallBlind: number = null;
     bigBlind: number = null;
     tableCards: Cards.Card[] = [];
+    playerAmount: number = 0;
 
     static from(json: any): gamePublics {
         let game: gamePublics = assign(new gamePublics(), json);
