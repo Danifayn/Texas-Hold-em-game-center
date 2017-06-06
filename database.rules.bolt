@@ -1,4 +1,62 @@
+path /games/{gid}/privates/allPlayers/{pid} is Player {
+  read() { false }
+  write() { false }
+}
+
+
 path / {
+  read() { false }
+  write() { false }
+}
+
+
+path /stats {
   read() { true }
-  write() { true }
+  write() { false }
+}
+
+
+path /users/{uid}/publics {
+  read() { true }
+  write() { false }
+}
+path /users/{uid}/privates {
+  read() { auth != null && auth.uid == uid }
+  write() { false }
+}
+
+
+path /games/{gid}/publics {
+  read() { true }
+  write() { false }
+}
+path /games/{gid}/privates/allPlayers/{pid}/publics {
+  read() { true }
+  write() { false }
+}
+path /games/{gid}/privates/allPlayers/{pid}/privates {
+  read() { auth != null && auth.uid == pid.publics.userId }
+  write() { false }
+}
+
+
+
+type Player {
+  publics: PlayerPublics;
+  privates : PlayerPrivates;
+}
+
+type PlayerPublics {
+    status: Any;
+    lastBet: Number;
+    money: Number;
+    userId: String;
+    points: Number;
+    isActive: Boolean;
+}
+
+type PlayerPrivates {
+    playerId: Number;
+    hand: Any;
+    playingGameId: Number;
 }

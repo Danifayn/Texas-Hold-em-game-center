@@ -10,14 +10,14 @@ export class gamePlayerLog extends logEntry {
     constructor(id?: number, player?: Player, status?: Status, amount?: number, date?: Date) {
         super(id, "", date);
         if (status == Status.Check) {
-            this.massage = player.playingUser + " checked";
+            this.massage = player.userId + " checked";
         } else if (status == Status.Fold) {
-            this.massage = player.playingUser + " folded";
+            this.massage = player.userId + " folded";
         } else if (status == Status.Raise) {
             if (amount == 0)
-                this.massage = player.playingUser + " called";
+                this.massage = player.userId + " called";
             else {
-                this.massage = player.playingUser + " raised by " + amount;
+                this.massage = player.userId + " raised by " + amount;
                 this.raiseAmount = amount;
             }
         }

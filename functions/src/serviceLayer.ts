@@ -7,8 +7,8 @@ import * as admin from 'firebase-admin'
 import * as assign from 'object.assign';
 import * as Game from "./games/gameObj";
 
-export const register = (gc: GameCenter, username: string, password: string, email: string) => {
-    gc.register(username, password, email);
+export const register = (gc: GameCenter, username: string, password: string, email: string, token?: string) => {
+    gc.register(username, password, email, token);
 };
 
 
@@ -21,12 +21,12 @@ export const createGame = ( gc: GameCenter,
                             minPlayers: number,
                             maxPlayers: number,
                             spectatingAllowed: boolean) => {
-  gc.createGame(user, gameType, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
+    return gc.createGame(user, gameType, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
 };
 
 export const joinGame = (gc: GameCenter, user: User, gameId: number) => {
-  gc.joinGame(user, gameId);
-  gc.getGame(gameId).addPlayer(user);
+    gc.joinGame(user, gameId);
+    gc.getGame(gameId).addPlayer(user);
 };
 
 export const spectateGame = (gc: GameCenter, user: User, gameId: number) => {
@@ -44,11 +44,11 @@ export const playerAction = (gc: GameCenter,
                             gameId: number,
                             newStatus: number,
                             newBet: number) => {
-  let playerID = playerId;
-  let game = gc.getGame(gameId);
-  let player = game.getPlayerByID(playerId);
-  player.status = newStatus;
-  game.doAction(player.status, newBet, player);
+    let playerID = playerId;
+    let game = gc.getGame(gameId);
+    let player = game.getPlayerByID(playerId);
+    player.status = newStatus;
+    game.doAction(player.status, newBet, player);
 };
 
 //start round
@@ -73,13 +73,13 @@ export const setLeagueCriteria = (gc: GameCenter, user: User, league: number, cr
 };
 
 export const getPlayableGames = (gc: GameCenter, user: User) => {
-    gc.getPlayableGames(user);
+    return gc.getPlayableGames(user);
 };
 
 export const endGame = (gc: GameCenter, user: User, gID: number) => {
     let finishedgame = gc.getGame(gID);
     finishedgame.allPlayers.forEach(player => {
-        let user = gc.getUser(player.playingUser);
+        let user = gc.getUserById(player.userId);
         gc.quitGame(user, gID);
     });
     finishedgame.endGame();
