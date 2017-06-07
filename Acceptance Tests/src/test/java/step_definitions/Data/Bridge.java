@@ -9,6 +9,28 @@ public interface Bridge {
     void setUpDatabase();
     
     //NOT FINISHED!!!!
+    /*
+    NEED TO IMPLEMENT:
+        export const isUserExisting = createHandler((gc, extractor, user) => true);
+        export const deleteUSer = createHandler((gc, extractor, user) => true);
+        export const isGameExisting = createHandler((gc, extractor, user) => true);
+        export const deleteGame = createHandler((gc, extractor, user) => true);;
+        export const isUSerPlaying = createHandler((gc, extractor, user) => true);
+        export const isUserSpectating = createHandler((gc, extractor, user) => true);
+        export const isGameReady = createHandler((gc, extractor, user) => true);
+        export const getUserCash = createHandler((gc, extractor, user) => true);
+        export const getPlayerCards = createHandler((gc, extractor, user) => true);
+        export const getPlayerBet = createHandler((gc, extractor, user) => true);
+        export const getCurrPlayer = createHandler((gc, extractor, user) => true);
+        export const getPot = createHandler((gc, extractor, user) => true);
+        export const setPot = createHandler((gc, extractor, user) => true);
+        export const setBigBlind = createHandler((gc, extractor, user) => true);
+        export const getCallAmount = createHandler((gc, extractor, user) => true);
+        export const setPlayerChips = createHandler((gc, extractor, user) => true);
+        export const getLeagueCriteria = createHandler((gc, extractor, user) => true);
+        export const getUserLeague = createHandler((gc, extractor, user) => true);
+        export const setDefLeague = createHandler((gc, extractor, user) => true);
+    */
 
     void logIn(String username, String password);//not using (login is done using firebase)
 
@@ -72,47 +94,47 @@ public interface Bridge {
 
     void startGame(String gameName);//using startGame
 
-    Integer getPlayerCash(String playerName);
+    Integer getPlayerCash(String playerName);//using getUserCash
 
-    Collection<String> getPlayerCards(String playerName, String gameName);
+    Collection<String> getPlayerCards(String playerName, String gameName);//using getPlayerCards
 
-    Integer getPlayerBet(String playerName, String gameName);
+    Integer getPlayerBet(String playerName, String gameName);//using getPlayerBet
 
-    String getCurrentPlayer(String gameName);
+    String getCurrentPlayer(String gameName);//using getCurrPlayer
 
     void dealCards(String gameName);//automatic action
 
     String lastGameAction(String playerName, String gameName);//not saved, only per user
 
-    int getGamePot(String gameName);
+    int getGamePot(String gameName);//using getPot
 
-    void setPot(String gameName, Integer pot);
+    void setPot(String gameName, Integer pot);//using setPot
 
     void raise(String playerName, Integer raise, String gameName);//using doAction
 
     void setRoundNumber(String gameName, Integer round);//not using round number
 
-    void setBigBlind(String gameName, Integer blind);
+    void setBigBlind(String gameName, Integer blind);//using setBigBlind
 
     void setGameType(String gameName, String gameType);//cannot change type, type is set in creation
 
-    boolean entitledToPot(String playerName, String gameName);//what?
+    boolean entitledToPot(String playerName, String gameName);//happens automatically at the end of a round
 
     void fold(String playerName, String gameName);//using doAction
 
-    void setPlayerRequiredBet(String playerName, String gameName, Integer chips);//what?
+    void setPlayerRequiredBet(String playerName, String gameName, Integer chips);//using getCallAmount
 
     void check(String playerName, String gameName);//using doAction
 
-    void setPlayerChipCount(String playerName, String gameName, Integer chip);
+    void setPlayerChipCount(String playerName, String gameName, Integer chip);//using setPlayerChips
 
-    Integer getLeaguePromotionThreshold();
+    Integer getLeaguePromotionThreshold();//using getLeagueCriteria BUT need a league number
 
-    void setLeaguePromotionThreshold(Integer points);//using setLeagueCriteria
+    void setLeaguePromotionThreshold(Integer points);//using setLeagueCriteria BUT league is a number
 
-    String getPlayerLeague(String playerName, String league);
+    String getPlayerLeague(String playerName, String league);//using getUserLeague BUT league is a number
 
-    void changePlayerLeague(String playerName, String league);//using setUserLeague
+    void changePlayerLeague(String playerName, String league);//using setUserLeague BUT league is a number
 
-    void setDefaultLeague(String league);
+    void setDefaultLeague(String league);//using setDefLeague BUT league is a number
 }
