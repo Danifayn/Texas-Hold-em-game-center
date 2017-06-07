@@ -54,12 +54,11 @@ export const endAGame = createHandler((gc, extractor, user) => SL.endGame(gc, us
 export const weeklyUpdate = createHandler((gc, extractor, user) => SL.weeklyUpdate(gc, user));
 
 export const reset = createHandler((gc, extractor, user) => SL.reset(gc));
-/*
-export const isUserExisting = 1;
-export const deleteUSer = 1;
-export const isGameExisting = 1;
-export const deleteGame = 1;
-export const isUSerPlaying = 1;
-export const isUserSpectating = 1;
-export const isGameReady = 1;
-*/
+
+export const isUserExisting = createHandler((gc, extractor, user) => true);
+export const deleteUSer = createHandler((gc, extractor, user) => true);
+export const isGameExisting = createHandler((gc, extractor, user) => true);
+export const deleteGame = createHandler((gc, extractor, user) => true);;
+export const isUSerPlaying = createHandler((gc, extractor, user) => true);
+export const isUserSpectating = createHandler((gc, extractor, user) => true);
+export const isGameReady = createHandler((gc, extractor, user) => true);
