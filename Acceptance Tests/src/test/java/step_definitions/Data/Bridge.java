@@ -9,6 +9,9 @@ public interface Bridge {
     void setUpDatabase();
     
     //NOT FINISHED!!!!
+    //IMPORTENT:
+            //a game identifier is an id(number) and not a name
+            //a league identifier is a number and not a string
     /*
     NEED TO IMPLEMENT:
         export const isUserExisting = createHandler((gc, extractor, user) => true);
@@ -122,7 +125,7 @@ public interface Bridge {
 
     void fold(String playerName, String gameName);//using doAction
 
-    void setPlayerRequiredBet(String playerName, String gameName, Integer chips);//using getCallAmount
+    void setPlayerRequiredBet(String playerName, String gameName, Integer chips);//depends on the game and the other players, not changable
 
     void check(String playerName, String gameName);//using doAction
 
