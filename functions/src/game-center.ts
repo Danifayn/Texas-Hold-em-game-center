@@ -10,6 +10,7 @@ export class GameCenter {
     private users: { [uid: number]: User } = {};
     private stats: { [username: string]: userStats} = {};
     private games: { [id: number]: Games.Game } = {};
+    private activeGames: number[] = [];
     private lastGameId = 0;
     private leaguesCriteria = [100, 200, 300, 400, 500, 600, 700, 800, 900, -1/*infinity*/];
     private lastUserId = 0;
@@ -64,6 +65,7 @@ export class GameCenter {
         this.games[id] = game;
         user.joinGame(game);
         this.logs.push(new logs.logEntry(++this.logId, user.username + " created a game with the id " + id, new Date()));
+        this.activeGames.push(id);
         return id;
     }
 
@@ -211,6 +213,10 @@ export class GameCenter {
 
         return gamesIndexes;
     };
+
+    endGame(gId : number) {
+        this.activeGames = this.activeGames.filter(x => x != gId);
+    }
 
     // factory method to create a GameCenter instance from the json data from the db
     public static from(json: any): GameCenter {
