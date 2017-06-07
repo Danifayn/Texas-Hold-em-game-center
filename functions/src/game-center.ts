@@ -10,6 +10,7 @@ export class GameCenter {
     private users: { [uid: number]: User } = {};
     private stats: { [username: string]: userStats} = {};
     private games: { [id: number]: Games.Game } = {};
+    private activeGames: number[] = [];
     private lastGameId = 0;
     private leaguesCriteria = [100, 200, 300, 400, 500, 600, 700, 800, 900, -1/*infinity*/];
     private lastUserId = 0;
@@ -40,6 +41,7 @@ export class GameCenter {
     }
 
     createGame(user: User,
+        gameName: string,
         gameType: Games.GameType,
         buyin: number,
         initialChips: number,
@@ -52,17 +54,18 @@ export class GameCenter {
         let id = ++this.lastGameId;
         let game = null;
         if (gameType == Games.GameType.Limit)
-            game = new Games.limitGame(id, user.league, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
+            game = new Games.limitGame(id, gameName, user.league, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
         if (gameType == Games.GameType.NoLimit)
-            game = new Games.noLimitGame(id, user.league, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
+            game = new Games.noLimitGame(id, gameName, user.league, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
         if (gameType == Games.GameType.PotLimit)
-            game = new Games.potLimitGame(id, user.league, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
+            game = new Games.potLimitGame(id, gameName, user.league, buyin, initialChips, minBet, minPlayers, maxPlayers, spectatingAllowed);
         if (game == null)
             throw new Error("game has no type!!");
         game.addPlayer(user);
         this.games[id] = game;
         user.joinGame(game);
         this.logs.push(new logs.logEntry(++this.logId, user.username + " created a game with the id " + id, new Date()));
+        this.activeGames.push(id);
         return id;
     }
 
@@ -110,21 +113,15 @@ export class GameCenter {
         this.logs.push(new logs.logEntry(++this.logId, user.username + " quit the game with id " + gameId, new Date()));
     }
 
-    register(username: string, password: string, email: string, token?: string) {
+    register(username: string, password: string, email: string, uid?: string) {
         if (/^[a-zA-Z0-9- ]*$/.test(username) == false)
             throw new Error('username cannot contain special characters !');
         if (this.getUser(username))
             throw new Error('username already taken !');
         else {
-            if(token){
-                admin.auth().verifyIdToken(token)
-                .then(function(decodedToken) {
-                    var uid = decodedToken.uid;
+            if(uid){
                     this.users[uid] = new User(uid, username, password, email, this.defaultLeague, 0);
                     this.stats[username] = new userStats(username);
-                }).catch(function(error) {
-                    throw error;
-                });
             } else {
                 this.users[username+"'s uId"] = new User(username+"'s uId", username, password, email, this.defaultLeague, 0);
                 this.stats[username] = new userStats(username);
@@ -134,6 +131,9 @@ export class GameCenter {
     }
 
     getUserById(uId: string): User {
+        console.log('------ getUserById: ' + uId);
+        console.log('------ users: ' , this.users);
+        console.log(`------ users[${uId}]: ` + this.users[uId]);
         return this.users[uId];
     }
 
@@ -213,6 +213,10 @@ export class GameCenter {
 
         return gamesIndexes;
     };
+
+    endGame(gId : number) {
+        this.activeGames = this.activeGames.filter(x => x != gId);
+    }
 
     // factory method to create a GameCenter instance from the json data from the db
     public static from(json: any): GameCenter {

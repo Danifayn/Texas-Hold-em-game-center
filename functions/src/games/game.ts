@@ -23,6 +23,7 @@ export abstract class Game {
     privates: gamePrivates;
 
     constructor(id?: number,
+        name?: string,
         league?: number,
         gameType?: GameType,
         buyin?: number,
@@ -36,6 +37,7 @@ export abstract class Game {
         this.privates = new gamePrivates();
 
         this.gameId = id;
+        this.gameName = name;
         this.type = gameType;
         this.buyin = buyin;
         this.league = league;
@@ -65,6 +67,7 @@ export abstract class Game {
             this.allPlayers.push(newPlayer);
             this.systemLogs.push(new logs.gameSystemLog(++this.logId, logs.logType.entering, newPlayer, null, new Date()));
             this.newPlayerId += 1;
+            this.playerAmount += 1;
         }
     }
 
@@ -308,6 +311,13 @@ export abstract class Game {
         this.publics.gameId = setter;
     }
 
+    get gameName():string {
+	return this.publics.gameName;
+    }
+    set gameName(setter:string) {
+        this.publics.gameName = setter;
+    }
+
     get spectatingAllowed():boolean {
         return this.publics.spectatingAllowed;
     }
@@ -406,6 +416,13 @@ export abstract class Game {
         this.publics.tableCards = setter;
     }
 
+    get playerAmount():number {
+        return this.publics.playerAmount;
+    }
+    set playerAmount(setter:number) {
+        this.publics.playerAmount = setter;
+    }
+
     get newPlayerId():number {
         return this.privates.newPlayerId;
     }
@@ -465,6 +482,7 @@ export abstract class Game {
 
 class gamePublics {
     gameId: number;
+    gameName: string = "no name";
     spectatingAllowed: boolean = true;
     type: GameType = null;
     buyin: number = 0;
@@ -479,6 +497,7 @@ class gamePublics {
     smallBlind: number = null;
     bigBlind: number = null;
     tableCards: Cards.Card[] = [];
+    playerAmount: number = 0;
 
     static from(json: any): gamePublics {
         let game: gamePublics = assign(new gamePublics(), json);

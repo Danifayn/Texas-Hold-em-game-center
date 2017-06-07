@@ -19,7 +19,7 @@ describe("Game Center", function() {
     user1 = gc.getUser('user1');
     gc.register('user2','user2','user2@email.com');
     user2 = gc.getUser('user2');
-    gameId = gc.createGame(user1, GameType.NoLimit, 20, 100, 10, 2, 23, false);
+    gameId = gc.createGame(user1, "game1", GameType.NoLimit, 20, 100, 10, 2, 23, false);
     mUser = new UserMock();
   })
 
@@ -47,7 +47,7 @@ describe("Game Center", function() {
     mUser.setPoints(Math.max(user1.points, user2.points)+1);
     mUser.setLeague(Math.max(user1.league, user2.league)+1);
     gc.setLeagueCriteria(mUser,2,312);
-    let gameId = gc.createGame(user1, GameType.NoLimit,50,50,50,2,21,true); // create and join the game
+    let gameId = gc.createGame(user1, "game2", GameType.NoLimit,50,50,50,2,21,true); // create and join the game
 
     user1.points += 313
     user1.gamesPlayed = 9;
