@@ -8,32 +8,10 @@ import java.util.Collection;
 public interface Bridge {
     void setUpDatabase();
     
-    //NOT FINISHED!!!!
     //IMPORTENT:
             //a game identifier is an id(number) and not a name
             //a league identifier is a number and not a string
-    /*
-    NEED TO IMPLEMENT:
-        export const isUserExisting = createHandler((gc, extractor, user) => true);
-        export const deleteUSer = createHandler((gc, extractor, user) => true);
-        export const isGameExisting = createHandler((gc, extractor, user) => true);
-        export const deleteGame = createHandler((gc, extractor, user) => true);;
-        export const isUSerPlaying = createHandler((gc, extractor, user) => true);
-        export const isUserSpectating = createHandler((gc, extractor, user) => true);
-        export const isGameReady = createHandler((gc, extractor, user) => true);
-        export const getUserCash = createHandler((gc, extractor, user) => true);
-        export const getPlayerCards = createHandler((gc, extractor, user) => true);
-        export const getPlayerBet = createHandler((gc, extractor, user) => true);
-        export const getCurrPlayer = createHandler((gc, extractor, user) => true);
-        export const getPot = createHandler((gc, extractor, user) => true);
-        export const setPot = createHandler((gc, extractor, user) => true);
-        export const setBigBlind = createHandler((gc, extractor, user) => true);
-        export const getCallAmount = createHandler((gc, extractor, user) => true);
-        export const setPlayerChips = createHandler((gc, extractor, user) => true);
-        export const getLeagueCriteria = createHandler((gc, extractor, user) => true);
-        export const getUserLeague = createHandler((gc, extractor, user) => true);
-        export const setDefLeague = createHandler((gc, extractor, user) => true);
-    */
+    //look for "extractor" in functions/src/index.ts to find field names
 
     void logIn(String username, String password);//not using (login is done using firebase)
 
