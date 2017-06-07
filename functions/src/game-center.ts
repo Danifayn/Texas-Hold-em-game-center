@@ -218,6 +218,23 @@ export class GameCenter {
         this.activeGames = this.activeGames.filter(x => x != gId);
     }
 
+    setDefLeague(leagueNum: number) {
+        this.defaultLeague = leagueNum;
+    }
+
+    getLeagueCret(leagueNum: number) {
+        return this.leaguesCriteria[leagueNum];
+    }
+
+    removeUser(username: string) {
+        let uId = this.getUser(username).uId;
+        this.users[uId] = null;
+    }
+
+    removeGame(gId: number) {
+        this.games[gId] = null;
+    }
+
     // factory method to create a GameCenter instance from the json data from the db
     public static from(json: any): GameCenter {
         let gc: GameCenter = assign(new GameCenter(), json);
