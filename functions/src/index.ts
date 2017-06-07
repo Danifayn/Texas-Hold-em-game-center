@@ -54,12 +54,22 @@ export const endAGame = createHandler((gc, extractor, user) => SL.endGame(gc, us
 export const weeklyUpdate = createHandler((gc, extractor, user) => SL.weeklyUpdate(gc, user));
 
 export const reset = createHandler((gc, extractor, user) => SL.reset(gc));
-/*
-export const isUserExisting = 1;
-export const deleteUSer = 1;
-export const isGameExisting = 1;
-export const deleteGame = 1;
-export const isUSerPlaying = 1;
-export const isUserSpectating = 1;
-export const isGameReady = 1;
-*/
+
+export const isUserExisting = createHandler((gc, extractor, user) => SL.isUserExisting(gc, extractor.string('username')));
+export const deleteUSer = createHandler((gc, extractor, user) => SL.deleteUSer(gc, extractor.string('username')));
+export const isGameExisting = createHandler((gc, extractor, user) => SL.isGameExisting(gc, extractor.number('gID')));
+export const deleteGame = createHandler((gc, extractor, user) => SL.deleteGame(gc, extractor.number('gID')));
+export const isUSerPlaying = createHandler((gc, extractor, user) => SL.isUSerPlaying(gc, extractor.string('username'), extractor.number('gID')));
+export const isUserSpectating = createHandler((gc, extractor, user) => SL.isUserSpectating(gc, extractor.string('username'), extractor.number('gID')));
+export const isGameReady = createHandler((gc, extractor, user) => SL.isGameReady(gc, extractor.number('gID')));
+export const getUserCash = createHandler((gc, extractor, user) => SL.getUserCash(gc, extractor.string('username')));
+export const getPlayerCards = createHandler((gc, extractor, user) => SL.getPlayerCards(gc, extractor.string('username'), extractor.number('gID')));
+export const getPlayerBet = createHandler((gc, extractor, user) => SL.getPlayerBet(gc, extractor.string('username'), extractor.number('gID')));
+export const getCurrPlayer = createHandler((gc, extractor, user) => SL.getCurrPlayer(gc, extractor.number('gID')));
+export const getPot = createHandler((gc, extractor, user) => SL.getPot(gc, extractor.number('gID')));
+export const setPot = createHandler((gc, extractor, user) => SL.setPot(gc, extractor.number('pot'), extractor.number('gID')));
+export const setBigBlind = createHandler((gc, extractor, user) => SL.setBigBlind(gc, extractor.number('gID'), extractor.number('newBlind')));
+export const setPlayerChips = createHandler((gc, extractor, user) => SL.setPlayerChips(gc, extractor.string('username'), extractor.number('gID'), extractor.number('chips')));
+export const getLeagueCriteria = createHandler((gc, extractor, user) => SL.getLeagueCriteria(gc, extractor.number('league')));
+export const getUserLeague = createHandler((gc, extractor, user) => SL.getUserLeague(gc, extractor.string('username')));
+export const setDefLeague = createHandler((gc, extractor, user) => SL.setDefLeague(gc, extractor.number('league')));

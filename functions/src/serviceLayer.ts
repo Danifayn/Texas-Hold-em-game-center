@@ -101,3 +101,84 @@ export const reset = (gc: GameCenter) => {
     gc.getGame(1).addPlayer(gc.getUser("test3"));
     gc.spectateGame(gc.getUser("test3"), 2);
 }
+
+//for tests
+
+export const isUserExisting = (gc: GameCenter, username: string) => { 
+    return gc.getUser(username) != null;
+}
+
+export const deleteUSer = (gc: GameCenter, username: string) => { 
+    gc.removeUser(username);
+ }
+export const isGameExisting = (gc: GameCenter, gId: number) => { 
+    return gc.getGame(gId) != null;
+ }
+
+export const deleteGame = (gc: GameCenter, gId: number) => { 
+    gc.removeGame(gId);
+ };
+
+export const isUSerPlaying = (gc: GameCenter, username: string, gId: number) => { 
+    return gc.getUser(username).activeGamesIds.filter(x => x == gId).length != 0
+ }
+
+export const isUserSpectating = (gc: GameCenter, username: string, gId: number) => { 
+    return gc.getUser(username).spectatingGamesIds.filter(x => x == gId).length != 0;
+ }
+
+export const isGameReady = (gc: GameCenter, gId: number) => { 
+    return gc.getGame(gId).minPlayers <= gc.getGame(gId).activePlayers.length;
+ }
+
+export const getUserCash = (gc: GameCenter, username: string) => {
+    return gc.getUser(username).money;
+ }
+
+export const getPlayerCards = (gc: GameCenter, username: string, gId: number) => { 
+    return gc.getGame(gId).getPlayerByUserId(gc.getUser(username).uId).hand.map(card => card.toString());
+ }
+
+export const getPlayerBet = (gc: GameCenter, username: string, gId: number) => { 
+    return gc.getGame(gId).getPlayerByUserId(gc.getUser(username).uId).lastBet;
+ }
+
+export const getCurrPlayer = (gc: GameCenter, gId: number) => { 
+    let myGame = gc.getGame(gId);
+    return gc.getUserById(myGame.getPlayerByID(myGame.currentPlayer).userId);
+ }
+
+export const getPot = (gc: GameCenter, gId: number) => { 
+    return gc.getGame(gId).pot; 
+}
+
+export const setPot = (gc: GameCenter, newPot: number, gId: number) => { 
+    gc.getGame(gId).pot = newPot; 
+}
+
+export const setBigBlind = (gc: GameCenter, gId: number, newBlind: number) => { 
+    gc.getGame(gId).bigBlind = newBlind;
+ }
+
+export const setPlayerChips = (gc: GameCenter, username: string, gId:number, chips: number) => { 
+    let uid = gc.getUser(username).uId;
+    let thisGame = gc.getGame(gId);
+    thisGame.allPlayers = thisGame.allPlayers.map(x => {
+        if(x.userId == uid){
+            x.money = chips;
+        }
+        return x;
+    });
+ }
+
+export const getLeagueCriteria = (gc: GameCenter, league: number) => { 
+    return gc.getLeagueCret(league);
+ }
+
+export const getUserLeague = (gc: GameCenter, username: string) => { 
+    return gc.getUser(username).league;
+ }
+
+export const setDefLeague = (gc: GameCenter, league: number) => { 
+    gc.setDefLeague(league);
+ }
