@@ -7,7 +7,7 @@ import * as assign from 'object.assign';
 import * as Game from "./games/gameObj";
 
 export const register = (gc: GameCenter, username: string, password: string, email: string, uid?: string) => {
-    gc.register(username, password, email, uid);
+    gc.register(username, password, email, uid);//problem here
 };
 
 
