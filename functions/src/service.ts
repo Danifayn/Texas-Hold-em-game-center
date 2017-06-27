@@ -39,14 +39,18 @@ export const createHandler = (f: RequestHandler) => {
 
     const onComplete = (e, commited, snapshot) => {
       if (commited || error) {
-        if (result){
-          console.log(`----- successfully finished transaction`);
-          res.send(200, { result });
-        }
-        else if (error){
+        if (error){
           console.log(`----- encountred an error: ` + error.message);
           res.send(400, error.message);
         }
+        else {
+          console.log(`----- successfully finished transaction`);
+          res.send(200, { result });
+        }
+      }
+      else {
+        console.log(`----- critical error!`);
+        res.send(400, "critical error!");
       }
     }
 
@@ -90,9 +94,12 @@ export const createHandler = (f: RequestHandler) => {
             console.log('----- ev = ', ev);
             try{
               const user = ev.test.getUser(params.username);
-              if(!user || user.password != params.password)
-                throw new Error('user not found or passwordsd don`t match');
-              result = f(ev.test,extractor,ev.test.getUser(params.username),user.uId);
+              //console.log("start");
+              if(user)
+                result = f(ev.test,extractor,ev.test.getUser(params.username),user.uId);
+              else
+                result = f(ev.test,extractor,ev.test.getUser(params.username));
+              //console.log("end");
               return ev; // write transaction
             }
             catch(e){

@@ -48,6 +48,7 @@ export const playerAction = (gc: GameCenter,
     let game = gc.getGame(gameId);
     let player = game.getPlayerByID(playerId);
     player.status = newStatus;
+    console.log(playerID + ";" + player.playerId + ";" + gameId + ";" + game.gameId);
     game.doAction(player.status, newBet, player);
 };
 
