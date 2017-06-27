@@ -304,6 +304,10 @@ export abstract class Game {
         return null;
     }
 
+    sendChat(user: User, msg: string) {
+        this.chat.push(new chatMsg(user.uId, msg));
+    }
+
     get gameId():number {
 	return this.publics.gameId;
     }
@@ -423,6 +427,13 @@ export abstract class Game {
         this.publics.playerAmount = setter;
     }
 
+    get chat():chatMsg[] {
+        return this.publics.chat;
+    }
+    set chat(setter:chatMsg[]) {
+        this.publics.chat = setter;
+    }
+
     get newPlayerId():number {
         return this.privates.newPlayerId;
     }
@@ -498,11 +509,13 @@ class gamePublics {
     bigBlind: number = null;
     tableCards: Cards.Card[] = [];
     playerAmount: number = 0;
+    chat: chatMsg[] = [];
 
     static from(json: any): gamePublics {
         let game: gamePublics = assign(new gamePublics(), json);
 
         game.tableCards = game.tableCards.map(x => Cards.Card.from(x));
+        game.chat = game.chat.map(x => chatMsg.from(x));
         return game;
     }
 }
@@ -525,5 +538,20 @@ class gamePrivates {
         game.userLogs = game.userLogs.map(x => logs.gamePlayerLog.from(x));
         game.systemLogs = game.systemLogs.map(x => logs.gameSystemLog.from(x));
         return game;
+    }
+}
+
+class chatMsg {
+    uid: string = "";
+    message: string = "";
+
+    constructor(id?: string, msg?: string) {
+        this.uid = id;
+        this.message = msg;
+    }
+    
+    static from(json: any): chatMsg {
+        let chat: chatMsg = assign(new chatMsg(), json);
+        return chat;
     }
 }

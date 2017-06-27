@@ -73,3 +73,4 @@ export const setPlayerChips = createHandler((gc, extractor, user) => SL.setPlaye
 export const getLeagueCriteria = createHandler((gc, extractor, user) => SL.getLeagueCriteria(gc, extractor.number('league')));
 export const getUserLeague = createHandler((gc, extractor, user) => SL.getUserLeague(gc, extractor.string('username')));
 export const setDefLeague = createHandler((gc, extractor, user) => SL.setDefLeague(gc, extractor.number('league')));
+export const sendChat = createHandler((gc, extractor, user) => SL.sendChat(gc, user, extractor.number('gID'), extractor.string('msg')));
