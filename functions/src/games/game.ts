@@ -202,10 +202,12 @@ export abstract class Game {
     private resetTable() {
         this.deck = Cards.Card.getNewDeck();
         this.tableCards = [];
+        console.log("start here");
         this.allPlayers.forEach(player => {
             player.hand = [];
             player.lastBet = 0;
         })
+        console.log("end here");
         this.activePlayers = [];
         this.allPlayers.map(x => { if (x.isActive) this.activePlayers.push(x.playerId); });
         this.pot = 0;
