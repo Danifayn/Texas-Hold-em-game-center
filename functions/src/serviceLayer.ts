@@ -185,5 +185,8 @@ export const setDefLeague = (gc: GameCenter, league: number) => {
  }
 
 export const sendChat = (gc: GameCenter, user:User, gID: number, msg: string) => { 
-    gc.getGame(gID).sendChat(user, msg);
+    if(gID == -1)
+        gc.sendChat(user, msg);
+    else
+        gc.getGame(gID).sendChat(user, msg);
  }

@@ -238,6 +238,10 @@ export class GameCenter {
         this.games[gId] = null;
     }
 
+    sendChat(user: User, msg: string) {
+        this.chat.push(new chatMsg(user.uId, msg));
+    }
+
     // factory method to create a GameCenter instance from the json data from the db
     public static from(json: any): GameCenter {
         let gc: GameCenter = assign(new GameCenter(), json);
