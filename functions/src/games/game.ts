@@ -4,6 +4,7 @@ import { User } from "../user";
 import * as logs from "../logs/logObj";
 import * as Cards from "./card";
 import * as GT from "./gameObj";
+import { chatMsg } from "../chat";
 
 export enum Stage {
     Preflop,
@@ -537,23 +538,8 @@ class gamePrivates {
 
         game.deck = game.deck.map(x => Cards.Card.from(x));
         game.allPlayers = game.allPlayers.map(x => Player.from(x));
-        game.userLogs = game.userLogs.map(x => logs.gamePlayerLog.from(x));
-        game.systemLogs = game.systemLogs.map(x => logs.gameSystemLog.from(x));
+        game.userLogs = game.userLogs.map(x => {if(x) return logs.gamePlayerLog.from(x)});
+        game.systemLogs = game.systemLogs.map(x => {if(x) return logs.gameSystemLog.from(x)});
         return game;
-    }
-}
-
-class chatMsg {
-    uid: string = "";
-    message: string = "";
-
-    constructor(id?: string, msg?: string) {
-        this.uid = id;
-        this.message = msg;
-    }
-    
-    static from(json: any): chatMsg {
-        let chat: chatMsg = assign(new chatMsg(), json);
-        return chat;
     }
 }

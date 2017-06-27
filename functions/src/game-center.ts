@@ -3,6 +3,7 @@ import { User } from './user';
 import { userStats } from './userStats'
 import * as assign from 'object.assign';
 import * as logs from "./logs/logObj";
+import { chatMsg } from "./chat";
 
 export class GameCenter {
     private defaultLeague: number = -1;
@@ -19,6 +20,8 @@ export class GameCenter {
     private errorLogs: logs.errorLog[] = [];
     private logId: number = 0;
     private logs: logs.logEntry[] = [];
+
+    public chat:chatMsg[] = [];
 
     test: number = 0;
 
@@ -241,6 +244,7 @@ export class GameCenter {
         gc.users = Object.keys(gc.users).reduce((acc, k) => ({ ...acc, [k]: User.from(gc.users[k]) }), {});
         gc.stats = Object.keys(gc.stats).reduce((acc, k) => ({ ...acc, [k]: userStats.from(gc.stats[k]) }), {});
         gc.games = Object.keys(gc.games).reduce((acc, k) => ({ ...acc, [k]: Games.Game.from(gc.games[k]) }), {});
+        gc.chat = gc.chat.map(x => chatMsg.from(x));
 
         return gc;
     }

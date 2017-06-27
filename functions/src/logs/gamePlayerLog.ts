@@ -9,6 +9,7 @@ export class gamePlayerLog extends logEntry {
 
     constructor(id?: number, player?: Player, status?: Status, amount?: number, date?: Date) {
         super(id, "", date);
+        if(!player) return;
         if (status == Status.Check) {
             this.massage = player.userId + " checked";
         } else if (status == Status.Fold) {

@@ -23,7 +23,7 @@ export enum CardRank {
     King,
 }
 
-export const cardName = ['A', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'];
+export const cardName = ['A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'];
 export const cardType = ['s', 'c', 'h', 'd'];
 
 export class Card {

@@ -6,7 +6,8 @@
     "firebase-admin": "^4.2.1",
     "firebase-functions": "^0.5.7",
     "firebase-tools": "^2.2.1",
-    "object.assign": "^4.0.4"
+    "object.assign": "^4.0.4",
+    "poker-evaluator": "^0.3.1"
   },
   "private": true,
   "scripts": {
