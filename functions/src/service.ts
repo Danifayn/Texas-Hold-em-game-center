@@ -1,6 +1,3 @@
-import { User } from './user';
-import { GameCenter } from './game-center';
-import { env } from './env'
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as assign from 'object.assign';
@@ -11,7 +8,7 @@ export type Extractor = {
   boolean: (name: string) => boolean;
 }
 
-export type RequestHandler = (gc: GameCenter, params: Extractor, currentUser?: User, uid?: string) => any;
+export type RequestHandler = (gc: any, params: Extractor, uid: string, username?: string, password?: string) => any;
 
 export const createExtractor = (o: any): Extractor => ({
   string: name => {
@@ -31,7 +28,7 @@ export const createExtractor = (o: any): Extractor => ({
 
 export const createHandler = (f: RequestHandler) => {
   return functions.https.onRequest((req,res)=>{
-    let result: env;
+    let result: any;
     let error: Error;
 
     const params: any = assign({}, req.query, req.params, req.body, req.headers);
@@ -58,23 +55,23 @@ export const createHandler = (f: RequestHandler) => {
             console.log('----- transaction started db = ' , db);
             console.log(`----- uid = ${decodedToken.uid}`);
 
-            const uid = decodedToken.uid;
+            /*const uid = decodedToken.uid;
             let ev = new env();
             if(db)
               ev = env.from(db);
 
-            console.log('----- ev = ', ev);
+            console.log('----- ev = ', ev);*/
 
             try{
-              result = f(ev.real,extractor,ev.real.getUserById(uid),uid);
+              result = f(db.real,extractor,decodedToken.uid);
               return ev; // write transaction
             }
             catch(e){
-              error = e;
+              /*error = e;
               let ev = new env();
               if(db)
                 ev = env.from(db);
-              ev.test.logError(req.url,params,e);
+              ev.test.logError(req.url,params,e);*/
               return ev; // cancel transaction and save error
             }
           }, onComplete, true);
@@ -84,23 +81,23 @@ export const createHandler = (f: RequestHandler) => {
       return admin.database().ref('/').transaction(db =>{
             if(!db) return 0;
             console.log('----- transaction started db = ' , db);
-            let ev = new env();
+            /*let ev = new env();
             if(db)
               ev = env.from(db);
-            console.log('----- ev = ', ev);
+            console.log('----- ev = ', ev);*/
             try{
-              const user = ev.test.getUser(params.username);
+              /*const user = ev.test.getUser(params.username);
               if(!user || user.password != params.password)
-                throw new Error('user not found or passwordsd don`t match');
-              result = f(ev.test,extractor,ev.test.getUser(params.username),user.uId);
+                throw new Error('user not found or passwordsd don`t match');*/
+              result = f(db.test,extractor,null, params.username, params.password);
               return ev; // write transaction
             }
             catch(e){
-              error = e;
+              /*error = e;
               let ev = new env();
               if(db)
                 ev = env.from(db);
-              ev.test.logError(req.url,params,e);
+              ev.test.logError(req.url,params,e);*/
               return ev; // cancel transaction and save error
             }
           }, onComplete, true);
